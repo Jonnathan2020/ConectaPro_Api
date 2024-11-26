@@ -1,6 +1,6 @@
 package com.perseus.conectapro.Entity.Enuns;
 
-public enum TipoUsuarioEnum {
+public enum tipoUsuarioEnum {
     PRESTADOR,
     CLIENTE,
     ADMINISTRADOR,
