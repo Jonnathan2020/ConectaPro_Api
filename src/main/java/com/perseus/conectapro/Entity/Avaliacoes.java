@@ -8,4 +8,5 @@ import lombok.Setter;
 @Setter
 @Table(name = "AVALIAÇÕES")
 public class Avaliacoes {
+
 }
