@@ -48,16 +48,6 @@ public class Pessoa {
     @Column(name = "SEGMENTO")
     private String segmento;
 
-    @Column(name = "FOTO ")
-    public BufferedImage foto;
-    /*para armazenar diretamente uma imagem
-    // Getters e Setters
-    public BufferedImage getFoto() {
-        return foto;
-    }
-    public void setFoto(BufferedImage foto) {
-        this.foto = foto;
-
     @Column(name = "ESPECIALIZACAO")
     public String especializacao;
 
@@ -82,20 +72,29 @@ public class Pessoa {
     @Column(name = "PUBLICACAO_SERVICO")
     public PublicacaoServico publicacaoServico;
 
-    @Column(name = "PUBLICACAO_SERVICO")
-    public PublicacaoServico publicacaoServico;
-
-    @Column(name = "ORDEM_SERVICO")
-    private OrdemServico ordemServico;
-
-    @Column(name = "CONTRATO")
-    private Contrato contrato;
+    @Column(name = "PUBLICACAO_PRESTADOR")
+    public PublicacaoServico publicacaoPrestador;
 
     @Column(name = "CONTRATO")
     private Contrato contrato;
 
     @Column(name = "PAGAMENTO")
     private Pagamento pagamento;
- */
+
+    @Column(name = "FATURAMENTO")
+    private Faturamento faturamento;
+
+    @Column(name = "FOTO ")
+    public BufferedImage foto;
+    /*para armazenar diretamente uma imagem
+    // Getters e Setters
+    public BufferedImage getFoto() {
+        return foto;
+    }
+    public void setFoto(BufferedImage foto) {
+        this.foto = foto;*/
+
+
+
 
 }
