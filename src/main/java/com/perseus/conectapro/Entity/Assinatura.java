@@ -21,7 +21,7 @@ import java.text.DateFormat;
 
         @OneToMany
         @JoinColumn(name = "ID_CONTRATO")
-        private Contrato contrato;
+        private Contrato contrato;//
 
         @Column(name = "DATA_INICIAL")
         private DateFormat dataInicial;
