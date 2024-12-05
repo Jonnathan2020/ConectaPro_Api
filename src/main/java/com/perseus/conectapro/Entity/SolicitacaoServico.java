@@ -1,5 +1,7 @@
 package com.perseus.conectapro.Entity;
 
+import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
+import com.perseus.conectapro.Entity.Enuns.StatusSolicitacaoEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,8 +21,8 @@ public class SolicitacaoServico
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "ID_PESSOA")
-    private Pessoa pessoa;
+    @JoinColumn(name = "ID_PRESTADOR")
+    private Prestador prestador;
 
     @Column(name = "DESCRICAO")
     public String descricao;
@@ -28,8 +30,9 @@ public class SolicitacaoServico
     @Column(name = "FOTO ")
     public BufferedImage foto;
 
-    @Column(name = "STATUS")
-    public Enum status;
+    @Column(name = "STATUS_SOLICITACAO_ENUM")
+    @Enumerated(EnumType.STRING)
+    public StatusSolicitacaoEnum statusSolicitacaoEnum;
 
     @Column(name = "CATEGORIA")
     public String categoria;

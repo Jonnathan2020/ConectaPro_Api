@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.aspectj.weaver.ast.Or;
 
+import java.text.DateFormat;
+
 @Entity
 @Getter
 @Setter
@@ -17,10 +19,21 @@ public class Contrato
     private int id;
 
     @OneToOne
-    @JoinColumn(name = "ORDEM_SERVICO")
-    private OrdemServico ordemServico;
+    @JoinColumn(name = "ID_SOLICITACAO_SERVICO")
+    private SolicitacaoServico solicitacaoServico;
 
+    @Column(name = "DATA_CRIACAO")
+    public DateFormat dataCriacao;
 
+    @Column(name = "DATA_FINALIZACAO")
+    public DateFormat dataFinalizacao;
+
+    @Column(name = "DADO_CLIENTE")
+    public EmpresaCliente dadoCliente;
+
+    /*Criei o atributo dado cobrador e dado cliente*/
+    @Column(name = "DADO_COBRADOR")
+    public Prestador dadoCobrador;
 
     @Column(name = "OBJETO_CONTRATO")
     public String objetoContrato;
@@ -30,6 +43,15 @@ public class Contrato
 
     @Column(name = "DESCRICAO")
     public String descricao;
+
+    @Column(name = "PRAZO")
+    public String prazo;
+
+    @Column(name = "VALORES_EXPLICITOS")
+    public double valoresExplicitos;
+
+    @Column(name = "Assinatura")
+    public String assinatura;
 
 
 

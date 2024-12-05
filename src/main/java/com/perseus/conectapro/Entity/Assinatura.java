@@ -16,8 +16,12 @@ import java.text.DateFormat;
         private Long id;
 
         @OneToOne
-        @JoinColumn(name = "ID_PESSOA")
-        private Pessoa pessoa;
+        @JoinColumn(name = "ID_PRESTADOR")
+        private Prestador prestador;
+
+        @OneToOne
+        @JoinColumn(name = "ID_EMPRESA_CLIENTE")
+        private EmpresaCliente empresaCliente;
 
         @OneToMany
         @JoinColumn(name = "ID_CONTRATO")

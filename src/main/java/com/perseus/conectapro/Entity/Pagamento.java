@@ -18,10 +18,10 @@ public class Pagamento
     private int id;
 
     @Column(name = "DADO_CLIENTE")
-    private Pessoa dadoCliente;
+    private EmpresaCliente dadoCliente;
 
     @Column(name = "DADO_Cobrador")
-    private Pessoa dadoCobrador;
+    private Prestador dadoCobrador;
 
     @Column(name = "DESCRICAO")
     private String descricao;
