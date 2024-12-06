@@ -1,5 +1,6 @@
 package com.perseus.conectapro.Entity;
 
+import com.perseus.conectapro.Entity.Enuns.TipoAssinaturaEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,10 @@ import java.text.DateFormat;
         @Id
         @Column(name = "ID_ASSINATURA")
         private Long id;
+
+        @OneToOne
+        @JoinColumn(name = "ID_TIPO_ASSINATURA")
+        private TipoAssinaturaEnum tipoAssinaturaEnum;
 
         @OneToOne
         @JoinColumn(name = "ID_PRESTADOR")

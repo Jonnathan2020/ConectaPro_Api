@@ -54,17 +54,14 @@ public class Pessoa {
     @Column(name = "HABILIDADES")
     public List habilidades;
 
-    @Column(name = "ENDERECO_COMERCIAL")
-    public EnderecoComercial enderecoComercial;
-
-    @Column(name = "ENDERECO_RESIDENCIAL")
-    public EnderecoResidencial enderecoResidencial;
+    @Column(name = "ENDERECO")
+    public Endereco endereco;
 
     @Column(name = "STATUS_DISPONIBILIDADE")
     public Enum statusDisponibilidade;
 
     @Column(name = "AVALIACOES")
-    public Avaliacoes avaliacoes;
+    public Avaliacao avaliacao;
 
     @Column(name = "CONTA_BANCARIA")
     private ContaBancaria contaBancaria;

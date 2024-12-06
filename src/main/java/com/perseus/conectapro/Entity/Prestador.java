@@ -19,7 +19,7 @@ public class Prestador
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int id;
 
-        @Column(name = "ENDERECO_COMERCIAL")
+        @Column(name = "ENDERECO")
         public Endereco endereco;
 
         @Column(name = "CPF")
@@ -67,9 +67,5 @@ public class Prestador
 
         @Column(name = "FOTO ")
         public BufferedImage foto;
-
-
-
-
 
     }
