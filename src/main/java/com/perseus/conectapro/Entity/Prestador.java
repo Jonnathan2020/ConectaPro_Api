@@ -10,7 +10,7 @@ import java.text.DateFormat;
 @Entity
 @Getter
 @Setter
-@Table(name = "PRESTADOR")
+@Table(name = "TBL_PRESTADORES")
 public class Prestador
 {
 
@@ -19,11 +19,14 @@ public class Prestador
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private int id;
 
-        @Column(name = "ENDERECO")
-        public Endereco endereco;
-
         @Column(name = "CPF")
         private String cpf;
+
+        @Column(name = "NOME")
+        public String nome;
+
+        @Column(name = "SOBRENOME")
+        public String sobrenome;
 
         @Column(name = "CNPJ")
         private String cnpj;
@@ -31,11 +34,9 @@ public class Prestador
         @Column(name = "TELEFONE")
         private int telefone;
 
-        @Column(name = "NOME")
-        public String nome;
 
-        @Column(name = "SOBRENOME")
-        public String sobrenome;
+        @Column(name = "ID_ENDERECO")
+        public Endereco idendereco;
 
         @Column(name = "DATA_NASCIMENTO")
         private DateFormat dataNascimento;
@@ -46,24 +47,24 @@ public class Prestador
         @Column(name = "ESPECIALIZACAO")
          public String especializacao;
 
-        @Column(name = "STATUS_DISPONIBILIDADE_ENUM")
+        @Column(name = "ID_STATUS_DISPONIBILIDADE")
         @Enumerated(EnumType.STRING)
-        public StatusDisponibilidadeEnum statusDisponibilidadeEnum;
+        public StatusDisponibilidadeEnum idStatusDisponibilidadeEnum;
 
-        @Column(name = "PUBLICACAO_SERVICO")
-        public PublicacaoServico publicacaoServico;
+        @Column(name = "ID_SOLICITACAO_SERVICO")
+        public SolicitacaoServico idSolicitacaoServico;
 
-        @Column(name = "PUBLICACAO_PRESTADOR")
-        public PublicacaoServico publicacaoPrestador;
+        @Column(name = "ID_SOLICITACAO_PRESTADOR")
+        public PublicacaoServico idSolicitacaoPrestador;
 
-        @Column(name = "PAGAMENTO")
-        private Pagamento pagamento;
+        @Column(name = "ID_PAGAMENTO")
+        private Pagamento idPagamento;
 
-        @Column(name = "FATURAMENTO")
-        private Faturamento faturamento;
+        @Column(name = "ID_FATURAMENTO")
+        private Faturamento idFaturamento;
 
-        @Column(name = "CONTRATO")
-        private Contrato contrato;
+        @Column(name = "ID_CONTRATO")
+        private Contrato idContrato;
 
         @Column(name = "FOTO ")
         public BufferedImage foto;
