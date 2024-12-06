@@ -9,7 +9,7 @@ import java.text.DateFormat;
 @Entity
 @Getter
 @Setter
-@Table(name = "PAGAMENTO")
+@Table(name = "TBL_PAGAMENTOS")
 public class Pagamento
 {
     @Id

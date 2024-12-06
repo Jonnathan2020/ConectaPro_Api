@@ -12,11 +12,11 @@ import java.text.DateFormat;
 @Entity
 @Getter
 @Setter
-@Table(name = "SOLICITACAO_SERVICO")
+@Table(name = "TBL_SOLICITACAO_SERVICOS")
 public class SolicitacaoServico
 {
     @Id
-    @Column(name = "ID_SOLICITACAO_PRESTADOR")
+    @Column(name = "ID_SOLICITACAO_SERVICO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
