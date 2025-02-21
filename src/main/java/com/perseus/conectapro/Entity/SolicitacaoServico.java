@@ -1,5 +1,6 @@
 package com.perseus.conectapro.Entity;
 
+import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Enuns.StatusSolicitacaoEnum;
 import jakarta.persistence.*;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,59 +27,61 @@ public class SolicitacaoServico
     private Prestador prestador;
 
     @Column(name = "DESCRICAO")
-    public String descricao;
+    private String descricao;
 
     @Column(name = "FOTO ")
-    public BufferedImage foto;
+    private BufferedImage foto;
 
-    @Column(name = "STATUS_SOLICITACAO_ENUM")
+    @Column(name = "STATUS_SOLICITACAO")
     @Enumerated(EnumType.STRING)
-    public StatusSolicitacaoEnum statusSolicitacaoEnum;
+    private StatusSolicitacaoEnum statusSolicitacao;
 
-    @Column(name = "CATEGORIA")
-    public String categoria;
+    @OneToMany
+    @JoinColumn(name = "CATEGORIA")
+    private List<Categoria> categoria;
 
     @Column(name = "ESPECIALIDADE")
-    public String especialidade;
+    private String especialidade;
 
     @Column(name = "LOCALIDADE")
-    public String localidade;
+    private String localidade;
 
     @Column(name = "ATIVIDADE")
     private String atividade;
 
     @Column(name = "VALOR_PROPOSTO")
-    public Double valorProposto;
+    private Double valorProposto;
 
     @Column(name = "DATA_CRIACAO")
-    public DateFormat dataCriacao;
+    private DateFormat dataCriacao;
 
     @Column(name = "DATA_ATUALIZACAO")
-    public DateFormat dataAtualizacao;
+    private DateFormat dataAtualizacao;
 
     @Column(name = "DATA_FINALIZACAO")
-    public DateFormat dataFinalizacao;
+    private DateFormat dataFinalizacao;
 
     @Column(name = "DATA_INICIO_EXECUCAO")
-    public DateFormat dataInicioExecucao;
+    private DateFormat dataInicioExecucao;
 
     /*@Column(name = "AVALIACAO_PRESTADOR")
     private AvaliacaoPrestador avaliacaoPrestador; Precisa da classe avaliação prestador*/
 
     @Column(name = "VISUALIZACAO")
-    public int visualizacao;
+    private int visualizacao;
 
     @Column(name = "CURTIDAS")
-    public int curtidas;
+    private int curtidas;
 
     @Column(name = "COMENTARIO")
-    public String comentario;
+    private String comentario;
 
     @Column(name = "COMPARTILHAMENTO")
-    public int compartilhamento;
+    private int compartilhamento;
 
-    @Column(name = "FORMA_PAGTO")
-    private Enum formaPagto;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "FORMA_PAGAMENTO")
+    private FormaPagtoEnum formaPagto;
 
     @Column(name = "PRAZO_EXECUCAO")
     private String prazoExecucao;

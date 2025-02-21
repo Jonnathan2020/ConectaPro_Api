@@ -23,35 +23,37 @@ public class Contrato
     private SolicitacaoServico solicitacaoServico;
 
     @Column(name = "DATA_CRIACAO")
-    public DateFormat dataCriacao;
+    private DateFormat dataCriacao;
 
     @Column(name = "DATA_FINALIZACAO")
-    public DateFormat dataFinalizacao;
+    private DateFormat dataFinalizacao;
 
-    @Column(name = "DADO_CLIENTE")
-    public EmpresaCliente dadoCliente;
+    @ManyToOne
+    @JoinColumn(name = "DADO_CLIENTE")
+    private EmpresaCliente dadoCliente;
 
     /*Criei o atributo dado cobrador e dado cliente*/
-    @Column(name = "DADO_COBRADOR")
-    public Prestador dadoCobrador;
+    @ManyToOne
+    @JoinColumn(name = "DADO_COBRADOR")
+    private Prestador dadoCobrador;
 
     @Column(name = "OBJETO_CONTRATO")
-    public String objetoContrato;
+    private String objetoContrato;
 
-    @Column(name = "CLASULAS")
-    public String clasulas;
+    @Column(name = "CLAUSULAS")
+    private String clausulas;
 
     @Column(name = "DESCRICAO")
-    public String descricao;
+    private String descricao;
 
     @Column(name = "PRAZO")
-    public String prazo;
+    private String prazo;
 
     @Column(name = "VALORES_EXPLICITOS")
-    public double valoresExplicitos;
+    private double valoresExplicitos;
 
     @Column(name = "Assinatura")
-    public String assinatura;
+    private String assinatura;
 
 
 

@@ -13,6 +13,9 @@ import java.text.DateFormat;
 @Setter
 @Table(name = "PESSOA")
 public class Pessoa {
+
+    // NÃO HÁ NECSSIDADE DESTA CLASSE?
+
     @Id
     @Column(name = "ID_PESSOA")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,6 +63,7 @@ public class Pessoa {
     @Column(name = "STATUS_DISPONIBILIDADE")
     public Enum statusDisponibilidade;
 
+    @OneToMany
     @Column(name = "AVALIACOES")
     public Avaliacao avaliacao;
 

@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,26 +17,36 @@ public class Solicitacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_SOLICITACAO")
     private Long id;
+
     @Column(name = "DESCRICAO")
-    private String Descricao;
+    private String descricao;
+
     @Column(name = "FOTO")
     private BufferedImage foto;
-    @Column(name = "CATEGORIA")
-    private String categoria;
+
+    @OneToMany
+    @JoinColumn(name = "CATEGORIA")
+    private List<Categoria> categoria;
 
     //private NvlUrgenciaEnum nvlUrgencia; - NvlUrgenciaEnum ainda não existe
     @Column(name = "DATA_PUBLICACAO")
     private DateFormat dataPub;
+
     @Column(name = "LOCALIDADE")
     private String localidade;
+
     @Column(name = "VALOR_PROPOSTO")
     private double valorProposto;
+
     @Column(name = "VISUALIZACOES")
     private Long visualizacoes;
+
     @Column(name = "CURTIDAS")
     private Long curtidas;
+
     @Column(name = "COMENTARIOS")
     private String comentarios;
+
     @Column(name = "COMPARTILHAMENTO")
     private Long compartilhamento;
 

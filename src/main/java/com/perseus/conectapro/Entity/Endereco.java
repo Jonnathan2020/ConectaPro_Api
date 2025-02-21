@@ -1,5 +1,6 @@
 package com.perseus.conectapro.Entity;
 
+import com.perseus.conectapro.Entity.Enuns.ufEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,18 +17,28 @@ public class Endereco
     private int id;
 
     @Column(name = "RUA")
-    String rua;
+    private String rua;
 
     @Column(name = "NUMERO")
-    int numero;
+    private int numero;
 
     @Column(name = "COMPLEMENTO")
-    String complemento;
+    private String complemento;
 
     @Column(name = "CIDADE")
-    String cidade;
+    private String cidade;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "UF")
-    String uf;
+    private ufEnum uf;
     /*Acredito que UF seria enum mas por enquanto vou deixar assim */
+
+    @JoinColumn(name = "ID_PRESTADOR")
+    @OneToOne
+    private EmpresaCliente idCliente;
+
+    @JoinColumn(name = "ID_PRESTADOR")
+    @OneToOne
+    private Prestador idPrestador;
+
 }

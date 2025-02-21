@@ -1,5 +1,6 @@
 package com.perseus.conectapro.Entity;
 
+import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,17 +18,19 @@ public class Pagamento
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "DADO_CLIENTE")
+    @JoinColumn(name = "DADO_CLIENTE")
     private EmpresaCliente dadoCliente;
 
-    @Column(name = "DADO_Cobrador")
+
+    @JoinColumn(name = "DADO_Cobrador")
     private Prestador dadoCobrador;
 
     @Column(name = "DESCRICAO")
     private String descricao;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "FORMATO_PAGTO")
-    private Enum formaPagto;
+    private FormaPagtoEnum formaPagto;
 
     @Column(name = "VALOR_TOTAL")
     private Double valorTotal;

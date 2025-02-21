@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,63 +22,67 @@ public class SolicitacaoPrestador
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @OneToMany
     @JoinColumn(name = "ID_EMPRESA_CLIENTE")
-    private EmpresaCliente idEmpresaCliente;
+    private List<EmpresaCliente> idEmpresaCliente;
 
     @Column(name = "DESCRICAO")
-    public String descricao;
+    private String descricao;
 
-    @Column(name = "FOTO ")
-    public BufferedImage foto;
+    @Column(name = "FOTO")
+    private BufferedImage foto;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "STATUS_SOLICITACAO")
-    public StatusSolicitacaoEnum idStatusSolicitacao;
+    private StatusSolicitacaoEnum statusSolicitacao;
 
-    @Column(name = "CATEGORIA")
-    public String categoria;
+    @OneToMany
+    @JoinColumn(name = "CATEGORIA")
+    private List<Categoria> categoria;
 
     @Column(name = "ESPECIALIDADE")
-    public String especialidade;
+    private String especialidade;
 
     @Column(name = "LOCALIDADE")
-    public String localidade;
+    private String localidade;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "NVL_URGENCIA")
-    public NvlUrgencia idNvlUrgencia;
+    private NvlUrgencia nvlUrgencia;
 
     @Column(name = "ATIVIDADE")
     private String atividade;
 
     @Column(name = "VALOR_PROPOSTO")
-    public Double valorProposto;
+    private Double valorProposto;
 
     @Column(name = "DATA_ATUALIZACAO")
-    public DateFormat dataAtualizacao;
+    private DateFormat dataAtualizacao;
 
     @Column(name = "DATA_CRIACAO")
-    public DateFormat dataCriacao;
+    private DateFormat dataCriacao;
 
     @Column(name = "DATA_FINALIZACAO")
-    public DateFormat dataFinalizacao;
+    private DateFormat dataFinalizacao;
 
     /*@Column(name = "AVALIACAO_PRESTADOR")
     private AvaliacaoPrestador avaliacaoPrestador; Precisa da classe avaliação prestador*/
 
     @Column(name = "VISUALIZACAO")
-    public int visualizacao;
+    private int visualizacao;
 
     @Column(name = "CURTIDAS")
-    public int curtidas;
+    private int curtidas;
 
     @Column(name = "COMENTARIOS")
-    public String comentario;
+    private String comentario;
 
     @Column(name = "COMPARTILHAMENTOS")
     public int compartilhamento;
 
-    @Column(name = "FORMA_PAGTO")
-    private FormaPagtoEnum idFormaPagto;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "FORMA_PAGAMENTO")
+    private FormaPagtoEnum formaPagto;
 
     @Column(name = "PRAZO_EXECUCAO")
     private String prazoExecucao;
@@ -87,7 +92,4 @@ public class SolicitacaoPrestador
 
     @Column(name = "TAXA_ADM")
     private Double taxaAdm;
-
-
-
 }

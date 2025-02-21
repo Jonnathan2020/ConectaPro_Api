@@ -18,17 +18,23 @@ public class Avaliacao {
     @Column(name = "DESCRICAO")
     private String descricao;
 
-    @Column(name = "ID_SOLICITACAO_SERVICO")
+    @OneToOne
+    @JoinColumn(name = "ID_SOLICITACAO_SERVICO")
     private SolicitacaoServico solicitacaoServico;
 
-    @Column(name = "ID_SOLICITACAO_PRESTADOR")
+    @OneToOne
+    @JoinColumn(name = "ID_SOLICITACAO_PRESTADOR")
     private SolicitacaoPrestador solicitacaoPrestador;
 
-    @OneToOne
-    @Column(name = "ID_EMPRESA_CLIENTE")
+    @ManyToOne
+    @JoinColumn(name = "ID_EMPRESA_CLIENTE")
     private EmpresaCliente idEmpresaCliente;
 
-    @OneToOne
-    @Column(name = "ID_NVL_SATISFACAO")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "NVL_SATISFACAO")
     private NvlSatisfacaoEnum nvlSatisfacao;
+
+    @ManyToOne
+    @JoinColumn(name = "ID_PRESTADOR")
+    private Prestador idPrestador;
 }

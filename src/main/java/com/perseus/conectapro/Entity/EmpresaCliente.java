@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,32 +22,36 @@ public class EmpresaCliente
     @Column(name = "CNPJ")
     private String cnpj;
 
-    @Column(name = "RAZA0_SOCIAL")
+    @Column(name = "RAZAO_SOCIAL")
     private String razaoSocial;
 
     @Column(name = "NOME_FANTASIA")
-    public String nomeFantasia;
+    private String nomeFantasia;
 
     @Column(name = "SEGMENTO")
-    public String segmento;
+    private String segmento;
 
     @Column(name = "TELEFONE")
-    private int telefone;
+    private String telefone;
 
-    @Column(name = "ENDERECO_COMERCIAL")
-    public Endereco enderecoComercial;
+    @OneToOne
+    @JoinColumn(name = "ENDERECO_COMERCIAL")
+    private Endereco enderecoComercial;
 
-    @Column(name = "PUBLICACAO_PRESTADOR")
-    public PublicacaoServico publicacaoPrestador;
+    //Por que teria publicação do prestador na classe da empresa?
+    @JoinColumn(name = "PUBLICACAO_PRESTADOR")
+    private PublicacaoServico publicacaoPrestador;
 
-    @Column(name = "CONTRATO")
-    private Contrato contrato;
+    @OneToMany
+    @JoinColumn(name = "CONTRATO")
+    private List<Contrato> contrato;
 
+    @OneToMany
     @Column(name = "PAGAMENTO")
-    private Pagamento pagamento;
+    private List<Pagamento> pagamento;
 
-    @Column(name = "FOTO ")
-    public BufferedImage foto;
+    @Column(name = "FOTO")
+    private BufferedImage foto;
 
 
 }

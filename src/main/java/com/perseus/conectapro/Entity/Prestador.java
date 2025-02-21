@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -23,50 +25,60 @@ public class Prestador
         private String cpf;
 
         @Column(name = "NOME")
-        public String nome;
+        private String nome;
 
         @Column(name = "SOBRENOME")
-        public String sobrenome;
+        private String sobrenome;
 
         @Column(name = "CNPJ")
         private String cnpj;
 
         @Column(name = "TELEFONE")
-        private int telefone;
+        private String telefone;
 
-
-        @Column(name = "ID_ENDERECO")
-        public Endereco idendereco;
+        @OneToOne
+        @JoinColumn(name = "ID_ENDERECO")
+        private Endereco idEndereco;
 
         @Column(name = "DATA_NASCIMENTO")
         private DateFormat dataNascimento;
 
         @Column(name = "HABILIDADE")
-         public String habilidade;
+         private String habilidade;
 
         @Column(name = "ESPECIALIZACAO")
-         public String especializacao;
+         private String especializacao;
 
-        @Column(name = "ID_STATUS_DISPONIBILIDADE")
+        @Column(name = "STATUS_DISPONIBILIDADE")
         @Enumerated(EnumType.STRING)
-        public StatusDisponibilidadeEnum idStatusDisponibilidadeEnum;
+        private StatusDisponibilidadeEnum statusDisponibilidade;
 
-        @Column(name = "ID_SOLICITACAO_SERVICO")
-        public SolicitacaoServico idSolicitacaoServico;
+        @OneToMany
+        @JoinColumn(name = "ID_SOLICITACAO_SERVICO")
+        private List<SolicitacaoServico> idSolicitacaoServico;
 
-        @Column(name = "ID_SOLICITACAO_PRESTADOR")
-        public PublicacaoServico idSolicitacaoPrestador;
+        @OneToMany
+        @JoinColumn(name = "ID_SOLICITACAO_PRESTADOR")
+        private List<PublicacaoServico> idSolicitacaoPrestador;
 
-        @Column(name = "ID_PAGAMENTO")
-        private Pagamento idPagamento;
+        @OneToMany
+        @JoinColumn(name = "ID_PAGAMENTO")
+        private List<Pagamento> idPagamento;
 
-        @Column(name = "ID_FATURAMENTO")
+        /*
+        @JoinColumn(name = "ID_FATURAMENTO")
         private Faturamento idFaturamento;
+         */
 
-        @Column(name = "ID_CONTRATO")
-        private Contrato idContrato;
+        @OneToMany
+        @JoinColumn(name = "ID_CONTRATO")
+        private List<Contrato> idContrato;
 
-        @Column(name = "FOTO ")
-        public BufferedImage foto;
+        @Column(name = "FOTO")
+        private BufferedImage foto;
+
+        @OneToMany
+        @JoinColumn(name = "ID_AVALIACAO")
+        private List<Avaliacao> idAvaliacao;
 
     }

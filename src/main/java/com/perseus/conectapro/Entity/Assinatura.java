@@ -1,13 +1,15 @@
 package com.perseus.conectapro.Entity;
 
+import com.perseus.conectapro.Entity.Enuns.PrazoEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoAssinaturaEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.text.DateFormat;
+import java.util.List;
 
-    @Getter
+@Getter
     @Setter
     @Entity
     @Table(name = "ASSINATURA")
@@ -16,8 +18,8 @@ import java.text.DateFormat;
         @Column(name = "ID_ASSINATURA")
         private Long id;
 
-        @OneToOne
-        @JoinColumn(name = "ID_TIPO_ASSINATURA")
+        @Enumerated(EnumType.STRING)
+        @Column(name = "TIPO_ASSINATURA")
         private TipoAssinaturaEnum tipoAssinaturaEnum;
 
         @OneToOne
@@ -30,20 +32,20 @@ import java.text.DateFormat;
 
         @OneToMany
         @JoinColumn(name = "ID_CONTRATO")
-        private Contrato contrato;//
+        private List<Contrato> contrato;
 
         @Column(name = "DATA_INICIAL")
         private DateFormat dataInicial;
+
         @Column(name = "DATA_FINAL")
         private DateFormat dataFinal;
 
         @Column(name = "PRAZO_ENUM")
-        private Enum prazo;
+        @Enumerated(EnumType.STRING)
+        private PrazoEnum prazo;
 
-        @Column(name="VALOR_TOTAL")
+        @Column(name= "VALOR_TOTAL")
         private double valorTotal;
-
-
 
     }
 
