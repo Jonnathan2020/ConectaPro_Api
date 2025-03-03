@@ -1,5 +1,7 @@
 package com.perseus.conectapro.Entity;
 
+import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
+import com.perseus.conectapro.Entity.Enuns.TipoSegmentoEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,46 +14,26 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "EMPRESA_CLIENTE")
-public class EmpresaCliente
+public class EmpresaCliente extends Usuario
 {
-    @Id
-    @Column(name = "ID_EMPRESA_CLIENTE")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(name = "CNPJ")
-    private String cnpj;
 
     @Column(name = "RAZAO_SOCIAL")
     private String razaoSocial;
 
-    @Column(name = "NOME_FANTASIA")
-    private String nomeFantasia;
-
+    @Enumerated(EnumType.STRING)
     @Column(name = "SEGMENTO")
-    private String segmento;
+    private TipoSegmentoEnum segmentoEnum;
 
-    @Column(name = "TELEFONE")
-    private String telefone;
+    @Column(name = "TBL_CLIENTE_CONTRATO")
+    private Contrato contrato;
 
-    @OneToOne
-    @JoinColumn(name = "ENDERECO_COMERCIAL")
-    private Endereco enderecoComercial;
+    @Column(name = "TBL_CLIENTE_PAGAMENTO")
+    private ClientePagamento pagamento;
 
-    //Por que teria publicação do prestador na classe da empresa?
-    @JoinColumn(name = "PUBLICACAO_PRESTADOR")
-    private PublicacaoServico publicacaoPrestador;
 
     @OneToMany
-    @JoinColumn(name = "CONTRATO")
-    private List<Contrato> contrato;
-
-    @OneToMany
-    @Column(name = "PAGAMENTO")
-    private List<Pagamento> pagamento;
-
-    @Column(name = "FOTO")
-    private BufferedImage foto;
+    @JoinColumn(name = "TBL_CLIENTE_AVALIACAO")
+    private Avaliacao avaliacao;
 
 
 }
