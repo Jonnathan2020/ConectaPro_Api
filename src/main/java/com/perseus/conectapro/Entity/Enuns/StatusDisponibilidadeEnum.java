@@ -6,7 +6,6 @@ import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
 @Table(name = "TBL_STATUS_DISPONIBILIDADE")
 public enum StatusDisponibilidadeEnum
 {;

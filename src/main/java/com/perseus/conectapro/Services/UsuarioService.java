@@ -21,34 +21,29 @@ public class UsuarioService {
     private EnderecoRepository enderecoRepository;
 
     public EmpresaCliente cadastrarCliente(EmpresaCliente cliente) {
-        // Criar e salvar o cliente (EmpresaCliente)
-        cliente.setNome(cliente.getNome());
-        cliente.setEmail(cliente.getEmail());
-        cliente.setRazaoSocial(cliente.getRazaoSocial());
-        cliente.setNomeFantasia(cliente.getNomeFantasia());
-        cliente.setCnpj(cliente.getCnpj());
-        cliente.setSegmentoEnum(cliente.getSegmentoEnum());
-        cliente.setTelefone(cliente.getTelefone());
-        cliente.setSenha(cliente.getSenha());
+        // Salvar o Cliente no banco para gerar um ID (se necessário)
+        EmpresaCliente clienteSalvo = empresaClienteRepository.save(cliente);
 
-        // Criar e salvar o endereço
+        // Criar e preencher o Endereço
         Endereco endereco = new Endereco();
-        endereco.setRua(endereco.getRua());  // Acessando corretamente a instância de Endereco
-        endereco.setBairro(endereco.getBairro());
-        endereco.setComplemento(endereco.getComplemento());
-        endereco.setNumero(endereco.getNumero());
-        endereco.setCidade(endereco.getCidade());
-        endereco.setEstado(endereco.getEstado());
+        endereco.setRua(cliente.getEnderecos().get(0).getRua());  // Pegando do objeto recebido
+        endereco.setBairro(cliente.getEnderecos().get(0).getBairro());
+        endereco.setComplemento(cliente.getEnderecos().get(0).getComplemento());
+        endereco.setNumero(cliente.getEnderecos().get(0).getNumero());
+        endereco.setCidade(cliente.getEnderecos().get(0).getCidade());
+        endereco.setEstado(cliente.getEnderecos().get(0).getEstado());
 
+        // Associar o endereço ao cliente
+        endereco.setUsuario(clienteSalvo);  // Definir o cliente ao endereço
+        enderecoRepository.save(endereco); // Salvar endereço no banco
 
-        // Salvar Endereço
-        enderecoRepository.save(endereco);
+        // Relacionar o cliente ao endereço
+        clienteSalvo.getEnderecos().add(endereco);
 
-        // Relacionar o cliente com o endereço (1:N)
-        cliente.getEnderecos().add(endereco);
-
-        // Salvar o Cliente
-        return empresaClienteRepository.save(cliente);
+        // Atualizar o Cliente no banco para garantir consistência
+        return empresaClienteRepository.save(clienteSalvo);
     }
+
 }
+
 

@@ -61,4 +61,7 @@ public class Usuario {
 
     @Column(name = "TBL_TIPOUSUARIO")
     public tipoUsuarioEnum tipoUsuario;
+
+    public void cadastrarCliente(Usuario usuario) {
+    }
 }
