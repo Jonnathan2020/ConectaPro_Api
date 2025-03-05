@@ -29,13 +29,13 @@ public class Contrato
     private DateFormat dataFinalizacao;
 
     @ManyToOne
-    @JoinColumn(name = "DADO_CLIENTE")
-    private EmpresaCliente dadoCliente;
+    @JoinColumn(name = "ID_USUARIO_CLIENTE")
+    private Usuario usuarioCliente;  // Representa o usuário do tipo cliente
 
-    /*Criei o atributo dado cobrador e dado cliente*/
+    // Relacionamento com o prestador (campo ID_USUARIO_PRESTADOR)
     @ManyToOne
-    @JoinColumn(name = "DADO_COBRADOR")
-    private Prestador dadoCobrador;
+    @JoinColumn(name = "ID_USUARIO_PRESTADOR")
+    private Usuario usuarioPrestador;
 
     @Column(name = "OBJETO_CONTRATO")
     private String objetoContrato;

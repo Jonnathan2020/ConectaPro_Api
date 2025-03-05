@@ -10,6 +10,7 @@ import java.text.DateFormat;
 import java.util.List;
 
 @Entity
+@DiscriminatorValue("PRESTADOR")
 @Getter
 @Setter
 @Table(name = "TBL_PRESTADORES")
