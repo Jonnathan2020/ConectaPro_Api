@@ -16,7 +16,7 @@ public class Contrato
     @Id
     @Column(name = "ID_CONTRATO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int idContrato;
 
     @OneToOne
     @JoinColumn(name = "ID_SOLICITACAO_SERVICO")

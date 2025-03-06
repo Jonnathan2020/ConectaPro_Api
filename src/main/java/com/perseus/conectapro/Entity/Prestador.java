@@ -4,81 +4,45 @@ import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.awt.image.BufferedImage;
-import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "TBL_PRESTADORES")
-public class Prestador
-{
+@Table(name = "TBL_PRESTADOR")
+@PrimaryKeyJoinColumn(name = "ID_USUARIO")
+public class Prestador extends Usuario{
 
-        @Id
-        @Column(name = "ID_PRESTADOR")
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private int id;
+    @ElementCollection
+    @CollectionTable(name = "HABILIDADES", joinColumns = @JoinColumn(name = "ID_PRESTADOR"))
+    @Column(name = "HABILIDADE")
+    private List<String> habilidades;
 
-        @Column(name = "CPF")
-        private String cpf;
+    @ElementCollection
+    @CollectionTable(name = "ESPECIALIDADES", joinColumns = @JoinColumn(name = "ID_PRESTADOR"))
+    @Column(name = "ESPECIALIDADE")
+    private List<String> especialidades;
 
-        @Column(name = "NOME")
-        private String nome;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS_DISPONIBILIDADE")
+    private StatusDisponibilidadeEnum statusDisponibilidade;
 
-        @Column(name = "SOBRENOME")
-        private String sobrenome;
+    @OneToMany(mappedBy = "prestador", cascade = CascadeType.ALL)
+    public List<PublicacaoServico> publicacoes;
 
-        @Column(name = "CNPJ")
-        private String cnpj;
+    @OneToOne
+    @JoinColumn(name = "ID_CONTRATO")
+    private Contrato idContrato;
 
-        @Column(name = "TELEFONE")
-        private String telefone;
+    @OneToMany(mappedBy = "TBL_PRESTADOR", cascade = CascadeType.ALL)
+    public List<Avaliacao> avaliacoes;
 
-        @OneToOne
-        @JoinColumn(name = "ID_ENDERECO")
-        private Endereco idEndereco;
+    @Column(name = "IS_PRESTADOR")
+    private boolean isPrestador;
 
-        @Column(name = "DATA_NASCIMENTO")
-        private DateFormat dataNascimento;
-
-        @Column(name = "HABILIDADE")
-         private String habilidade;
-
-        @Column(name = "ESPECIALIZACAO")
-         private String especializacao;
-
-        @Column(name = "STATUS_DISPONIBILIDADE")
-        @Enumerated(EnumType.STRING)
-        private StatusDisponibilidadeEnum statusDisponibilidade;
-
-        @OneToMany
-        @JoinColumn(name = "ID_SOLICITACAO_SERVICO")
-        private List<SolicitacaoServico> idSolicitacaoServico;
-
-        @OneToMany
-        @JoinColumn(name = "ID_SOLICITACAO_PRESTADOR")
-        private List<PublicacaoServico> idSolicitacaoPrestador;
-
-        @OneToMany
-        @JoinColumn(name = "ID_PAGAMENTO")
-        private List<Pagamento> idPagamento;
-
-        /*
-        @JoinColumn(name = "ID_FATURAMENTO")
-        private Faturamento idFaturamento;
-         */
-
-        @OneToMany
-        @JoinColumn(name = "ID_CONTRATO")
-        private List<Contrato> idContrato;
-
-        @Column(name = "FOTO")
-        private BufferedImage foto;
-
-        @OneToMany
-        @JoinColumn(name = "ID_AVALIACAO")
-        private List<Avaliacao> idAvaliacao;
-
-    }
+    /*ainda nao existe as classes!
+        private PrestadorPagamento pagamentos;
+        private PrestadorFaturamento faturamentos;
+     */
+}

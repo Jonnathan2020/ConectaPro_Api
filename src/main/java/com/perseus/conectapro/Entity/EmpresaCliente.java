@@ -11,47 +11,25 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "EMPRESA_CLIENTE")
-public class EmpresaCliente
+@Table(name = "TBL_EMPRESA_CLIENTE")
+@PrimaryKeyJoinColumn(name = "ID_USUARIO")
+public class EmpresaCliente extends Usuario
 {
-    @Id
-    @Column(name = "ID_EMPRESA_CLIENTE")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(name = "CNPJ")
-    private String cnpj;
-
     @Column(name = "RAZAO_SOCIAL")
-    private String razaoSocial;
-
-    @Column(name = "NOME_FANTASIA")
-    private String nomeFantasia;
+    public String razaoSocial;
 
     @Column(name = "SEGMENTO")
-    private String segmento;
-
-    @Column(name = "TELEFONE")
-    private String telefone;
+    public String segmento;
 
     @OneToOne
-    @JoinColumn(name = "ENDERECO_COMERCIAL")
-    private Endereco enderecoComercial;
+    @JoinColumn(name = "ID_CONTRATO")
+    private Contrato idContrato;
 
-    //Por que teria publicação do prestador na classe da empresa?
-    @JoinColumn(name = "PUBLICACAO_PRESTADOR")
-    private PublicacaoServico publicacaoPrestador;
+    @OneToMany(mappedBy = "TBL_EMPRESA_CLIENTE", cascade = CascadeType.ALL)
+    public List<Avaliacao> avaliacoes;
 
-    @OneToMany
-    @JoinColumn(name = "CONTRATO")
-    private List<Contrato> contrato;
-
-    @OneToMany
-    @Column(name = "PAGAMENTO")
-    private List<Pagamento> pagamento;
-
-    @Column(name = "FOTO")
-    private BufferedImage foto;
+    @Column(name = "IS_EMPRESA_CLIENTE")
+    private boolean isEmpresaCliente;
 
 
 }

@@ -5,16 +5,25 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
+
 @Table(name = "TBL_STATUS_DISPONIBILIDADE")
 public enum StatusDisponibilidadeEnum
-{;
-    @Id
-    @Column(name = "ID_STATUS_DISPONIBILIDADE")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+{
+    DISPONIVEL(1, "Disponível"),
+    INDISPONIVEL(2, "Indisponível"),
+    EM_ATENDIMENTO(3, "Em Atendimento");
 
-    @Column
-    private String descricao;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_STATUS_DISPONIBILIDADE")
+    public int id;
+
+    @Column(name = "desc")
+    public String descricao;
+
+    // Construtor da enumeração
+    StatusDisponibilidadeEnum(int id, String descricao) {
+        this.id = id;
+        this.descricao = descricao;
+    }
 }
