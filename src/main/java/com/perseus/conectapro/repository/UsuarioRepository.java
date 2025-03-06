@@ -1,7 +1,7 @@
-package com.perseus.conectapro.repository;
+package com.perseus.conectapro.Repository;
 
 import com.perseus.conectapro.Entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 }

@@ -1,7 +1,10 @@
-package com.perseus.conectapro.repository;
+package com.perseus.conectapro.Repository;
 
 import com.perseus.conectapro.Entity.EmpresaCliente;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface EmpresaClienteRepository extends JpaRepository<EmpresaCliente, Long> {
+@Repository
+public interface EmpresaClienteRepository extends JpaRepository<EmpresaCliente, Integer> {
+
 }
