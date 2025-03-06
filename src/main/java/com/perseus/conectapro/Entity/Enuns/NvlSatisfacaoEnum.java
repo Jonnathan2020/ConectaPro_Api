@@ -1,7 +1,8 @@
 package com.perseus.conectapro.Entity.Enuns;
 
 public enum NvlSatisfacaoEnum {
-    ALTO,
-    MEDIO,
-    BAIXO
+    MUITO_SATISFEITO,
+    SATISFEITO,
+    POUCO_SATISFEITO,
+    INSATISFEITO
 }

@@ -3,6 +3,7 @@ package com.perseus.conectapro.Entity;
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Enuns.StatusSolicitacaoEnum;
+import com.perseus.conectapro.Entity.Enuns.TipoSegmentoEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -38,7 +39,7 @@ public class SolicitacaoServico
 
     @OneToMany
     @JoinColumn(name = "CATEGORIA")
-    private List<Categoria> categoria;
+    private TipoSegmentoEnum categoria;
 
     @Column(name = "ESPECIALIDADE")
     private String especialidade;

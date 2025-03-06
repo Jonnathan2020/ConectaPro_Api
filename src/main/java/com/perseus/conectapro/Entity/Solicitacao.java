@@ -1,5 +1,6 @@
 package com.perseus.conectapro.Entity;
 
+import com.perseus.conectapro.Entity.Enuns.TipoSegmentoEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +27,7 @@ public class Solicitacao {
 
     @OneToMany
     @JoinColumn(name = "CATEGORIA")
-    private List<Categoria> categoria;
+    private List<TipoSegmentoEnum> categoria;
 
     //private NvlUrgenciaEnum nvlUrgencia; - NvlUrgenciaEnum ainda não existe
     @Column(name = "DATA_PUBLICACAO")
@@ -52,5 +53,5 @@ public class Solicitacao {
 
     @OneToMany
     @JoinColumn(name = "PESSOA")
-    private Pessoa idPessoa;
+    private Usuario idPessoa;
 }
