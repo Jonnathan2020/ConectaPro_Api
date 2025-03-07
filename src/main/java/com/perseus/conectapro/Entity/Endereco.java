@@ -1,6 +1,7 @@
 package com.perseus.conectapro.Entity;
 
 //import com.perseus.conectapro.Entity.Enuns.ufEnum;
+import com.perseus.conectapro.Entity.Enuns.UfEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,27 +9,32 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "ENDERECO")
+@Table(name = "TBL_ENDERECO")
 public class Endereco {
     @Id
     @Column(name = "ID_ENDERECO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idEndereco;
+    public int idEndereco;
 
-    @Column(name = "RUA")
-    private String rua;
+    @Column(name = "LOGRADOURO")
+    public String logradouro;
 
     @Column(name = "NUMERO")
-    private int numero;
+    public int numero;
 
-    @Column(name = "COMPLEMENTO")
-    private String complemento;
+    @Column(name = "BAIRRO")
+    public String bairro;
 
     @Column(name = "CIDADE")
-    private String cidade;
+    public String cidade;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "UF")
+    public UfEnum uf;
+
+    @Column(name = "COMPLEMENTO")
+    public String complemento;
+
+    /*Acredito que UF seria enum mas por enquanto vou deixar assim */
 }
-//    @Enumerated(EnumType.STRING)
-//    @Column(name = "UF")
-//    private Enum uf;
-//    /*Acredito que UF seria enum mas por enquanto vou deixar assim */
 

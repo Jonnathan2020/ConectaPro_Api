@@ -1,5 +1,6 @@
 package com.perseus.conectapro.Controller;
 
+import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,15 @@ public class UsuarioController {
         return usuarioService.consultarUsuarios();
     }
 
-    @GetMapping
-    public Usuario cadastrarUsuario(@RequestBody Usuario usuario){
-        return usuarioService.cadastrarUsuario(usuario);
+    //Buscar usuário por email
+    @GetMapping("/{id}")
+    public Usuario consultarUsuarioPorId(@PathVariable int id){
+        return usuarioService.consultarUsuarioPorId(id);
+    }
+
+    @GetMapping("/nome/{nome}")
+    public List<Usuario> getUsuarioByName(@PathVariable String nome){
+        return usuarioService.consultarUsuarioPorNome(nome);
     }
 
     @PutMapping
@@ -31,6 +38,11 @@ public class UsuarioController {
         }
         else
             return null;
+    }
+
+    @PostMapping("/Registro")
+    public Usuario cadastrarUsuario(@RequestBody Usuario usuario){
+        return usuarioService.cadastrarUsuario(usuario);
     }
 
     @DeleteMapping("/{id}")

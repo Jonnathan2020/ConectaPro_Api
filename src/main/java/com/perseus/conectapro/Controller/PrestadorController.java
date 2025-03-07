@@ -2,6 +2,7 @@ package com.perseus.conectapro.Controller;
 
 import com.perseus.conectapro.Entity.EmpresaCliente;
 import com.perseus.conectapro.Entity.Prestador;
+import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Service.PrestadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,11 @@ public class PrestadorController {
     }
 
     //Buscar prestador por nome
-    //////////
+    @GetMapping("/nome/{nome}")
+    public List<Prestador> getPrestadoresByName(@PathVariable String nome){
+        return prestadorService.consultarPrestadorPorNome(nome);
+    }
+
 
     //Buscar prestador por habilidade
     @GetMapping("/habilidade/{habilidade}")
@@ -50,6 +55,10 @@ public class PrestadorController {
             return null;
     }
 
+    @PostMapping("/Registro")
+    public Prestador cadastrarPrestador(@RequestBody Prestador prestador){
+        return prestadorService.cadastrarPrestador(prestador);
+    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id){

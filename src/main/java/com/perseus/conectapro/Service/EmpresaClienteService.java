@@ -10,7 +10,11 @@ import java.util.List;
 @Service
 public class EmpresaClienteService {
 
-    private EmpresaClienteRepository empresaClienteRepository;
+    public EmpresaClienteRepository empresaClienteRepository;
+
+    public List<EmpresaCliente> consultarEmpresaPorNome(String nome) {
+        return empresaClienteRepository.findByName(nome);
+    }
 
     //cadastrar as informaçoes alem do usuario, faltantes para uma empresa cliente
     public EmpresaCliente cadastrarEmpresaCliente(EmpresaCliente empresaCliente) {

@@ -1,6 +1,7 @@
 package com.perseus.conectapro.Controller;
 
 import com.perseus.conectapro.Entity.EmpresaCliente;
+import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Service.EmpresaClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,10 @@ public class EmpresaClienteController {
     }
 
     //Buscar empresa por nome
-    /////////
+    @GetMapping("/nome/{nome}")
+    public List<EmpresaCliente> getEmpresaByName(@PathVariable String nome){
+        return empresaClienteService.consultarEmpresaPorNome(nome);
+    }
 
     //Alterar informações da empresa
     @PutMapping

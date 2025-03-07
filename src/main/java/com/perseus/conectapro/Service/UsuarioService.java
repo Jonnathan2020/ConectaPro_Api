@@ -1,7 +1,11 @@
 package com.perseus.conectapro.Service;
 
+import com.perseus.conectapro.Entity.EmpresaCliente;
+import com.perseus.conectapro.Entity.Endereco;
+import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -63,5 +67,43 @@ public class UsuarioService {
 
     }
 
+    public List<Usuario> consultarUsuarioPorNome(String nome) {
+        return usuarioRepository.findByName(nome);
+    }
+
+    //consultar usuario especifico
+    public Usuario consultarUsuarioPorId(int idUsuario) {
+        Usuario usuarioEspecifico = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new IllegalArgumentException("Prestador não encontrado!!"));
+
+        return usuarioEspecifico;
+    }
+
+//    @Autowired
+//    private EnderecoRepository enderecoRepository;
+//
+//    public EmpresaCliente cadastrarCliente(EmpresaCliente cliente) {
+//        // Salvar o Cliente no banco para gerar um ID (se necessário)
+//        EmpresaCliente clienteSalvo = empresaClienteRepository.save(cliente);
+//
+//        // Criar e preencher o Endereço
+//        Endereco endereco = new Endereco();
+//        endereco.setRua(cliente.getEnderecos().get(0).getRua());  // Pegando do objeto recebido
+//        endereco.setBairro(cliente.getEnderecos().get(0).getBairro());
+//        endereco.setComplemento(cliente.getEnderecos().get(0).getComplemento());
+//        endereco.setNumero(cliente.getEnderecos().get(0).getNumero());
+//        endereco.setCidade(cliente.getEnderecos().get(0).getCidade());
+//        endereco.setEstado(cliente.getEnderecos().get(0).getEstado());
+//
+//        // Associar o endereço ao cliente
+//        endereco.setUsuario(clienteSalvo);  // Definir o cliente ao endereço
+//        enderecoRepository.save(endereco); // Salvar endereço no banco
+//
+//        // Relacionar o cliente ao endereço
+//        clienteSalvo.getEnderecos().add(endereco);
+//
+//        // Atualizar o Cliente no banco para garantir consistência
+//        return empresaClienteRepository.save(clienteSalvo);
+//    }
 
 }

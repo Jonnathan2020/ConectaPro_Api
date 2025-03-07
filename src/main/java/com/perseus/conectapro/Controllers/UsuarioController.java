@@ -1,7 +1,7 @@
 package com.perseus.conectapro.Controllers;
 
 import com.perseus.conectapro.Entity.EmpresaCliente;
-import com.perseus.conectapro.Services.UsuarioService;
+import com.perseus.conectapro.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
