@@ -51,11 +51,11 @@ public class UsuarioService {
         //alterando todos atributos da classe
         usuarioExistente.setDocumento(usuarioExistente.getDocumento());
         usuarioExistente.setNome(usuarioExistente.getNome());
-        usuarioExistente.setNomeFantasia(usuarioExistente.getNomeFantasia());
         usuarioExistente.setEmail(usuarioExistente.getEmail());
         usuarioExistente.setSenha(usuarioExistente.getSenha());
         usuarioExistente.setTelefone(usuarioExistente.getTelefone());
         usuarioExistente.setCaminhoFoto(usuarioExistente.getCaminhoFoto());
+        usuarioExistente.setTipoUsuario(usuarioExistente.getTipoUsuario());
 
         //retornou um metodo que salva as informações no banco
         return usuarioRepository.save(usuarioExistente);

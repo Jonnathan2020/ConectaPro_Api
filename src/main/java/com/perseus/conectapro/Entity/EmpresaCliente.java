@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.print.DocFlavor;
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
 import java.util.List;
@@ -12,24 +13,25 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "TBL_EMPRESA_CLIENTE")
-@PrimaryKeyJoinColumn(name = "ID_USUARIO")
 public class EmpresaCliente extends Usuario
 {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_EMPRESA_CLIENTE")
+    public int idEmpresaCliente;
+
+    @Column(name = "CNPJ")
+    public String CNPJ;
+
     @Column(name = "RAZAO_SOCIAL")
     public String razaoSocial;
 
-    @Column(name = "SEGMENTO")
-    public String segmento;
+    @Column(name = "NOME_FANTASIA")
+    public String nomeFantasia; //usuario pode escolher qual nome utilizara para o publico
 
     @OneToOne
-    @JoinColumn(name = "ID_CONTRATO")
-    private Contrato idContrato;
-
-    @OneToMany(mappedBy = "TBL_EMPRESA_CLIENTE", cascade = CascadeType.ALL)
-    public List<Avaliacao> avaliacoes;
-
-    @Column(name = "IS_EMPRESA_CLIENTE")
-    private boolean isEmpresaCliente;
+    @JoinColumn(name = "TBL_USUARIO")
+    public Usuario idUsuario;
 
 
 }

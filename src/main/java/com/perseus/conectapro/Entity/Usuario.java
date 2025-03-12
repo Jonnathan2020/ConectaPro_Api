@@ -1,6 +1,8 @@
 package com.perseus.conectapro.Entity;
 
+import com.perseus.conectapro.Entity.Enuns.tipoUsuarioEnum;
 import jakarta.persistence.*;
+import lombok.Cleanup;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,9 +23,6 @@ public class Usuario {
     @Column(name = "NOME")
     public String nome;
 
-    @Column(name = "NOME_FANTASIA")
-    public String nomeFantasia; //usuario pode escolher qual nome utilizara para o publico
-
     @Column(name = "EMAIL")
     private String email;
 
@@ -33,14 +32,13 @@ public class Usuario {
     @Column(name = "TELEFONE")
     public int telefone; //aceita somente numeros e o sistema deve fazer o ajuste do formato do numero de telefone
 
-    @JoinColumn(name = "ID_CONTRATO")
-    @OneToOne
-    private Contrato idContrato; //faz referencia ao id da classe contrato, um exemplo do pq o nome da classe é bom ser utilizado no id
-
     @JoinColumn(name = "ID_ENDERECO")
     @OneToOne
     public Endereco idEndereco;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TIPO_USUARIO")
+    public tipoUsuarioEnum tipoUsuario;
 
     public String caminhoFoto; //indica onde está armazenada a imagem dentro das pastas
 

@@ -1,5 +1,6 @@
 package com.perseus.conectapro.Entity;
 
+import com.perseus.conectapro.Entity.Enuns.Plano;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,38 +12,30 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "TBL_PRESTADOR")
-@PrimaryKeyJoinColumn(name = "ID_USUARIO")
 public class Prestador extends Usuario{
 
-    @ElementCollection
-    @CollectionTable(name = "HABILIDADES", joinColumns = @JoinColumn(name = "ID_PRESTADOR"))
-    @Column(name = "HABILIDADE")
-    private List<String> habilidades;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_PRESTADOR")
+    public int idPrestador;
+
+    @Column(name = "DESC_PRESTADOR")
+    public String descPrestador;
 
     @ElementCollection
     @CollectionTable(name = "ESPECIALIDADES", joinColumns = @JoinColumn(name = "ID_PRESTADOR"))
     @Column(name = "ESPECIALIDADE")
-    private List<String> especialidades;
+    public List<String> especialidades;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS_DISPONIBILIDADE")
-    private StatusDisponibilidadeEnum statusDisponibilidade;
+    public StatusDisponibilidadeEnum statusDisponibilidade;
 
-    @OneToMany(mappedBy = "prestador", cascade = CascadeType.ALL)
-    public List<PublicacaoServico> publicacoes;
-
+    @JoinColumn(name = "TBL_USUARIO")
     @OneToOne
-    @JoinColumn(name = "ID_CONTRATO")
-    private Contrato idContrato;
+    public Usuario idUsuario;
 
-    @OneToMany(mappedBy = "TBL_PRESTADOR", cascade = CascadeType.ALL)
-    public List<Avaliacao> avaliacoes;
-
-    @Column(name = "IS_PRESTADOR")
-    private boolean isPrestador;
-
-    /*ainda nao existe as classes!
-        private PrestadorPagamento pagamentos;
-        private PrestadorFaturamento faturamentos;
-     */
+    @JoinColumn(name = "TBL_PLANO")
+    @OneToOne
+    public Plano idPlano;
 }

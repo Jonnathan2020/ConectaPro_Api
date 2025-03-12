@@ -33,13 +33,6 @@ public class PrestadorController {
         return prestadorService.consultarPrestadorPorNome(nome);
     }
 
-
-    //Buscar prestador por habilidade
-    @GetMapping("/habilidade/{habilidade}")
-    public List<Prestador> getPrestadoresByHabilidade(@PathVariable String habilidade) {
-        return prestadorService.consultarPrestadorPorHabilidade(habilidade);
-    }
-
     //Buscar prestador por especialidade
     @GetMapping("/especialidade/{especialidade}")
     public List<Prestador> getPrestadoresByEspecialidade(@PathVariable String especialidade) {
@@ -48,8 +41,8 @@ public class PrestadorController {
 
     @PutMapping
     public Prestador alterarPrestador(@RequestBody Prestador prestador, @PathVariable("id") int id){
-        if (id == prestador.getIdUsuario()){
-            return prestadorService.alterarPrestador(prestador.getIdUsuario());
+        if (id == prestador.getIdPrestador()){
+            return prestadorService.alterarPrestador(prestador.getIdPrestador());
         }
         else
             return null;
