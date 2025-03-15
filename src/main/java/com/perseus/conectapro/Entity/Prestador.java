@@ -11,19 +11,12 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "TBL_PRESTADOR")
-public class Prestador extends Usuario{
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_PRESTADOR")
-    public int idPrestador;
-
+public class Prestador extends Usuario {
     @Column(name = "DESC_PRESTADOR")
     public String descPrestador;
 
     @ElementCollection
-    @CollectionTable(name = "ESPECIALIDADES", joinColumns = @JoinColumn(name = "ID_PRESTADOR"))
+    @CollectionTable(name = "ESPECIALIDADES", joinColumns = @JoinColumn(name = "ID_USUARIO"))
     @Column(name = "ESPECIALIDADE")
     public List<String> especialidades;
 
@@ -31,11 +24,8 @@ public class Prestador extends Usuario{
     @Column(name = "STATUS_DISPONIBILIDADE")
     public StatusDisponibilidadeEnum statusDisponibilidade;
 
-    @JoinColumn(name = "TBL_USUARIO")
-    @OneToOne
-    public Usuario idUsuario;
-
-    @JoinColumn(name = "TBL_PLANO")
-    @OneToOne
-    public Plano idPlano;
+    @Enumerated(EnumType.STRING) // Armazena o valor como string no banco
+    @Column(name = "PLANO")
+    public Plano plano;
 }
+

@@ -12,7 +12,7 @@ public class EmpresaClienteService {
     public EmpresaClienteRepository empresaClienteRepository;
 
     public List<EmpresaCliente> consultarEmpresaPorNome(String nome) {
-        return empresaClienteRepository.findByName(nome);
+        return empresaClienteRepository.findByNome(nome);
     }
 
     //cadastrar as informaçoes alem do usuario, faltantes para uma empresa cliente

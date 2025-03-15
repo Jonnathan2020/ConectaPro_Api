@@ -18,7 +18,7 @@ public enum StatusDisponibilidadeEnum
     @Column(name = "ID_STATUS_DISPONIBILIDADE")
     public int id;
 
-    @Column(name = "desc")
+    @Column(name = "DESCRICAO_STATUS_DISPONIBILIDADE")
     public String descricao;
 
     // Construtor da enumeração

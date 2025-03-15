@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 @RequestMapping("/prestador")
 public class PrestadorController {
 
@@ -41,8 +42,8 @@ public class PrestadorController {
 
     @PutMapping
     public Prestador alterarPrestador(@RequestBody Prestador prestador, @PathVariable("id") int id){
-        if (id == prestador.getIdPrestador()){
-            return prestadorService.alterarPrestador(prestador.getIdPrestador());
+        if (id == prestador.getIdUsuario()){
+            return prestadorService.alterarPrestador(prestador.getIdUsuario());
         }
         else
             return null;

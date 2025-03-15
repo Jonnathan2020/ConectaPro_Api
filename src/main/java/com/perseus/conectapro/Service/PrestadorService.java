@@ -38,7 +38,7 @@ public class PrestadorService {
 
     //consultar pelo nome
     public List<Prestador> consultarPrestadorPorNome(String nome){
-        return prestadorRepository.findByName(nome);
+        return prestadorRepository.findByNome(nome);
     }
 
     //consultar pela especialidade

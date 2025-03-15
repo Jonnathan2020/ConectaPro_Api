@@ -16,7 +16,8 @@ import java.util.List;
 @Service
 public class UsuarioService {
 
-    private UsuarioRepository usuarioRepository;           //dependencia do repository que faz conexao com o banco
+    @Autowired
+    private UsuarioRepository usuarioRepository;          //dependencia do repository que faz conexao com o banco
 
     //consultar usuarios
     public List<Usuario> consultarUsuarios(){
@@ -36,12 +37,12 @@ public class UsuarioService {
 
     //cadastro do usuario com metodo jpa
     public Usuario cadastrarUsuario(Usuario usuario){
+        /*
         if (!isEmailValido(usuario.getEmail())) {
             System.out.println("Erro: E-mail inválido.");
-            return usuarioRepository.save(usuario);                ////chama o metodo da biblioteca jparepository pre-definido pela framework
         }
-
-        return usuario;
+         */
+        return usuarioRepository.save(usuario);                ////chama o metodo da biblioteca jparepository pre-definido pela framework
     }
 
     //alterar informaçoes do usuario
@@ -68,7 +69,7 @@ public class UsuarioService {
     }
 
     public List<Usuario> consultarUsuarioPorNome(String nome) {
-        return usuarioRepository.findByName(nome);
+        return usuarioRepository.findByNome(nome);
     }
 
     //consultar usuario especifico

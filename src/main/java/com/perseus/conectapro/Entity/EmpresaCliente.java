@@ -12,13 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "TBL_EMPRESA_CLIENTE")
-public class EmpresaCliente extends Usuario
-{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_EMPRESA_CLIENTE")
-    public int idEmpresaCliente;
+public class EmpresaCliente extends Usuario {
 
     @Column(name = "CNPJ")
     public String CNPJ;
@@ -27,11 +21,6 @@ public class EmpresaCliente extends Usuario
     public String razaoSocial;
 
     @Column(name = "NOME_FANTASIA")
-    public String nomeFantasia; //usuario pode escolher qual nome utilizara para o publico
-
-    @OneToOne
-    @JoinColumn(name = "TBL_USUARIO")
-    public Usuario idUsuario;
-
-
+    public String nomeFantasia;
 }
+

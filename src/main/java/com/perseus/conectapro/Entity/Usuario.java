@@ -9,16 +9,16 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "TBL_USUARIO") //classe mae para as classes prestador e empresa/cliemte
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "TBL_USUARIO")
 public class Usuario {
-
     @Id
-    @Column(name = "ID_USUARIO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idUsuario; //nomeado como o id + nome classe para diferenciar na hora de produzir
+    @Column(name = "ID_USUARIO")
+    private int idUsuario;
 
     @Column(name = "DOCUMENTO")
-    private String documento; //entra como cpf ou cnpj dependendo do regime de trabalho do usuario
+    private String documento;
 
     @Column(name = "NOME")
     public String nome;
@@ -27,10 +27,10 @@ public class Usuario {
     private String email;
 
     @Column(name = "SENHA")
-    private String senha; // primeiro assume string e no metodo deve ser criptografada
+    private String senha;
 
     @Column(name = "TELEFONE")
-    public int telefone; //aceita somente numeros e o sistema deve fazer o ajuste do formato do numero de telefone
+    public Long telefone;
 
     @JoinColumn(name = "ID_ENDERECO")
     @OneToOne
@@ -40,7 +40,5 @@ public class Usuario {
     @Column(name = "TIPO_USUARIO")
     public tipoUsuarioEnum tipoUsuario;
 
-    public String caminhoFoto; //indica onde está armazenada a imagem dentro das pastas
-
-
+    public String caminhoFoto;
 }

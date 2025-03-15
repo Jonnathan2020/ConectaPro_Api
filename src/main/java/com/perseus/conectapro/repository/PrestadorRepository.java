@@ -8,7 +8,11 @@ import java.util.List;
 
 public interface PrestadorRepository extends JpaRepository<Prestador, Integer> {
 
-    List<Prestador> findByHabilidadesContaining(String habilidade);
     List<Prestador> findByEspecialidadesContaining(String especialidade);
+    List<Prestador> findByNome(String nome);
 
+
+    /*
+    List<Prestador> findByHabilidadesContaining(String habilidade);
+     */
 }

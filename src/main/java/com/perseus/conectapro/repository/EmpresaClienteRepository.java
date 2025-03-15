@@ -7,6 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface EmpresaClienteRepository extends JpaRepository<EmpresaCliente, Integer> {
-    List<EmpresaCliente> findBySegmentoContaining(String segmento);
 
+    List<EmpresaCliente> findByNome(String nome);
+
+    /*
+    List<EmpresaCliente> findBySegmentoContaining(String segmento);
+     */
 }
