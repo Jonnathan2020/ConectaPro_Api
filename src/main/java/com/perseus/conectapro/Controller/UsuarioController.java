@@ -32,7 +32,7 @@ public class UsuarioController {
         return usuarioService.consultarUsuarioPorNome(nome);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public Usuario alterarUsuario(@RequestBody Usuario usuario, @PathVariable("id") int id){
         if(id == usuario.getIdUsuario()){
             return usuarioService.alterarUsuario(usuario.getIdUsuario());

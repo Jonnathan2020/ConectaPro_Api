@@ -18,11 +18,9 @@ public class Avaliacao {
     @Column(name = "DESCRICAO")
     private String descricao;
 
-    /*
     @OneToOne
-    @JoinColumn(name = "ID_SOLICITACAO_SERVICO")
-    private SolicitacaoServico solicitacaoServico;
-     */
+    @JoinColumn(name = "ID_SERVICO")
+    public Servico idServico;
 
     @ManyToOne
     @JoinColumn(name = "ID_EMPRESA_CLIENTE")

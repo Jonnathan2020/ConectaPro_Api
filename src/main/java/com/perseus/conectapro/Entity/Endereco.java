@@ -32,9 +32,10 @@ public class Endereco {
     @Column(name = "UF")
     public UfEnum uf;
 
+    @Column(name = "CEP")
+    public int CEP;
+
     @Column(name = "COMPLEMENTO")
     public String complemento;
-
-    /*Acredito que UF seria enum mas por enquanto vou deixar assim */
 }
 

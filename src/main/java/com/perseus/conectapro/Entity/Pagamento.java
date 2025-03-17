@@ -16,45 +16,21 @@ public class Pagamento
     @Id
     @Column(name = "ID_PAGAMENTO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    public int idPagamento;
 
-    /*IDs compartilhados significam que tanto a Empresa quanto
-     o Prestador usam o mesmo ID da classe Usuario, já que
-     ambos herdam dessa classe. Quando você registra um
-     Pagamento, o campo id_usuario pode ser o ID de uma
-     Empresa ou de um Prestador, mas o valor do ID será
-     o mesmo para ambos. A tabela Pagamento armazena
-     esse ID compartilhado, independentemente do tipo
-     de usuário. Isso permite que tanto empresas quanto
-     prestadores possam estar associados ao pagamento com
-     o mesmo ID. Ou seja, o pagamento pode se referir a
-     diferentes tipos de usuários usando o mesmo campo de ID.*/
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
+    @OneToOne
+    @JoinColumn(name = "ID_SERVICO")
+    public Servico idServico;
 
-    @Column(name = "DESCRICAO")
-    private String descricao;
+    @Column(name = "VALOR_PAGAMENTO")
+    public float valorPagamento;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "FORMATO_PAGTO")
-    private FormaPagtoEnum formaPagto;
+    @Column(name = "VALOR_PLATAFORMA")
+    public float valorPlataforma;
 
-    @Column(name = "VALOR_TOTAL")
-    private Double valorTotal;
+    @Column(name = "VALOR_PRESTADOR")
+    public float valorPrestador;
 
-    @Column(name = "VALOR_PAGTO")
-    private Double valorPagto;
-
-    @Column(name = "DATA_PAGTO")
-    private DateFormat dataPagto;
-
-    @Column(name = "DATA_VENC")
-    private DateFormat dataVenc;
-
-    @Column(name = "COMPROVANTE")
-    private String comprovante;
-    
-
-
+    @Column(name = "SITUACAO_REPASSE")
+    public String situacaoRepasse;
 }

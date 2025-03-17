@@ -8,6 +8,7 @@ import javax.print.DocFlavor;
 import java.awt.image.BufferedImage;
 import java.text.DateFormat;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -22,5 +23,7 @@ public class EmpresaCliente extends Usuario {
 
     @Column(name = "NOME_FANTASIA")
     public String nomeFantasia;
-}
+
+    @OneToMany(mappedBy = "idEmpresaCliente")
+    private List<Servico> servicos;}
 

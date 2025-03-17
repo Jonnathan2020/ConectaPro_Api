@@ -37,11 +37,10 @@ public class UsuarioService {
 
     //cadastro do usuario com metodo jpa
     public Usuario cadastrarUsuario(Usuario usuario){
-        /*
+
         if (!isEmailValido(usuario.getEmail())) {
             System.out.println("Erro: E-mail inválido.");
         }
-         */
         return usuarioRepository.save(usuario);                ////chama o metodo da biblioteca jparepository pre-definido pela framework
     }
 
@@ -79,32 +78,4 @@ public class UsuarioService {
 
         return usuarioEspecifico;
     }
-
-//    @Autowired
-//    private EnderecoRepository enderecoRepository;
-//
-//    public EmpresaCliente cadastrarCliente(EmpresaCliente cliente) {
-//        // Salvar o Cliente no banco para gerar um ID (se necessário)
-//        EmpresaCliente clienteSalvo = empresaClienteRepository.save(cliente);
-//
-//        // Criar e preencher o Endereço
-//        Endereco endereco = new Endereco();
-//        endereco.setRua(cliente.getEnderecos().get(0).getRua());  // Pegando do objeto recebido
-//        endereco.setBairro(cliente.getEnderecos().get(0).getBairro());
-//        endereco.setComplemento(cliente.getEnderecos().get(0).getComplemento());
-//        endereco.setNumero(cliente.getEnderecos().get(0).getNumero());
-//        endereco.setCidade(cliente.getEnderecos().get(0).getCidade());
-//        endereco.setEstado(cliente.getEnderecos().get(0).getEstado());
-//
-//        // Associar o endereço ao cliente
-//        endereco.setUsuario(clienteSalvo);  // Definir o cliente ao endereço
-//        enderecoRepository.save(endereco); // Salvar endereço no banco
-//
-//        // Relacionar o cliente ao endereço
-//        clienteSalvo.getEnderecos().add(endereco);
-//
-//        // Atualizar o Cliente no banco para garantir consistência
-//        return empresaClienteRepository.save(clienteSalvo);
-//    }
-
 }
