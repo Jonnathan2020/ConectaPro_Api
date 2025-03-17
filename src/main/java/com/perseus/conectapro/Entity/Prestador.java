@@ -1,6 +1,5 @@
 package com.perseus.conectapro.Entity;
 
-import com.perseus.conectapro.Entity.Enuns.Plano;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -24,8 +23,12 @@ public class Prestador extends Usuario {
     @Column(name = "STATUS_DISPONIBILIDADE")
     public StatusDisponibilidadeEnum statusDisponibilidade;
 
-    @Enumerated(EnumType.STRING) // Armazena o valor como string no banco
-    @Column(name = "PLANO")
-    public Plano plano;
+    @JoinColumn(name = "ID_PLANO")
+    @OneToOne
+    public Plano idPlano;
+
+
+    @OneToMany(mappedBy = "prestador")
+    private List<Servico> servicos;
 }
 

@@ -22,5 +22,8 @@ public class EmpresaCliente extends Usuario {
 
     @Column(name = "NOME_FANTASIA")
     public String nomeFantasia;
+
+    @OneToMany(mappedBy = "prestador")
+    private List<Servico> servicos;
 }
 
