@@ -6,21 +6,21 @@ import jakarta.persistence.*;
 @Table(name = "TBL_SITUACAO_SERVICO")
 public enum SituacaoServicoEnum
 {
-    ORCAMENTO("O", "ORÇAMENTO"),
-    APROVADO("A", "APROVADO"),
-    AGENDADO("G", "AGENDADO"),
-    CANCELADO("C", "CANCELADO"),
-    FINALIZADO("F", "FINALIZADO");
+    ORCAMENTO(1, "ORÇAMENTO"),
+    APROVADO(2, "APROVADO"),
+    AGENDADO(3, "AGENDADO"),
+    CANCELADO(4, "CANCELADO"),
+    FINALIZADO(5, "FINALIZADO");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_SITUACAO_SERVICO")
-    public String id;
+    public int id;
 
     @Column(name = "DESC_SITUACAO_SERVICO")
     public String descSituacaoServico;
 
-    SituacaoServicoEnum(String id, String descSituacaoServico) {
+    SituacaoServicoEnum(int id, String descSituacaoServico) {
         this.id = id;
         this.descSituacaoServico = descSituacaoServico;
     }

@@ -21,7 +21,7 @@ public class UsuarioController {
         return usuarioService.consultarUsuarios();
     }
 
-    //Buscar usuário por email
+    //Buscar usuário por id
     @GetMapping("/{id}")
     public Usuario consultarUsuarioPorId(@PathVariable int id){
         return usuarioService.consultarUsuarioPorId(id);
