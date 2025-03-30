@@ -19,8 +19,8 @@ public class Plano {
     private String descPlano; // descricao ou nome do plano
 
     @Column(name = "VALOR_FIXO_PLANO")
-    private float valorFixoPlano; //valor fixo do plano
+    private Float valorFixoPlano; //valor fixo do plano
 
     @Column(name = "PERCENTUAL_PLANO")
-    private float percentualPlano; //percentual sobre valor de comissionamento do plano
+    private Float percentualPlano; //percentual sobre valor de comissionamento do plano
 }

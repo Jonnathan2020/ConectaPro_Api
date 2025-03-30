@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class ServicoUpdateDTO {
 
     private SituacaoServicoEnum idSituacaoServico;
-    private double valorContratacao;
+    private Float valorContratacao;
     private LocalDateTime dataAprovacao;
     private LocalDateTime dataExecucao;
     private LocalDateTime dataPagamento;

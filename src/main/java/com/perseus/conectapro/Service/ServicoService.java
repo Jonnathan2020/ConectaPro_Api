@@ -30,7 +30,7 @@ public class ServicoService {
                 .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado!!"));
 
         if(servicoUpdateDTO.getIdSituacaoServico() != null){
-            servicoExistente.setIdSituacaoServico(servicoUpdateDTO.getIdSituacaoServico());
+            servicoExistente.setSituacaoServico(servicoUpdateDTO.getIdSituacaoServico());
         }
         if(servicoUpdateDTO.getDataInclusao() != null){
             servicoExistente.setDataInclusao(servicoUpdateDTO.getDataInclusao());

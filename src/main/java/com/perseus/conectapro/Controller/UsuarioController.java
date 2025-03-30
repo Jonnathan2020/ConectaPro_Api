@@ -30,11 +30,13 @@ public class UsuarioController {
         return usuarioService.consultarUsuarioPorId(id);
     }
 
+    //Buscar usuário pelo nome
     @GetMapping("/nome/{nome}")
     public List<Usuario> getUsuarioByName(@PathVariable String nome){
         return usuarioService.consultarUsuarioPorNome(nome);
     }
 
+    //Alterar usuário
     @PutMapping("/{id}")
     public Usuario alterarUsuario(@RequestBody UsuarioUpdateDTO usuarioUpdateDTO, @PathVariable("id") int id){
         if(id == usuarioUpdateDTO.getIdUsuario()){
@@ -44,6 +46,7 @@ public class UsuarioController {
             return null;
     }
 
+    //Cadastrar usuário
     @PostMapping("/registro")
     public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody UsuarioCreateDTO usuarioCreateDTO) {
         Usuario usuarioCriado = usuarioService.cadastrarUsuario(usuarioCreateDTO);

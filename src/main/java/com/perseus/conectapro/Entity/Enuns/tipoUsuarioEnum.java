@@ -9,13 +9,8 @@ public enum tipoUsuarioEnum {
     PRESTADOR(1, "Prestador"),
     CLIENTE(2, "Cliente");
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_TIPO_USUARIO")
-    public int id;
-
-    @Column(name = "DESC_TIPO_USUARIO")
-    public String descricao;
+    private final int id;
+    private final String descricao;
 
     // Construtor da enumeração
     tipoUsuarioEnum(int id, String descricao) {
@@ -23,5 +18,12 @@ public enum tipoUsuarioEnum {
         this.descricao = descricao;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public String getDescricao() {
+        return descricao;
+    }
 }
+

@@ -33,7 +33,7 @@ public class Servico {
     private EmpresaCliente idEmpresaCliente;
 
     @Column(name = "VALOR_CONTRATACAO")
-    private double valorContratacao;
+    private Float valorContratacao;
 
     @Column(name = "DATA_INCLUSAO")
     private LocalDateTime dataInclusao;
@@ -48,6 +48,6 @@ public class Servico {
     private LocalDateTime dataPagamento;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "ID_SITUACAO_SERVICO")
-    private SituacaoServicoEnum idSituacaoServico;
+    @Column(name = "SITUACAO_SERVICO")
+    private SituacaoServicoEnum situacaoServico;
 }

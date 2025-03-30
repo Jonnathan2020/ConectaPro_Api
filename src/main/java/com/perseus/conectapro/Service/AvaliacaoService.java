@@ -17,7 +17,7 @@ public class AvaliacaoService {
     //Cadastrar avaliação
     public Avaliacao cadastrarAvaliacao(Avaliacao avaliacao) { return avaliacaoRepository.save(avaliacao); }
 
-    //Consultar avaliação
+    //Consultar avaliações
     public List<Avaliacao> listarAvaliacoes() {
         return avaliacaoRepository.findAll();
     }
