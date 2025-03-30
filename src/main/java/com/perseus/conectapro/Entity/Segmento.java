@@ -13,10 +13,10 @@ public class Segmento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_SEGMENTO")
-    public int idSegmento;
+    private int idSegmento;
 
     @Column(name = "DESC_SEGMENTO")
-    public String descSegmento;
+    private String descSegmento;
 
 
 }

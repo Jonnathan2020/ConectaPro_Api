@@ -1,9 +1,10 @@
 package com.perseus.conectapro.Service;
 
-import com.perseus.conectapro.Entity.EmpresaCliente;
+import com.perseus.conectapro.DTO.UsuarioCreateDTO;
+import com.perseus.conectapro.DTO.UsuarioUpdateDTO;
 import com.perseus.conectapro.Entity.Endereco;
-import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Entity.Usuario;
+import com.perseus.conectapro.Repository.EnderecoRepository;
 import com.perseus.conectapro.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;          //dependencia do repository que faz conexao com o banco
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     //consultar usuarios
     public List<Usuario> consultarUsuarios(){
@@ -35,27 +38,61 @@ public class UsuarioService {
         return matcher.matches();
     }
 
-    //cadastro do usuario com metodo jpa
-    public Usuario cadastrarUsuario(Usuario usuario){
+    public Usuario cadastrarUsuario(UsuarioCreateDTO usuarioCreateDTO) {
+        // Criação do usuário
+        Usuario usuario = new Usuario();
+        usuario.setDocumento(usuarioCreateDTO.getDocumento());
+        usuario.setNome(usuarioCreateDTO.getNome());
+        usuario.setEmail(usuarioCreateDTO.getEmail());
+        usuario.setSenha(usuarioCreateDTO.getSenha());
+        usuario.setTelefone(usuarioCreateDTO.getTelefone());
+        usuario.setTipoUsuario(usuarioCreateDTO.getTipoUsuario());
+        usuario.setCaminhoFoto(usuarioCreateDTO.getCaminhoFoto());
 
-        if (!isEmailValido(usuario.getEmail())) {
-            System.out.println("Erro: E-mail inválido.");
-        }
-        return usuarioRepository.save(usuario);                ////chama o metodo da biblioteca jparepository pre-definido pela framework
+        // Criação do endereço com base nos dados do DTO
+        Endereco endereco = new Endereco();
+        endereco.setLogradouro(usuarioCreateDTO.getLogradouro());
+        endereco.setNumero(usuarioCreateDTO.getNumero());
+        endereco.setBairro(usuarioCreateDTO.getBairro());
+        endereco.setCidade(usuarioCreateDTO.getCidade());
+        endereco.setUf(usuarioCreateDTO.getUf());
+        endereco.setCEP(usuarioCreateDTO.getCep());
+        endereco.setComplemento(usuarioCreateDTO.getComplemento());
+
+        // Salva o novo endereço no banco
+        endereco = enderecoRepository.save(endereco);
+
+        // Associa o endereço ao usuário
+        usuario.setEndereco(endereco);
+
+        // Salva o novo usuário no banco de dados
+        return usuarioRepository.save(usuario);
     }
 
-    //alterar informaçoes do usuario
-    public Usuario alterarUsuario(int idUsuario){
-        Usuario usuarioExistente = usuarioRepository.findById(idUsuario).orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado!!"));
 
-        //alterando todos atributos da classe
-        usuarioExistente.setDocumento(usuarioExistente.getDocumento());
-        usuarioExistente.setNome(usuarioExistente.getNome());
-        usuarioExistente.setEmail(usuarioExistente.getEmail());
-        usuarioExistente.setSenha(usuarioExistente.getSenha());
-        usuarioExistente.setTelefone(usuarioExistente.getTelefone());
-        usuarioExistente.setCaminhoFoto(usuarioExistente.getCaminhoFoto());
-        usuarioExistente.setTipoUsuario(usuarioExistente.getTipoUsuario());
+    //alterar informaçoes do usuario
+    public Usuario alterarUsuario(int idUsuario, UsuarioUpdateDTO usuarioUpdateDTO){
+        Usuario usuarioExistente = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado!!"));
+
+        if(usuarioUpdateDTO.getDocumento() != null){
+            usuarioExistente.setDocumento(usuarioUpdateDTO.getDocumento());
+        }
+        if(usuarioUpdateDTO.getNome() != null){
+            usuarioExistente.setNome(usuarioUpdateDTO.getNome());
+        }
+        if(usuarioUpdateDTO.getSenha() != null){
+            usuarioExistente.setSenha(usuarioUpdateDTO.getSenha());
+        }
+        if(usuarioUpdateDTO.getTelefone() != null){
+            usuarioExistente.setTelefone(usuarioUpdateDTO.getTelefone());
+        }
+        if(usuarioUpdateDTO.getCaminhoFoto() != null){
+            usuarioExistente.setCaminhoFoto(usuarioUpdateDTO.getCaminhoFoto());
+        }
+        if(usuarioUpdateDTO.getTipoUsuario() != null){
+            usuarioExistente.setTipoUsuario(usuarioUpdateDTO.getTipoUsuario());
+        }
 
         //retornou um metodo que salva as informações no banco
         return usuarioRepository.save(usuarioExistente);

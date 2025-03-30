@@ -15,22 +15,22 @@ public class Orcamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_ORCAMENTO")
-    public int idOrcamento;
+    private int idOrcamento;
 
     @OneToOne
     @JoinColumn(name = "ID_SERVICO")
-    public Servico idServico;
+    private Servico idServico;
 
     @OneToOne
     @JoinColumn(name = "ID_PRESTADOR")
-    public Prestador idPrestador;
+    private Prestador idPrestador;
 
     @Column(name = "VALOR_ORCAMENTO")
-    public float valorOrcamento;
+    private float valorOrcamento;
 
     @Column(name = "PREVISAO_INICIO")
-    public LocalDateTime previsaoInicio;
+    private LocalDateTime previsaoInicio;
 
     @Column(name = "DURACAO_SERVICO")
-    public int duracaoServico;
+    private int duracaoServico;
 }

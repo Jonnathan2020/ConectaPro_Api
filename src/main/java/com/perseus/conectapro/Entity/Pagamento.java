@@ -16,21 +16,21 @@ public class Pagamento
     @Id
     @Column(name = "ID_PAGAMENTO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int idPagamento;
+    private int idPagamento;
 
     @OneToOne
     @JoinColumn(name = "ID_SERVICO")
-    public Servico idServico;
+    private Servico idServico;
 
     @Column(name = "VALOR_PAGAMENTO")
-    public float valorPagamento;
+    private float valorPagamento;
 
     @Column(name = "VALOR_PLATAFORMA")
-    public float valorPlataforma;
+    private float valorPlataforma;
 
     @Column(name = "VALOR_PRESTADOR")
-    public float valorPrestador;
+    private float valorPrestador;
 
     @Column(name = "SITUACAO_REPASSE")
-    public String situacaoRepasse;
+    private String situacaoRepasse;
 }

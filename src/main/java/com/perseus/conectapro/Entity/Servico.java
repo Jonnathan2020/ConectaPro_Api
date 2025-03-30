@@ -18,36 +18,36 @@ public class Servico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_SERVICO")
-    public int idServico;
+    private int idServico;
 
     @ManyToOne
     @JoinColumn(name = "ID_PRESTADOR")
-    public Prestador idPrestador;
+    private Prestador idPrestador;
 
     @OneToOne
     @JoinColumn(name = "ID_SEGMENTO")
-    public Segmento idSegmento;
+    private Segmento idSegmento;
 
     @ManyToOne
     @JoinColumn(name = "ID_EMPRESA_CLIENTE")
-    public EmpresaCliente idEmpresaCliente;
+    private EmpresaCliente idEmpresaCliente;
 
     @Column(name = "VALOR_CONTRATACAO")
-    public float valorContratacao;
+    private double valorContratacao;
 
     @Column(name = "DATA_INCLUSAO")
-    public LocalDateTime dataInclusao;
+    private LocalDateTime dataInclusao;
 
     @Column(name = "DATA_APROVACAO")
-    public LocalDateTime dataAprovacao;
+    private LocalDateTime dataAprovacao;
 
     @Column(name = "DATA_EXECUCAO")
-    public LocalDateTime dataExecucao;
+    private LocalDateTime dataExecucao;
 
     @Column(name = "DATA_PAGAMENTO")
-    public LocalDateTime dataPagamento;
+    private LocalDateTime dataPagamento;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ID_SITUACAO_SERVICO")
-    public SituacaoServicoEnum idSituacaoServico;
+    private SituacaoServicoEnum idSituacaoServico;
 }

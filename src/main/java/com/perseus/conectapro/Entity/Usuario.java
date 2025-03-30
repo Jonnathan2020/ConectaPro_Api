@@ -12,6 +12,7 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "TBL_USUARIO")
 public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_USUARIO")
@@ -21,7 +22,7 @@ public class Usuario {
     private String documento;
 
     @Column(name = "NOME")
-    public String nome;
+    private String nome;
 
     @Column(name = "EMAIL")
     private String email;
@@ -30,17 +31,17 @@ public class Usuario {
     private String senha;
 
     @Column(name = "TELEFONE")
-    public Long telefone;
+    private Long telefone;
 
     @JoinColumn(name = "ID_ENDERECO")
     @OneToOne
-    public Endereco idEndereco;
+    private Endereco endereco;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TIPO_USUARIO")
-    public tipoUsuarioEnum tipoUsuario;
+    private tipoUsuarioEnum tipoUsuario;
 
-    public String caminhoFoto;
+    private String caminhoFoto;
 
     /*IDs compartilhados significam que tanto a Empresa quanto
      o Prestador usam o mesmo ID da classe Usuario, já que

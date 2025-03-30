@@ -20,7 +20,7 @@ public class Avaliacao {
 
     @OneToOne
     @JoinColumn(name = "ID_SERVICO")
-    public Servico idServico;
+    private Servico idServico;
 
     @ManyToOne
     @JoinColumn(name = "ID_EMPRESA_CLIENTE")

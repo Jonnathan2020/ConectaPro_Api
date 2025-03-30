@@ -1,10 +1,15 @@
 package com.perseus.conectapro.Controller;
 
+import com.perseus.conectapro.DTO.PrestadorCreateDTO;
+import com.perseus.conectapro.DTO.PrestadorUpdateDTO;
 import com.perseus.conectapro.Entity.EmpresaCliente;
 import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Service.PrestadorService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,18 +45,15 @@ public class PrestadorController {
         return prestadorService.consultarPrestadorPorEspecialidade(especialidade);
     }
 
-    @PutMapping
-    public Prestador alterarPrestador(@RequestBody Prestador prestador, @PathVariable("id") int id){
-        if (id == prestador.getIdUsuario()){
-            return prestadorService.alterarPrestador(prestador.getIdUsuario());
-        }
-        else
-            return null;
+    @PutMapping("{id}")
+    public Prestador alterarPrestador(@RequestBody PrestadorUpdateDTO prestadorUpdateDTO, @PathVariable("id") int id){
+            return prestadorService.alterarPrestador(id, prestadorUpdateDTO);
     }
 
-    @PostMapping("/Registro")
-    public Prestador cadastrarPrestador(@RequestBody Prestador prestador){
-        return prestadorService.cadastrarPrestador(prestador);
+    @PostMapping("/registro")
+    public ResponseEntity<Prestador> cadastrarPrestador(@RequestBody PrestadorCreateDTO prestador){
+        Prestador prestadorCriado = prestadorService.cadastrarPrestador(prestador);
+        return ResponseEntity.status(HttpStatus.CREATED).body(prestadorCriado);
     }
 
     @DeleteMapping("/{id}")

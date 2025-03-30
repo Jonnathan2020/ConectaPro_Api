@@ -1,26 +1,39 @@
 package com.perseus.conectapro.Service;
 
+import com.perseus.conectapro.DTO.PrestadorCreateDTO;
+import com.perseus.conectapro.DTO.PrestadorUpdateDTO;
 import com.perseus.conectapro.Entity.Prestador;
+import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.AvaliacaoRepository;
 import com.perseus.conectapro.Repository.PrestadorRepository;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class PrestadorService {
 
-
+    @Autowired
     private PrestadorRepository prestadorRepository;
-
+    @Autowired
     private AvaliacaoRepository avaliacaoRepository;
 
     //cadastrar as informaçoes alem do usuario, faltantes para um prestador
-    public Prestador cadastrarPrestador(Prestador prestador) {
-            return prestadorRepository.save(prestador);
+    public Prestador cadastrarPrestador(PrestadorCreateDTO prestadorDTO) {
+        Prestador prestador = new Prestador();
+        prestador.setDocumento(prestadorDTO.getDocumento());
+        prestador.setNome(prestadorDTO.getNome());
+        prestador.setEmail(prestadorDTO.getEmail());
+        prestador.setSenha(prestadorDTO.getSenha());
+        prestador.setTelefone(prestadorDTO.getTelefone());
+        prestador.setTipoUsuario(prestadorDTO.getTipoUsuario());
+        prestador.setCaminhoFoto(prestadorDTO.getCaminhoFoto());
+
+        prestador.setDescPrestador(prestadorDTO.getDescPrestador());
+        prestador.setEspecialidades(prestadorDTO.getEspecialidades());
+        prestador.setStatusDisponibilidade(prestadorDTO.getStatusDisponibilidade());
+
+        return prestadorRepository.save(prestador);
     }
 
     //consultar somente prestadores de servico
@@ -47,16 +60,20 @@ public class PrestadorService {
     }
 
     //alterar informaçoes somente do prestador
-    public Prestador alterarPrestador(int idUsuario) {
-        Prestador prestadorExistente = prestadorRepository.findById(idUsuario).orElseThrow(() -> new IllegalArgumentException("Prestador não encontrado!!"));
+    public Prestador alterarPrestador(int idUsuario, PrestadorUpdateDTO prestadorUpdateDTO) {
+        Prestador prestadorExistente = prestadorRepository.findById(idUsuario)
+                .orElseThrow(() -> new IllegalArgumentException("Prestador não encontrado!!"));
 
-        //alterando todos atributos da classe
-        prestadorExistente.setNome(prestadorExistente.getNome());
-        prestadorExistente.setEmail(prestadorExistente.getEmail());
-        prestadorExistente.setTelefone(prestadorExistente.getTelefone());
-        prestadorExistente.setDescPrestador(prestadorExistente.getDescPrestador());
-        prestadorExistente.setEspecialidades(prestadorExistente.getEspecialidades());
-        prestadorExistente.setStatusDisponibilidade(prestadorExistente.getStatusDisponibilidade());
+
+        if (prestadorUpdateDTO.getDescPrestador() != null){
+            prestadorExistente.setDescPrestador(prestadorUpdateDTO.getDescPrestador());
+        }
+        if (prestadorUpdateDTO.getEspecialidades() != null){
+            prestadorExistente.setEspecialidades(prestadorUpdateDTO.getEspecialidades());
+        }
+        if (prestadorUpdateDTO.getStatusDisponibilidade() != null){
+            prestadorExistente.setStatusDisponibilidade(prestadorUpdateDTO.getStatusDisponibilidade());
+        }
 
         //metodo que salva as informaçoes do prestador
         return prestadorRepository.save(prestadorExistente);

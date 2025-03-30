@@ -13,10 +13,10 @@ public class SegmentoPrestador {
     @EmbeddedId
     @OneToOne
     @JoinColumn(name = "ID_PRESTADOR")
-    public Prestador idPrestador;
+    private Prestador idPrestador;
 
     @EmbeddedId
     @OneToOne
     @JoinColumn(name = "ID_SEGMENTO")
-    public Segmento idSegemento;
+    private Segmento idSegemento;
 }

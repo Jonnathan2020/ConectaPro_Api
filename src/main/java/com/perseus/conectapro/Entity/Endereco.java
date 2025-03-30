@@ -14,28 +14,28 @@ public class Endereco {
     @Id
     @Column(name = "ID_ENDERECO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int idEndereco;
+    private int idEndereco;
 
     @Column(name = "LOGRADOURO")
-    public String logradouro;
+    private String logradouro;
 
     @Column(name = "NUMERO")
-    public int numero;
+    private Integer numero;
 
     @Column(name = "BAIRRO")
-    public String bairro;
+    private String bairro;
 
     @Column(name = "CIDADE")
-    public String cidade;
+    private String cidade;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "UF")
-    public UfEnum uf;
+    private UfEnum uf;
 
     @Column(name = "CEP")
-    public int CEP;
+    private Integer CEP;
 
     @Column(name = "COMPLEMENTO")
-    public String complemento;
+    private String complemento;
 }
 

@@ -1,8 +1,10 @@
 package com.perseus.conectapro.Controller;
 
+import com.perseus.conectapro.DTO.ServicoUpdateDTO;
 import com.perseus.conectapro.Entity.Servico;
 import com.perseus.conectapro.Service.ServicoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +18,10 @@ public class ServicoController {
     private ServicoService servicoService;
 
     //Cadastar servico
-    @PostMapping("/Registro")
-    public Servico cadastrarServico(@RequestBody Servico servico){
-        return servicoService.cadastrarServico(servico);
+    @PostMapping("/registro")
+    public ResponseEntity<Servico> cadastrarServico(@RequestBody Servico servico){
+        Servico servicoCriado = servicoService.cadastrarServico(servico);
+        return ResponseEntity.status(HttpStatus.CREATED).body(servicoCriado);
     }
 
     //consultar servicos
@@ -34,15 +37,9 @@ public class ServicoController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Servico> alterarServico(@RequestBody Servico servico, @PathVariable("id") int id){
-        if(id == servico.getIdServico()){
-            Servico servicoAtualizado = servicoService.alterarServico(servico.idServico);
+    public ResponseEntity<Servico> alterarServico(@PathVariable("id") int id,@RequestBody ServicoUpdateDTO servicoUpdateDTO){
+            Servico servicoAtualizado = servicoService.alterarServico(id, servicoUpdateDTO);
             return ResponseEntity.ok(servicoAtualizado);
-        }
-        else {
-            return ResponseEntity.badRequest().body(null);
-        }
-
     }
 
     @DeleteMapping("/{id}")

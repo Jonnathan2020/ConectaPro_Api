@@ -16,13 +16,13 @@ import java.util.Set;
 public class EmpresaCliente extends Usuario {
 
     @Column(name = "CNPJ")
-    public String CNPJ;
+    private String CNPJ;
 
     @Column(name = "RAZAO_SOCIAL")
-    public String razaoSocial;
+    private String razaoSocial;
 
     @Column(name = "NOME_FANTASIA")
-    public String nomeFantasia;
+    private String nomeFantasia;
 
     @OneToMany(mappedBy = "idEmpresaCliente")
     private List<Servico> servicos;}

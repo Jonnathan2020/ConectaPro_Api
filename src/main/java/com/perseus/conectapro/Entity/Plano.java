@@ -13,14 +13,14 @@ public class Plano {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_PLANO")
-    public int idPlano;  //identificador
+    private int idPlano;  //identificador
 
     @Column(name = "DESC_PLANO")
-    public String descPlano; // descricao ou nome do plano
+    private String descPlano; // descricao ou nome do plano
 
     @Column(name = "VALOR_FIXO_PLANO")
-    public float valorFixoPlano; //valor fixo do plano
+    private float valorFixoPlano; //valor fixo do plano
 
     @Column(name = "PERCENTUAL_PLANO")
-    public float percentualPlano; //percentual sobre valor de comissionamento do plano
+    private float percentualPlano; //percentual sobre valor de comissionamento do plano
 }

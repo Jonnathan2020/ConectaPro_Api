@@ -13,11 +13,11 @@ public class SegmentoCliente {
     @EmbeddedId
     @OneToOne
     @JoinColumn(name = "ID_SEGMENTO")
-    public Segmento idSegmento;
+    private Segmento idSegmento;
 
     @EmbeddedId
     @OneToOne
     @JoinColumn(name = "ID_EMPRESA_CLIENTE")
-    public EmpresaCliente idEmpresaCliente;
+    private EmpresaCliente idEmpresaCliente;
 
 }

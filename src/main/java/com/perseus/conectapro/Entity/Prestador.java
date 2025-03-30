@@ -13,21 +13,23 @@ import java.util.Set;
 @Setter
 public class Prestador extends Usuario {
     @Column(name = "DESC_PRESTADOR")
-    public String descPrestador;
+    private String descPrestador;
 
     @ElementCollection
     @CollectionTable(name = "ESPECIALIDADES", joinColumns = @JoinColumn(name = "ID_USUARIO"))
     @Column(name = "ESPECIALIDADE")
-    public List<String> especialidades;
+    private List<String> especialidades;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS_DISPONIBILIDADE")
-    public StatusDisponibilidadeEnum statusDisponibilidade;
+    private StatusDisponibilidadeEnum statusDisponibilidade;
 
     @JoinColumn(name = "ID_PLANO")
     @OneToOne
-    public Plano idPlano;
+    private Plano idPlano;
 
+    @OneToMany(mappedBy = "idPrestador")
+    private List<Avaliacao> avaliacoes;
 
     @OneToMany(mappedBy = "idPrestador")
     private List<Servico> servicos;
