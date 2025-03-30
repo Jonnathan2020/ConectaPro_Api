@@ -3,7 +3,9 @@ package com.perseus.conectapro.Service;
 import com.perseus.conectapro.DTO.EmpresaClienteCreateDTO;
 import com.perseus.conectapro.DTO.EmpresaClienteUpdateDTO;
 import com.perseus.conectapro.Entity.EmpresaCliente;
+import com.perseus.conectapro.Entity.Endereco;
 import com.perseus.conectapro.Repository.EmpresaClienteRepository;
+import com.perseus.conectapro.Repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,9 @@ import java.util.List;
 public class EmpresaClienteService {
 
     @Autowired
-    public EmpresaClienteRepository empresaClienteRepository;
+    private EmpresaClienteRepository empresaClienteRepository;
+    @Autowired
+    private EnderecoRepository enderecoRepository;
 
     public List<EmpresaCliente> consultarEmpresaPorNome(String nome) {
         return empresaClienteRepository.findByNome(nome);
@@ -22,6 +26,18 @@ public class EmpresaClienteService {
     //cadastrar as informaçoes alem do usuario, faltantes para uma empresa cliente
     public EmpresaCliente cadastrarEmpresaCliente(EmpresaClienteCreateDTO empresaClienteCreateDTO) {
 
+        Endereco endereco = new Endereco();
+        endereco.setLogradouro(empresaClienteCreateDTO.getLogradouro());
+        endereco.setNumero(empresaClienteCreateDTO.getNumero());
+        endereco.setBairro(empresaClienteCreateDTO.getBairro());
+        endereco.setCidade(empresaClienteCreateDTO.getCidade());
+        endereco.setUf(empresaClienteCreateDTO.getUf());
+        endereco.setCEP(empresaClienteCreateDTO.getCep());
+        endereco.setComplemento(empresaClienteCreateDTO.getComplemento());
+
+        // Persistindo o Endereco
+        endereco = enderecoRepository.save(endereco);
+        
         EmpresaCliente empresaCliente = new EmpresaCliente();
         empresaCliente.setDocumento(empresaClienteCreateDTO.getDocumento());
         empresaCliente.setNome(empresaClienteCreateDTO.getNome());
@@ -34,6 +50,7 @@ public class EmpresaClienteService {
         empresaCliente.setCNPJ(empresaClienteCreateDTO.getCNPJ());
         empresaCliente.setRazaoSocial(empresaClienteCreateDTO.getRazaoSocial());
         empresaCliente.setNomeFantasia(empresaClienteCreateDTO.getNomeFantasia());
+        empresaCliente.setEndereco(endereco);
 
         return empresaClienteRepository.save(empresaCliente);
     }

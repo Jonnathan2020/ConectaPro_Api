@@ -25,7 +25,7 @@ public class Prestador extends Usuario {
     private StatusDisponibilidadeEnum statusDisponibilidade;
 
     @JoinColumn(name = "ID_PLANO")
-    @OneToOne
+    @ManyToOne
     private Plano idPlano;
 
     @OneToMany(mappedBy = "idPrestador")
