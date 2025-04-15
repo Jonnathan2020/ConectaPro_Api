@@ -54,6 +54,7 @@ public class PrestadorService {
         prestador.setTipoUsuario(prestadorDTO.getTipoUsuario());
         prestador.setCaminhoFoto(prestadorDTO.getCaminhoFoto());
         prestador.setIdPlano(plano);
+
         prestador.setDescPrestador(prestadorDTO.getDescPrestador());
         prestador.setEspecialidades(prestadorDTO.getEspecialidades());
         prestador.setStatusDisponibilidade(prestadorDTO.getStatusDisponibilidade());
