@@ -18,9 +18,6 @@ public class Usuario {
     @Column(name = "ID_USUARIO")
     private int idUsuario;
 
-    @Column(name = "DOCUMENTO")
-    private String documento;
-
     @Column(name = "NOME")
     private String nome;
 

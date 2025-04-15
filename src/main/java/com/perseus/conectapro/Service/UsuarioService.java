@@ -41,7 +41,6 @@ public class UsuarioService {
     public Usuario cadastrarUsuario(UsuarioCreateDTO usuarioCreateDTO) {
         // Criação do usuário
         Usuario usuario = new Usuario();
-        usuario.setDocumento(usuarioCreateDTO.getDocumento());
         usuario.setNome(usuarioCreateDTO.getNome());
         usuario.setEmail(usuarioCreateDTO.getEmail());
         usuario.setSenha(usuarioCreateDTO.getSenha());
@@ -75,9 +74,6 @@ public class UsuarioService {
         Usuario usuarioExistente = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado!!"));
 
-        if(usuarioUpdateDTO.getDocumento() != null){
-            usuarioExistente.setDocumento(usuarioUpdateDTO.getDocumento());
-        }
         if(usuarioUpdateDTO.getNome() != null){
             usuarioExistente.setNome(usuarioUpdateDTO.getNome());
         }

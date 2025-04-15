@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class EmpresaClienteCreateDTO extends UsuarioCreateDTO {
 
-    private String CNPJ;
+    private String cnpj;
     private String razaoSocial;
     private String nomeFantasia;
 

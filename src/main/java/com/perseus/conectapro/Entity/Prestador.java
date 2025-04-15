@@ -15,6 +15,9 @@ public class Prestador extends Usuario {
     @Column(name = "DESC_PRESTADOR")
     private String descPrestador;
 
+    @Column(name = "CPF")
+    private String cpf;
+
     @ElementCollection
     @CollectionTable(name = "ESPECIALIDADES", joinColumns = @JoinColumn(name = "ID_USUARIO"))
     @Column(name = "ESPECIALIDADE")

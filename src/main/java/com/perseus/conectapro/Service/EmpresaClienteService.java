@@ -39,7 +39,6 @@ public class EmpresaClienteService {
         endereco = enderecoRepository.save(endereco);
         
         EmpresaCliente empresaCliente = new EmpresaCliente();
-        empresaCliente.setDocumento(empresaClienteCreateDTO.getDocumento());
         empresaCliente.setNome(empresaClienteCreateDTO.getNome());
         empresaCliente.setEmail(empresaClienteCreateDTO.getEmail());
         empresaCliente.setSenha(empresaClienteCreateDTO.getSenha());
@@ -47,7 +46,7 @@ public class EmpresaClienteService {
         empresaCliente.setTipoUsuario(empresaClienteCreateDTO.getTipoUsuario());
         empresaCliente.setCaminhoFoto(empresaClienteCreateDTO.getCaminhoFoto());
 
-        empresaCliente.setCNPJ(empresaClienteCreateDTO.getCNPJ());
+        empresaCliente.setCnpj(empresaClienteCreateDTO.getCnpj());
         empresaCliente.setRazaoSocial(empresaClienteCreateDTO.getRazaoSocial());
         empresaCliente.setNomeFantasia(empresaClienteCreateDTO.getNomeFantasia());
         empresaCliente.setEndereco(endereco);
@@ -72,8 +71,8 @@ public class EmpresaClienteService {
         EmpresaCliente empresaExistente = empresaClienteRepository.findById(idUsuario)
                 .orElseThrow(() -> new IllegalArgumentException("Empresa não encontrada!!"));
 
-        if(empresaClienteUpdateDTO.getCNPJ() != null){
-            empresaExistente.setCNPJ(empresaClienteUpdateDTO.getCNPJ());
+        if(empresaClienteUpdateDTO.getCnpj() != null){
+            empresaExistente.setCnpj(empresaClienteUpdateDTO.getCnpj());
         }
         if(empresaClienteUpdateDTO.getRazaoSocial() != null){
             empresaExistente.setRazaoSocial(empresaClienteUpdateDTO.getRazaoSocial());

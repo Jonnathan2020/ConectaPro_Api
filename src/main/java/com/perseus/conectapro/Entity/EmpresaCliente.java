@@ -16,7 +16,7 @@ import java.util.Set;
 public class EmpresaCliente extends Usuario {
 
     @Column(name = "CNPJ")
-    private String CNPJ;
+    private String cnpj;
 
     @Column(name = "RAZAO_SOCIAL")
     private String razaoSocial;

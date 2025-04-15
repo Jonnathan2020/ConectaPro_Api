@@ -9,7 +9,6 @@ import lombok.Setter;
 @Setter
 public class UsuarioCreateDTO {
 
-    private String documento;
     private String nome;
     private String email;
     private String senha;

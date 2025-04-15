@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 public class PrestadorCreateDTO extends UsuarioCreateDTO{
 
+    private String cpf;
     private String descPrestador;
     private List<String> especialidades;
     private StatusDisponibilidadeEnum statusDisponibilidade;
