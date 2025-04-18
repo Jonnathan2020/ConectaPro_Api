@@ -3,8 +3,8 @@ package com.perseus.conectapro.Controller;
 import com.perseus.conectapro.DTO.EmpresaClienteCreateDTO;
 import com.perseus.conectapro.DTO.EmpresaClienteUpdateDTO;
 import com.perseus.conectapro.Entity.EmpresaCliente;
-import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Service.EmpresaClienteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +39,7 @@ public class EmpresaClienteController {
     }
 
     @PostMapping("/registro")
-    public ResponseEntity<EmpresaCliente> cadastrarEmpresa(@RequestBody EmpresaClienteCreateDTO empresaClienteDTO){
+    public ResponseEntity<EmpresaCliente> cadastrarEmpresa(@RequestBody @Valid EmpresaClienteCreateDTO empresaClienteDTO){
         EmpresaCliente empresaCriada = empresaClienteService.cadastrarEmpresaCliente(empresaClienteDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(empresaCriada);
     }

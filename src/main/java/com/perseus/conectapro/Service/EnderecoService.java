@@ -3,7 +3,6 @@ package com.perseus.conectapro.Service;
 import com.perseus.conectapro.Entity.Endereco;
 import com.perseus.conectapro.Repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,6 +37,9 @@ public class EnderecoService {
         Endereco enderecoExistente = enderecoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Endereço não enccontrado no cadastro!"));
 
+        if(endereco.getCep() != null){
+            enderecoExistente.setCep(endereco.getCep());
+        }
         if(endereco.getLogradouro() != null){
             enderecoExistente.setLogradouro(endereco.getLogradouro());
         }

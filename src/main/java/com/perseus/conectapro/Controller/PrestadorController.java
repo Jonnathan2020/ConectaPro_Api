@@ -2,11 +2,9 @@ package com.perseus.conectapro.Controller;
 
 import com.perseus.conectapro.DTO.PrestadorCreateDTO;
 import com.perseus.conectapro.DTO.PrestadorUpdateDTO;
-import com.perseus.conectapro.Entity.EmpresaCliente;
 import com.perseus.conectapro.Entity.Prestador;
-import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Service.PrestadorService;
-import org.apache.coyote.Response;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,7 +50,7 @@ public class PrestadorController {
     }
 
     @PostMapping("/registro")
-    public ResponseEntity<Prestador> cadastrarPrestador(@RequestBody PrestadorCreateDTO prestador){
+    public ResponseEntity<Prestador> cadastrarPrestador(@RequestBody @Valid PrestadorCreateDTO prestador){
         Prestador prestadorCriado = prestadorService.cadastrarPrestador(prestador);
         return ResponseEntity.status(HttpStatus.CREATED).body(prestadorCriado);
     }

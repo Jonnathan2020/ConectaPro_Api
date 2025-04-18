@@ -4,9 +4,7 @@ import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -36,5 +34,20 @@ public class Prestador extends Usuario {
 
     @OneToMany(mappedBy = "idPrestador")
     private List<Servico> servicos;
+
+    @PrePersist
+    @PreUpdate
+    public void formatarCpf() {
+        if (cpf != null) {
+            cpf = cpf.replaceAll("\\D", ""); // Remove tudo que não for número
+
+            if (cpf.length() != 11) {
+                throw new IllegalArgumentException("CPF deve conter exatamente 11 dígitos numéricos.");
+            }
+
+            cpf = cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." + cpf.substring(6, 9) + "-" + cpf.substring(9, 11);
+        }
+    }
+
 }
 

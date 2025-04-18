@@ -9,10 +9,13 @@ import lombok.Setter;
 public class UsuarioUpdateDTO {
 
     private int idUsuario;
+
     private String nome;
+
     private String email;
+
     private String senha;
-    private Long telefone;
+    private String telefone;
     private tipoUsuarioEnum tipoUsuario;
     private String caminhoFoto;
 

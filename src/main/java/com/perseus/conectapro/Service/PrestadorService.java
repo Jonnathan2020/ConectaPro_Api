@@ -5,7 +5,6 @@ import com.perseus.conectapro.DTO.PrestadorUpdateDTO;
 import com.perseus.conectapro.Entity.Endereco;
 import com.perseus.conectapro.Entity.Plano;
 import com.perseus.conectapro.Entity.Prestador;
-import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.AvaliacaoRepository;
 import com.perseus.conectapro.Repository.EnderecoRepository;
 import com.perseus.conectapro.Repository.PlanoRepository;
@@ -42,7 +41,7 @@ public class PrestadorService {
         endereco.setBairro(prestadorDTO.getBairro());
         endereco.setCidade(prestadorDTO.getCidade());
         endereco.setUf(prestadorDTO.getUf());
-        endereco.setCEP(prestadorDTO.getCep());
+        endereco.setCep(prestadorDTO.getCep());
         endereco.setComplemento(prestadorDTO.getComplemento());
 
         // Persistindo o Endereco
@@ -93,8 +92,33 @@ public class PrestadorService {
         return prestadorRepository.findByEspecialidadesContaining(especialidade);
     }
 
+    // Metodo para validação das informações durante a atualização do prestador
+    private void validarAtualizacaoPrestador(PrestadorUpdateDTO dto) {
+        if (dto.getCpf() != null) {
+            String cpfLimpo = dto.getCpf().replaceAll("\\D", "");
+            if (cpfLimpo.length() != 11) {
+                throw new IllegalArgumentException("CPF inválido. Deve conter 11 dígitos numéricos");
+            }
+        }
+
+        if (dto.getDescPrestador() != null && dto.getDescPrestador().isBlank()) {
+            throw new IllegalArgumentException("A descrição do prestador, se informada, não pode estar em branco");
+        }
+
+        if (dto.getEspecialidades() != null && dto.getEspecialidades().isEmpty()) {
+            throw new IllegalArgumentException("As especialidades, se informadas, não podem estar vazias");
+        }
+
+        if (dto.getStatusDisponibilidade() != null && !dto.getStatusDisponibilidade().name().isBlank()) {
+            throw new IllegalArgumentException("Status de disponibilidade inválido");
+        }
+    }
+
+
     //alterar informaçoes somente do prestador
     public Prestador alterarPrestador(int idUsuario, PrestadorUpdateDTO prestadorUpdateDTO) {
+        validarAtualizacaoPrestador(prestadorUpdateDTO);
+
         Prestador prestadorExistente = prestadorRepository.findById(idUsuario)
                 .orElseThrow(() -> new IllegalArgumentException("Prestador não encontrado!!"));
 

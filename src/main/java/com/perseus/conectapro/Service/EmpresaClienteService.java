@@ -35,7 +35,7 @@ public class EmpresaClienteService {
         endereco.setBairro(empresaClienteCreateDTO.getBairro());
         endereco.setCidade(empresaClienteCreateDTO.getCidade());
         endereco.setUf(empresaClienteCreateDTO.getUf());
-        endereco.setCEP(empresaClienteCreateDTO.getCep());
+        endereco.setCep(empresaClienteCreateDTO.getCep());
         endereco.setComplemento(empresaClienteCreateDTO.getComplemento());
 
         // Persistindo o Endereco
@@ -72,8 +72,28 @@ public class EmpresaClienteService {
         return empresaClienteEspecifica;
     }
 
+    // Metodo para validacao das informacoes durante a atualizacao da empresa
+    private void validarAtualizacaoEmpresa(EmpresaClienteUpdateDTO dto) {
+        if (dto.getCnpj() != null) {
+            String cnpjLimpo = dto.getCnpj().replaceAll("\\D", "");
+            if (cnpjLimpo.length() != 14) {
+                throw new IllegalArgumentException("CNPJ inválido. Deve conter 14 dígitos numéricos");
+            }
+        }
+
+        if (dto.getRazaoSocial() != null && dto.getRazaoSocial().isBlank()) {
+            throw new IllegalArgumentException("A razão social, se informada, não pode estar em branco");
+        }
+
+        if (dto.getNomeFantasia() != null && dto.getNomeFantasia().isBlank()) {
+            throw new IllegalArgumentException("O nome fantasia, se informado, não pode estar em branco");
+        }
+    }
+
     //alterar informaçoes somente da empresa
     public EmpresaCliente alterarEmpresaCliente(int idUsuario, EmpresaClienteUpdateDTO empresaClienteUpdateDTO){
+       validarAtualizacaoEmpresa(empresaClienteUpdateDTO);
+
         EmpresaCliente empresaExistente = empresaClienteRepository.findById(idUsuario)
                 .orElseThrow(() -> new IllegalArgumentException("Empresa não encontrada!!"));
 

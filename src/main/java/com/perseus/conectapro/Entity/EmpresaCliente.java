@@ -4,11 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.print.DocFlavor;
-import java.awt.image.BufferedImage;
-import java.text.DateFormat;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -25,5 +21,25 @@ public class EmpresaCliente extends Usuario {
     private String nomeFantasia;
 
     @OneToMany(mappedBy = "idEmpresaCliente")
-    private List<Servico> servicos;}
+    private List<Servico> servicos;
 
+    @PrePersist
+    @PreUpdate
+    public void formatarCnpj() {
+        if (cnpj != null) {
+            // Remove tudo que não for número
+            cnpj = cnpj.replaceAll("\\D", "");
+
+            // Só formata se tiver exatamente 14 dígitos
+            if (cnpj.length() == 14) {
+                cnpj = cnpj.substring(0, 2) + "." +
+                        cnpj.substring(2, 5) + "." +
+                        cnpj.substring(5, 8) + "/" +
+                        cnpj.substring(8, 12) + "-" +
+                        cnpj.substring(12, 14);
+            } else {
+                throw new IllegalArgumentException("CNPJ deve conter 14 dígitos numéricos");
+            }
+        }
+    }
+}

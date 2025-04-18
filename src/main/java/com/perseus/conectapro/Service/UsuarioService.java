@@ -60,7 +60,7 @@ public class UsuarioService {
         endereco.setBairro(usuarioCreateDTO.getBairro());
         endereco.setCidade(usuarioCreateDTO.getCidade());
         endereco.setUf(usuarioCreateDTO.getUf());
-        endereco.setCEP(usuarioCreateDTO.getCep());
+        endereco.setCep(usuarioCreateDTO.getCep());
         endereco.setComplemento(usuarioCreateDTO.getComplemento());
 
         // Salva o novo endereço no banco
@@ -73,9 +73,39 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    //Metodo para validacao das informacoes inseridas durante a atualizacao do usuario
+    private void validarAtualizacaoUsuario(UsuarioUpdateDTO dto) {
+        if (dto.getNome() != null && dto.getNome().isBlank()) {
+            throw new IllegalArgumentException("O nome, se informado, não pode estar em branco");
+        }
+
+        if (dto.getEmail() != null) {
+            if (dto.getEmail().isBlank()) {
+                throw new IllegalArgumentException("O email, se informado, não pode estar em branco");
+            }
+            if (!dto.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+                throw new IllegalArgumentException("Formato de e-mail inválido");
+            }
+        }
+
+        if (dto.getSenha() != null && dto.getSenha().length() < 6) {
+            throw new IllegalArgumentException("A senha, se informada, deve ter pelo menos 6 caracteres");
+        }
+
+        if (dto.getTelefone() != null && !dto.getTelefone().matches("^\\d{10,11}$")) {
+            throw new IllegalArgumentException("Telefone inválido. Deve conter apenas números (10 ou 11 dígitos)");
+        }
+
+        if (dto.getTipoUsuario() != null && dto.getTipoUsuario().name().isBlank()) {
+            throw new IllegalArgumentException("Tipo de usuário inválido");
+        }
+    }
+
 
     //alterar informaçoes do usuario
     public Usuario alterarUsuario(int idUsuario, UsuarioUpdateDTO usuarioUpdateDTO){
+        validarAtualizacaoUsuario(usuarioUpdateDTO);
+
         Usuario usuarioExistente = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado!!"));
 

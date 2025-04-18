@@ -2,7 +2,6 @@ package com.perseus.conectapro.Entity;
 
 import com.perseus.conectapro.Entity.Enuns.tipoUsuarioEnum;
 import jakarta.persistence.*;
-import lombok.Cleanup;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,7 +27,7 @@ public class Usuario {
     private String senha;
 
     @Column(name = "TELEFONE")
-    private Long telefone;
+    private String telefone;
 
     @JoinColumn(name = "ID_ENDERECO")
     @OneToOne

@@ -33,7 +33,7 @@ public class Endereco {
     private UfEnum uf;
 
     @Column(name = "CEP")
-    private Integer CEP;
+    private String cep;
 
     @Column(name = "COMPLEMENTO")
     private String complemento;
