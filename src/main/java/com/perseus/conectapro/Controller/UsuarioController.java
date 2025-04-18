@@ -1,7 +1,9 @@
 package com.perseus.conectapro.Controller;
 
+import com.perseus.conectapro.DTO.EmpresaClienteUpdateDTO;
 import com.perseus.conectapro.DTO.UsuarioCreateDTO;
 import com.perseus.conectapro.DTO.UsuarioUpdateDTO;
+import com.perseus.conectapro.Entity.EmpresaCliente;
 import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +41,9 @@ public class UsuarioController {
 
     //Alterar usuário
     @PutMapping("/{id}")
-    public Usuario alterarUsuario(@RequestBody UsuarioUpdateDTO usuarioUpdateDTO, @PathVariable("id") int id){
-        if(id == usuarioUpdateDTO.getIdUsuario()){
-            return usuarioService.alterarUsuario(id, usuarioUpdateDTO);
-        }
-        else
-            return null;
+    public ResponseEntity<Usuario> alterarUsuario(@RequestBody UsuarioUpdateDTO usuarioUpdateDTO, @PathVariable("id") int id){
+        Usuario usuarioAtualizado = usuarioService.alterarUsuario(id, usuarioUpdateDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioAtualizado);
     }
 
     //Cadastrar usuário
