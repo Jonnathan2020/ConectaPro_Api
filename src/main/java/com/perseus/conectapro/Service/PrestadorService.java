@@ -11,6 +11,7 @@ import com.perseus.conectapro.Repository.EnderecoRepository;
 import com.perseus.conectapro.Repository.PlanoRepository;
 import com.perseus.conectapro.Repository.PrestadorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -25,6 +26,8 @@ public class PrestadorService {
     private PlanoRepository planoRepository;
     @Autowired
     private EnderecoRepository enderecoRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     //cadastrar as informaçoes alem do usuario, faltantes para um prestador
     public Prestador cadastrarPrestador(PrestadorCreateDTO prestadorDTO) {
@@ -49,7 +52,10 @@ public class PrestadorService {
         prestador.setCpf(prestadorDTO.getCpf());
         prestador.setNome(prestadorDTO.getNome());
         prestador.setEmail(prestadorDTO.getEmail());
-        prestador.setSenha(prestadorDTO.getSenha());
+
+        //Criptografia da senha
+        prestador.setSenha(passwordEncoder.encode(prestadorDTO.getSenha()));
+
         prestador.setTelefone(prestadorDTO.getTelefone());
         prestador.setTipoUsuario(prestadorDTO.getTipoUsuario());
         prestador.setCaminhoFoto(prestadorDTO.getCaminhoFoto());

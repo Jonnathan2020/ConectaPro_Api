@@ -7,6 +7,7 @@ import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.EnderecoRepository;
 import com.perseus.conectapro.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -21,6 +22,8 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;          //dependencia do repository que faz conexao com o banco
     @Autowired
     private EnderecoRepository enderecoRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     //consultar usuarios
     public List<Usuario> consultarUsuarios(){
@@ -43,10 +46,12 @@ public class UsuarioService {
         Usuario usuario = new Usuario();
         usuario.setNome(usuarioCreateDTO.getNome());
         usuario.setEmail(usuarioCreateDTO.getEmail());
-        usuario.setSenha(usuarioCreateDTO.getSenha());
         usuario.setTelefone(usuarioCreateDTO.getTelefone());
         usuario.setTipoUsuario(usuarioCreateDTO.getTipoUsuario());
         usuario.setCaminhoFoto(usuarioCreateDTO.getCaminhoFoto());
+
+        //Criptografia da senha
+        usuario.setSenha(passwordEncoder.encode(usuarioCreateDTO.getSenha()));
 
         // Criação do endereço com base nos dados do DTO
         Endereco endereco = new Endereco();
@@ -78,7 +83,8 @@ public class UsuarioService {
             usuarioExistente.setNome(usuarioUpdateDTO.getNome());
         }
         if(usuarioUpdateDTO.getSenha() != null){
-            usuarioExistente.setSenha(usuarioUpdateDTO.getSenha());
+            //Criptografia da senha durante alteração de senha
+            usuarioExistente.setSenha(passwordEncoder.encode(usuarioUpdateDTO.getSenha()));
         }
         if(usuarioUpdateDTO.getTelefone() != null){
             usuarioExistente.setTelefone(usuarioUpdateDTO.getTelefone());

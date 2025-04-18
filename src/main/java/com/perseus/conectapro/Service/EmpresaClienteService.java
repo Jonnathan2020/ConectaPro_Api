@@ -7,6 +7,7 @@ import com.perseus.conectapro.Entity.Endereco;
 import com.perseus.conectapro.Repository.EmpresaClienteRepository;
 import com.perseus.conectapro.Repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public class EmpresaClienteService {
     private EmpresaClienteRepository empresaClienteRepository;
     @Autowired
     private EnderecoRepository enderecoRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public List<EmpresaCliente> consultarEmpresaPorNome(String nome) {
         return empresaClienteRepository.findByNome(nome);
@@ -41,7 +44,10 @@ public class EmpresaClienteService {
         EmpresaCliente empresaCliente = new EmpresaCliente();
         empresaCliente.setNome(empresaClienteCreateDTO.getNome());
         empresaCliente.setEmail(empresaClienteCreateDTO.getEmail());
-        empresaCliente.setSenha(empresaClienteCreateDTO.getSenha());
+
+        //Criptografia da senha
+        empresaCliente.setSenha(passwordEncoder.encode(empresaClienteCreateDTO.getSenha()));
+
         empresaCliente.setTelefone(empresaClienteCreateDTO.getTelefone());
         empresaCliente.setTipoUsuario(empresaClienteCreateDTO.getTipoUsuario());
         empresaCliente.setCaminhoFoto(empresaClienteCreateDTO.getCaminhoFoto());
