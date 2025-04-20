@@ -2,13 +2,22 @@ package com.perseus.conectapro.Controller;
 
 import com.perseus.conectapro.DTO.PrestadorCreateDTO;
 import com.perseus.conectapro.DTO.PrestadorUpdateDTO;
+import com.perseus.conectapro.Entity.EmpresaCliente;
+import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Prestador;
+import com.perseus.conectapro.Repository.PrestadorRepository;
 import com.perseus.conectapro.Service.PrestadorService;
 import jakarta.validation.Valid;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.domain.Like;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,11 +28,26 @@ public class PrestadorController {
 
     @Autowired
     private PrestadorService prestadorService;
+    @Autowired
+    private PrestadorRepository prestadorRepository;
 
     //listar prestadores
     @GetMapping
-    public List<Prestador> consultarPrestadores(){
-        return prestadorService.consultarPrestadores();
+    public List<Prestador> consultarPrestadores(
+            @And({
+                    @Spec(path = "idUsuario", spec = Equal.class),
+                    @Spec(path = "cpf", spec = Like.class),
+                    @Spec(path = "statusDisponibilidade", spec = Equal.class),
+                    @Spec(path = "idPlano.idPlano", spec = Equal.class)
+            })Specification<Prestador> spec
+            ){
+
+        List<Prestador> prestador = prestadorRepository.findAll(spec);
+        if (prestador.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum prestador encontrado com os filtros fornecidos.");
+        }
+        return prestador;
+
     }
 
     //Buscar prestador por id
