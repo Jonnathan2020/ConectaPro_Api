@@ -2,6 +2,7 @@ package com.perseus.conectapro.Service;
 
 import com.perseus.conectapro.DTO.EmpresaClienteCreateDTO;
 import com.perseus.conectapro.DTO.EmpresaClienteUpdateDTO;
+import com.perseus.conectapro.DTO.ViaCepDTO;
 import com.perseus.conectapro.Entity.EmpresaCliente;
 import com.perseus.conectapro.Entity.Endereco;
 import com.perseus.conectapro.Repository.EmpresaClienteRepository;
@@ -21,6 +22,8 @@ public class EmpresaClienteService {
     private EnderecoRepository enderecoRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ViaCepService viaCepService;
 
     public List<EmpresaCliente> consultarEmpresaPorNome(String nome) {
         return empresaClienteRepository.findByNome(nome);
@@ -29,16 +32,21 @@ public class EmpresaClienteService {
     //cadastrar as informaçoes alem do usuario, faltantes para uma empresa cliente
     public EmpresaCliente cadastrarEmpresaCliente(EmpresaClienteCreateDTO empresaClienteCreateDTO) {
 
+        ViaCepDTO viaCep = viaCepService.buscarEnderecoPorCep(empresaClienteCreateDTO.getCep());
+
         Endereco endereco = new Endereco();
-        endereco.setLogradouro(empresaClienteCreateDTO.getLogradouro());
+        //Serao definidos após a inserção do cep
+        endereco.setLogradouro(viaCep.getLogradouro());
+        endereco.setBairro(viaCep.getBairro());
+        endereco.setCidade(viaCep.getLocalidade());
+        endereco.setUf(viaCep.getUf());
+        endereco.setCep(viaCep.getCep());
+
+        //Usuario definirá manualmente
         endereco.setNumero(empresaClienteCreateDTO.getNumero());
-        endereco.setBairro(empresaClienteCreateDTO.getBairro());
-        endereco.setCidade(empresaClienteCreateDTO.getCidade());
-        endereco.setUf(empresaClienteCreateDTO.getUf());
-        endereco.setCep(empresaClienteCreateDTO.getCep());
         endereco.setComplemento(empresaClienteCreateDTO.getComplemento());
 
-        // Persistindo o Endereco
+        //Persistindo o Endereco
         endereco = enderecoRepository.save(endereco);
         
         EmpresaCliente empresaCliente = new EmpresaCliente();

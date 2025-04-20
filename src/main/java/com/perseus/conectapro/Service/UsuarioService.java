@@ -2,6 +2,7 @@ package com.perseus.conectapro.Service;
 
 import com.perseus.conectapro.DTO.UsuarioCreateDTO;
 import com.perseus.conectapro.DTO.UsuarioUpdateDTO;
+import com.perseus.conectapro.DTO.ViaCepDTO;
 import com.perseus.conectapro.Entity.Endereco;
 import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.EnderecoRepository;
@@ -24,6 +25,8 @@ public class UsuarioService {
     private EnderecoRepository enderecoRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ViaCepService viaCepService;
 
     //consultar usuarios
     public List<Usuario> consultarUsuarios(){
@@ -42,6 +45,9 @@ public class UsuarioService {
     }
 
     public Usuario cadastrarUsuario(UsuarioCreateDTO usuarioCreateDTO) {
+
+        ViaCepDTO viaCep = viaCepService.buscarEnderecoPorCep(usuarioCreateDTO.getCep());
+
         // Criação do usuário
         Usuario usuario = new Usuario();
         usuario.setNome(usuarioCreateDTO.getNome());
@@ -55,12 +61,15 @@ public class UsuarioService {
 
         // Criação do endereço com base nos dados do DTO
         Endereco endereco = new Endereco();
-        endereco.setLogradouro(usuarioCreateDTO.getLogradouro());
+        //Serao definidos após a inserção do cep
+        endereco.setLogradouro(viaCep.getLogradouro());
+        endereco.setBairro(viaCep.getBairro());
+        endereco.setCidade(viaCep.getLocalidade());
+        endereco.setUf(viaCep.getUf());
+        endereco.setCep(viaCep.getCep());
+
+        //Usuario definirá manualmente
         endereco.setNumero(usuarioCreateDTO.getNumero());
-        endereco.setBairro(usuarioCreateDTO.getBairro());
-        endereco.setCidade(usuarioCreateDTO.getCidade());
-        endereco.setUf(usuarioCreateDTO.getUf());
-        endereco.setCep(usuarioCreateDTO.getCep());
         endereco.setComplemento(usuarioCreateDTO.getComplemento());
 
         // Salva o novo endereço no banco

@@ -28,11 +28,7 @@ public class EnderecoController {
     //Alterar endereço
     @PutMapping("/{id}")
     public Endereco alterarEndereco(@RequestBody Endereco endereco, @PathVariable("id") int id){
-        if(id == endereco.getIdEndereco()){
-            return enderecoService.alterarEndereco(id, endereco);
-        }
-        else
-            return null;
+        return enderecoService.alterarEndereco(id, endereco);
     }
 
     //Cadastrar endereço

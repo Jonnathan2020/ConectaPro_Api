@@ -38,19 +38,15 @@ public class UsuarioCreateDTO {
 
     private String caminhoFoto;
 
-    @NotBlank(message = "O logradouro não pode estar vazio")
     private String logradouro;
 
     @NotNull(message = "O número não pode estar vazio")
     private int numero;
 
-    @NotBlank(message = "O bairro não pode estar vazio")
     private String bairro;
 
-    @NotBlank(message = "A cidade não pode estar vazia")
     private String cidade;
 
-    @NotNull(message = "A UF não pode estar vazia")
     private UfEnum uf;
 
     @NotBlank(message = "O CEP não pode estar vazio")

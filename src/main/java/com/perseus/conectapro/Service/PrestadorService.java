@@ -2,6 +2,7 @@ package com.perseus.conectapro.Service;
 
 import com.perseus.conectapro.DTO.PrestadorCreateDTO;
 import com.perseus.conectapro.DTO.PrestadorUpdateDTO;
+import com.perseus.conectapro.DTO.ViaCepDTO;
 import com.perseus.conectapro.Entity.Endereco;
 import com.perseus.conectapro.Entity.Plano;
 import com.perseus.conectapro.Entity.Prestador;
@@ -27,6 +28,8 @@ public class PrestadorService {
     private EnderecoRepository enderecoRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ViaCepService viaCepService;
 
     //cadastrar as informaçoes alem do usuario, faltantes para um prestador
     public Prestador cadastrarPrestador(PrestadorCreateDTO prestadorDTO) {
@@ -34,14 +37,18 @@ public class PrestadorService {
         Plano plano = planoRepository.findById(prestadorDTO.getIdPlano())
                 .orElseThrow(() -> new RuntimeException("Plano não encontrado"));
 
+        ViaCepDTO viaCep = viaCepService.buscarEnderecoPorCep(prestadorDTO.getCep());
 
         Endereco endereco = new Endereco();
-        endereco.setLogradouro(prestadorDTO.getLogradouro());
+        //Serao definidos após a inserção do cep
+        endereco.setCep(viaCep.getCep());
+        endereco.setLogradouro(viaCep.getLogradouro());
+        endereco.setBairro(viaCep.getBairro());
+        endereco.setCidade(viaCep.getLocalidade());
+        endereco.setUf(viaCep.getUf());
+
+        //Usuario definirá manualmente
         endereco.setNumero(prestadorDTO.getNumero());
-        endereco.setBairro(prestadorDTO.getBairro());
-        endereco.setCidade(prestadorDTO.getCidade());
-        endereco.setUf(prestadorDTO.getUf());
-        endereco.setCep(prestadorDTO.getCep());
         endereco.setComplemento(prestadorDTO.getComplemento());
 
         // Persistindo o Endereco
