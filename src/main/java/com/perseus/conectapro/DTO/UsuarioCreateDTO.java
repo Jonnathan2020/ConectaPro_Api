@@ -1,5 +1,6 @@
 package com.perseus.conectapro.DTO;
 
+import com.perseus.conectapro.Entity.Enuns.RoleEnum;
 import com.perseus.conectapro.Entity.Enuns.UfEnum;
 import com.perseus.conectapro.Entity.Enuns.tipoUsuarioEnum;
 import jakarta.validation.constraints.Email;
@@ -35,8 +36,9 @@ public class UsuarioCreateDTO {
 
     @NotNull(message = "O tipo de usuário não pode estar vazio")
     private tipoUsuarioEnum tipoUsuario;
-
+    private RoleEnum role;
     private String caminhoFoto;
+
 
     private String logradouro;
 

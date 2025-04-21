@@ -21,13 +21,26 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("/usuarios")
 public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    //Rota somente para admin
+    @GetMapping("/admin")
+    private String getAdmin(){
+        return "Permissão de administrador";
+    }
+
+    //Rota somente para usuario
+    @GetMapping("/user")
+    private String getUser(){
+        return "Permissão de usuário";
+    }
+
 
     //Listar usuario
     @GetMapping
@@ -38,6 +51,7 @@ public class UsuarioController {
                     @Spec(path = "email", spec = Equal.class),
                     @Spec(path = "telefone", spec = Like.class), // Adicionando filtro para telefone
                     @Spec(path = "tipoUsuario", spec = Equal.class), // Filtro para tipo de usuário
+                    @Spec(path = "role", spec = Equal.class),
                     @Spec(path = "endereco.cidade", spec = Like.class), // Filtro para o relacionamento com Endereco, caso queira filtrar por algum atributo do endereço
                     @Spec(path = "endereco.uf", spec = Equal.class),
                     @Spec(path = "endereco.cep", spec = Like.class)
@@ -50,8 +64,6 @@ public class UsuarioController {
         }
         return usuarios;
     }
-
-
 
     //Buscar usuário por id
     @GetMapping("/{id}")
