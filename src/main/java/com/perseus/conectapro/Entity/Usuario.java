@@ -1,16 +1,23 @@
 package com.perseus.conectapro.Entity;
 
+import com.perseus.conectapro.Entity.Enuns.RoleEnum;
 import com.perseus.conectapro.Entity.Enuns.tipoUsuarioEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "TBL_USUARIO")
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +45,56 @@ public class Usuario {
     private tipoUsuarioEnum tipoUsuario;
 
     private String caminhoFoto;
+
+    //nivel de permissao do usuario
+    @Column(name = "ROLES")
+    private RoleEnum role;
+
+
+
+    //metodos implementados do userdatails para segurança de autenticacao
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.getRole() == RoleEnum.ADMIN){
+            return List.of(
+                    new SimpleGrantedAuthority("ROLE_ADMIN"),
+                    new SimpleGrantedAuthority("ROLE_USER")
+            );
+        }
+        return List.of(
+                new SimpleGrantedAuthority("ROLE_USER")
+        );
+    }
+
+    @Override
+    public String getPassword() {
+        return this.getSenha();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.getEmail();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
     /*IDs compartilhados significam que tanto a Empresa quanto
      o Prestador usam o mesmo ID da classe Usuario, já que

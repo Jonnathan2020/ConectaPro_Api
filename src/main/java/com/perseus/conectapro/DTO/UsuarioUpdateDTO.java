@@ -1,5 +1,6 @@
 package com.perseus.conectapro.DTO;
 
+import com.perseus.conectapro.Entity.Enuns.RoleEnum;
 import com.perseus.conectapro.Entity.Enuns.tipoUsuarioEnum;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,8 +16,13 @@ public class UsuarioUpdateDTO {
     private String email;
 
     private String senha;
+
     private String telefone;
+
     private tipoUsuarioEnum tipoUsuario;
+
+    private RoleEnum role;
+
     private String caminhoFoto;
 
 }

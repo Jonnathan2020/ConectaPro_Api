@@ -4,6 +4,7 @@ import com.perseus.conectapro.DTO.UsuarioCreateDTO;
 import com.perseus.conectapro.DTO.UsuarioUpdateDTO;
 import com.perseus.conectapro.DTO.ViaCepDTO;
 import com.perseus.conectapro.Entity.Endereco;
+import com.perseus.conectapro.Entity.Enuns.RoleEnum;
 import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.EnderecoRepository;
 import com.perseus.conectapro.Repository.UsuarioRepository;
@@ -46,6 +47,12 @@ public class UsuarioService {
 
     public Usuario cadastrarUsuario(UsuarioCreateDTO usuarioCreateDTO) {
 
+        Usuario usuarioExiste = usuarioRepository.findByEmail(usuarioCreateDTO.getEmail());
+
+        if (usuarioExiste != null){
+            throw new RuntimeException("Usuário já existe!!");
+        }
+
         ViaCepDTO viaCep = viaCepService.buscarEnderecoPorCep(usuarioCreateDTO.getCep());
 
         // Criação do usuário
@@ -55,6 +62,7 @@ public class UsuarioService {
         usuario.setTelefone(usuarioCreateDTO.getTelefone());
         usuario.setTipoUsuario(usuarioCreateDTO.getTipoUsuario());
         usuario.setCaminhoFoto(usuarioCreateDTO.getCaminhoFoto());
+        usuario.setRole(usuarioCreateDTO.getRole());
 
         //Criptografia da senha
         usuario.setSenha(passwordEncoder.encode(usuarioCreateDTO.getSenha()));
@@ -133,6 +141,10 @@ public class UsuarioService {
         }
         if(usuarioUpdateDTO.getTipoUsuario() != null){
             usuarioExistente.setTipoUsuario(usuarioUpdateDTO.getTipoUsuario());
+        }
+
+        if(usuarioUpdateDTO.getRole() != null){
+            usuarioExistente.setRole(usuarioUpdateDTO.getRole());
         }
 
         //retornou um metodo que salva as informações no banco
