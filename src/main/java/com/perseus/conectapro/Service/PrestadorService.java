@@ -4,6 +4,7 @@ import com.perseus.conectapro.DTO.PrestadorCreateDTO;
 import com.perseus.conectapro.DTO.PrestadorUpdateDTO;
 import com.perseus.conectapro.DTO.ViaCepDTO;
 import com.perseus.conectapro.Entity.Endereco;
+import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Plano;
 import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Repository.AvaliacaoRepository;
@@ -82,22 +83,27 @@ public class PrestadorService {
     }
 
     //consultar prestador especifico
-    public Prestador consultarPrestadorUnico(int idUsuario) {
-        Prestador prestadorEspecifico = prestadorRepository.findById(idUsuario)
-                .orElseThrow(() -> new IllegalArgumentException("Prestador não encontrado!!"));
-
+    public List<Prestador> consultarPrestadorUnico(int id) {
+        List<Prestador> prestadorEspecifico = prestadorRepository.findByIdUsuario(id);
+        //.orElseThrow(() -> new IllegalArgumentException("Prestador não encontrado!!"));
         return prestadorEspecifico;
     }
 
     //consultar pelo nome
     public List<Prestador> consultarPrestadorPorNome(String nome){
-        return prestadorRepository.findByNome(nome);
+        return prestadorRepository.findByNomeContainingIgnoreCase(nome);
     }
 
     //consultar pela especialidade
     public List<Prestador> consultarPrestadorPorEspecialidade(String especialidade) {
         return prestadorRepository.findByEspecialidadesContaining(especialidade);
     }
+
+    //consultar pelo status disponibilidade
+    public List<Prestador> consultarPrestadorPorStatusDisponibilidade(StatusDisponibilidadeEnum statusDisponibilidadeEnum) {
+        return prestadorRepository.findByStatusDisponibilidadeContaining(statusDisponibilidadeEnum);
+    }
+
 
     // Metodo para validação das informações durante a atualização do prestador
     private void validarAtualizacaoPrestador(PrestadorUpdateDTO dto) {

@@ -158,7 +158,7 @@ public class UsuarioService {
     }
 
     public List<Usuario> consultarUsuarioPorNome(String nome) {
-        return usuarioRepository.findByNome(nome);
+        return usuarioRepository.findByNomeContainingIgnoreCase(nome);
     }
 
     //consultar usuario especifico

@@ -26,8 +26,12 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    //Usuario admin padrao Js: "email": "jonnathan.santos15@gmail.com",
+    //                         "senha": "senhaforte123"
 
     //Rota somente para admin
     @GetMapping("/admin")
