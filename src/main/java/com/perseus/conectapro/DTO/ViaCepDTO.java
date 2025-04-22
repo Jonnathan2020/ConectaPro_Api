@@ -13,4 +13,6 @@ public class ViaCepDTO {
     private String localidade; // cidade
     private UfEnum uf;
     private Boolean erro;
+
+    //testa esse cep que é sem erro :  01048-000
 }

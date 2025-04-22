@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>, JpaSpecificationExecutor<Usuario> {
-    List<Usuario> findByNome(String name);
+    List<Usuario> findByNomeContainingIgnoreCase(String name);
     Usuario findByEmail(String email);
 
 }

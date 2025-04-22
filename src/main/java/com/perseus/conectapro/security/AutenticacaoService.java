@@ -66,8 +66,6 @@ public class AutenticacaoService implements TokenService {
     }
 
     private Instant geraDataExpiracao() {
-        return LocalDateTime.now()
-                .plusHours(8)
-                .toInstant(ZoneOffset.of("-03:00"));
+        return null;
     }
 }

@@ -1,9 +1,8 @@
 package com.perseus.conectapro.Entity.Enuns;
 
-import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.Setter;
 
+@Getter
 public enum StatusDisponibilidadeEnum {
     DISPONIVEL(1, "Disponível"),
     INDISPONIVEL(2, "Indisponível"),
@@ -24,5 +23,11 @@ public enum StatusDisponibilidadeEnum {
 
     public String getDescricao() {
         return descricao;
+    }
+
+    // Sobrescrita do metodo toString para retorno da descrição
+    @Override
+    public String toString() {
+        return this.descricao;
     }
 }

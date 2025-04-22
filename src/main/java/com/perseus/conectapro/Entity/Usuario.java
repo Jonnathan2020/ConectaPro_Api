@@ -36,7 +36,7 @@ public class Usuario implements UserDetails {
     @Column(name = "TELEFONE")
     private String telefone;
 
-    @JoinColumn(name = "ID_ENDERECO")
+    @JoinColumn(name = "ENDERECO")
     @OneToOne
     private Endereco endereco;
 

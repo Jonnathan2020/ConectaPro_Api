@@ -5,6 +5,7 @@ import com.perseus.conectapro.DTO.PrestadorUpdateDTO;
 import com.perseus.conectapro.Entity.EmpresaCliente;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Prestador;
+import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.PrestadorRepository;
 import com.perseus.conectapro.Service.PrestadorService;
 import jakarta.validation.Valid;
@@ -52,7 +53,7 @@ public class PrestadorController {
 
     //Buscar prestador por id
     @GetMapping("/{id}")
-    public Prestador consultarPrestador(@PathVariable int id){
+    public List<Prestador> consultarPrestadorUnico(@PathVariable int id){
         return prestadorService.consultarPrestadorUnico(id);
     }
 
@@ -64,8 +65,14 @@ public class PrestadorController {
 
     //Buscar prestador por especialidade
     @GetMapping("/especialidade/{especialidade}")
-    public List<Prestador> getPrestadoresByEspecialidade(@PathVariable String especialidade) {
-        return prestadorService.consultarPrestadorPorEspecialidade(especialidade);
+    public List<Prestador> getPrestadoresByEspecialidades(@PathVariable String especialidade) {
+        return prestadorService.consultarPrestadorPorEspecialidades(especialidade);
+    }
+
+    //Buscar prestador por status disponibilidade
+    @GetMapping("/status/{status}")
+    public List<Prestador> getPrestadoresByStatusDisponibilidade(@PathVariable StatusDisponibilidadeEnum status) {
+        return prestadorService.consultarPrestadorPorStatusDisponibilidade(status);
     }
 
     @PutMapping("{id}")
