@@ -72,14 +72,9 @@ public class PrestadorController {
     //Buscar prestador por status disponibilidade
     @GetMapping("/status/{status}")
     public List<Prestador> getPrestadoresByStatusDisponibilidade(@PathVariable StatusDisponibilidadeEnum status) {
-        return prestadorService.consultarPrestadorPorStatusDisponibilidade(status);
+        return prestadorService.consultarPrestadorPorStatusDisponiblidade(status);
     }
 
-    //Buscar prestador por status disponibilidade
-    @GetMapping("/status/{status}")
-    public List<Prestador> getPrestadoresByStatusDisponibilidade(@PathVariable StatusDisponibilidadeEnum status) {
-        return prestadorService.consultarPrestadorPorStatusDisponibilidade(status);
-    }
 
     @PutMapping("{id}")
     public Prestador alterarPrestador(@RequestBody PrestadorUpdateDTO prestadorUpdateDTO, @PathVariable("id") int id){

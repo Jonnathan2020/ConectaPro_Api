@@ -99,11 +99,9 @@ public class PrestadorService {
         return prestadorRepository.findByEspecialidadesContaining(especialidades);
     }
 
-    //consultar pelo status disponibilidade
-    public List<Prestador> consultarPrestadorPorStatusDisponibilidade(StatusDisponibilidadeEnum statusDisponibilidadeEnum) {
-        return prestadorRepository.findByStatusDisponibilidade(statusDisponibilidadeEnum);
+    public List<Prestador> consultarPrestadorPorStatusDisponiblidade(StatusDisponibilidadeEnum status) {
+        return prestadorRepository.findByStatusDisponibilidade(status);
     }
-
 
     // Metodo para validação das informações durante a atualização do prestador
     private void validarAtualizacaoPrestador(PrestadorUpdateDTO dto) {
@@ -147,10 +145,6 @@ public class PrestadorService {
         }
         if (prestadorUpdateDTO.getStatusDisponibilidade() != null){
             prestadorExistente.setStatusDisponibilidade(prestadorUpdateDTO.getStatusDisponibilidade());
-        }
-
-        if(prestadorUpdateDTO.getRole() != null){
-            prestadorExistente.setRole(prestadorUpdateDTO.getRole());
         }
 
         //metodo que salva as informaçoes do prestador
