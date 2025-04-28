@@ -5,6 +5,8 @@ import com.perseus.conectapro.DTO.EmpresaClienteUpdateDTO;
 import com.perseus.conectapro.DTO.ViaCepDTO;
 import com.perseus.conectapro.Entity.EmpresaCliente;
 import com.perseus.conectapro.Entity.Endereco;
+import com.perseus.conectapro.Entity.Enuns.TipoUsuarioEnum;
+import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.EmpresaClienteRepository;
 import com.perseus.conectapro.Repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import java.util.List;
 @Service
 public class EmpresaClienteService {
 
+    private Usuario usuario;
     @Autowired
     private EmpresaClienteRepository empresaClienteRepository;
     @Autowired
@@ -26,7 +29,7 @@ public class EmpresaClienteService {
     private ViaCepService viaCepService;
 
     public List<EmpresaCliente> consultarEmpresaPorNome(String nome) {
-        return empresaClienteRepository.findByNome(nome);
+        return empresaClienteRepository.findByNomeContainingIgnoreCase(nome);
     }
 
     //cadastrar as informaçoes alem do usuario, faltantes para uma empresa cliente
@@ -50,27 +53,25 @@ public class EmpresaClienteService {
         endereco = enderecoRepository.save(endereco);
         
         EmpresaCliente empresaCliente = new EmpresaCliente();
-        empresaCliente.setNome(empresaClienteCreateDTO.getNome());
-        empresaCliente.setEmail(empresaClienteCreateDTO.getEmail());
-
-        //Criptografia da senha
-        empresaCliente.setSenha(passwordEncoder.encode(empresaClienteCreateDTO.getSenha()));
-
-        empresaCliente.setTelefone(empresaClienteCreateDTO.getTelefone());
-        empresaCliente.setTipoUsuario(empresaClienteCreateDTO.getTipoUsuario());
-        empresaCliente.setCaminhoFoto(empresaClienteCreateDTO.getCaminhoFoto());
-
         empresaCliente.setCnpj(empresaClienteCreateDTO.getCnpj());
         empresaCliente.setRazaoSocial(empresaClienteCreateDTO.getRazaoSocial());
+        empresaCliente.setNome(empresaClienteCreateDTO.getNome());
+        empresaCliente.setEmail(empresaClienteCreateDTO.getEmail());
+        //Criptografia da senha
+        empresaCliente.setSenha(passwordEncoder.encode(empresaClienteCreateDTO.getSenha()));
+        empresaCliente.setTelefone(empresaClienteCreateDTO.getTelefone());
+        empresaCliente.setTipoUsuario(TipoUsuarioEnum.CLIENTE);
         empresaCliente.setNomeFantasia(empresaClienteCreateDTO.getNomeFantasia());
         empresaCliente.setEndereco(endereco);
+        empresaCliente.setCaminhoFoto(empresaClienteCreateDTO.getCaminhoFoto());
 
         return empresaClienteRepository.save(empresaCliente);
     }
 
     //consultar somente empresas clientes
     public List<EmpresaCliente> consultarEmpresasCliente(){
-        return empresaClienteRepository.findAll();
+
+        return empresaClienteRepository.findByTipoUsuario("CLIENTE");
     }
 
     //consultar empresa cliente especifica

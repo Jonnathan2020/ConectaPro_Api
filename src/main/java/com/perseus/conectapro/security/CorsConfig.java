@@ -13,10 +13,10 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("")
-                        .allowedOrigins("") // ou coloque o domínio do front
+                registry.addMapping("/**")
+                        .allowedOrigins("*") // ou coloque o domínio do front
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("")
+                        .allowedHeaders("*")
                         .allowCredentials(true);
             }
         };

@@ -41,12 +41,11 @@ public class EmpresaClienteController {
             })Specification<EmpresaCliente> spec
             ){
 
-        List<EmpresaCliente> clientes = empresaClienteRepository.findAll(spec);
-        if (clientes.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhuma empresa encontrada com os filtros fornecidos.");
-        }
-        return clientes;
-
+            List<EmpresaCliente> clientes = empresaClienteRepository.findAll(spec);
+            if (clientes.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhuma empresa encontrada com os filtros fornecidos.");
+            }
+            return clientes;
     }
 
     //Buscar empresa por id

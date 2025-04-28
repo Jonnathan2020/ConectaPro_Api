@@ -5,6 +5,7 @@ import com.perseus.conectapro.DTO.PrestadorUpdateDTO;
 import com.perseus.conectapro.DTO.ViaCepDTO;
 import com.perseus.conectapro.Entity.Endereco;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
+import com.perseus.conectapro.Entity.Enuns.TipoUsuarioEnum;
 import com.perseus.conectapro.Entity.Plano;
 import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Repository.AvaliacaoRepository;
@@ -62,9 +63,8 @@ public class PrestadorService {
 
         //Criptografia da senha
         prestador.setSenha(passwordEncoder.encode(prestadorDTO.getSenha()));
-
         prestador.setTelefone(prestadorDTO.getTelefone());
-        prestador.setTipoUsuario(prestadorDTO.getTipoUsuario());
+        prestador.setTipoUsuario(TipoUsuarioEnum.PRESTADOR);
         prestador.setCaminhoFoto(prestadorDTO.getCaminhoFoto());
         prestador.setIdPlano(plano);
         prestador.setRole(prestadorDTO.getRole());

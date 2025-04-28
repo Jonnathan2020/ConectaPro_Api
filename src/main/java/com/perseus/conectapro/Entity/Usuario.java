@@ -1,7 +1,7 @@
 package com.perseus.conectapro.Entity;
 
 import com.perseus.conectapro.Entity.Enuns.RoleEnum;
-import com.perseus.conectapro.Entity.Enuns.tipoUsuarioEnum;
+import com.perseus.conectapro.Entity.Enuns.TipoUsuarioEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,7 +42,7 @@ public class Usuario implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TIPO_USUARIO")
-    private tipoUsuarioEnum tipoUsuario;
+    private TipoUsuarioEnum tipoUsuario;
 
     private String caminhoFoto;
 

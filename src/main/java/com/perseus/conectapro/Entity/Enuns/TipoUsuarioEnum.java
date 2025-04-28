@@ -1,11 +1,6 @@
 package com.perseus.conectapro.Entity.Enuns;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
-public enum tipoUsuarioEnum {
+public enum TipoUsuarioEnum {
     PRESTADOR(1, "Prestador"),
     CLIENTE(2, "Cliente");
 
@@ -13,7 +8,7 @@ public enum tipoUsuarioEnum {
     private final String descricao;
 
     // Construtor da enumeração
-    tipoUsuarioEnum(int id, String descricao) {
+    TipoUsuarioEnum(int id, String descricao) {
         this.id = id;
         this.descricao = descricao;
     }

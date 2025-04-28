@@ -2,7 +2,7 @@ package com.perseus.conectapro.DTO;
 
 import com.perseus.conectapro.Entity.Enuns.RoleEnum;
 import com.perseus.conectapro.Entity.Enuns.UfEnum;
-import com.perseus.conectapro.Entity.Enuns.tipoUsuarioEnum;
+import com.perseus.conectapro.Entity.Enuns.TipoUsuarioEnum;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -34,8 +34,9 @@ public class UsuarioCreateDTO {
     )
     private String telefone;
 
-    @NotNull(message = "O tipo de usuário não pode estar vazio")
-    private tipoUsuarioEnum tipoUsuario;
+    //realizando cadastro direto nas classes cliente ou prestador o atributo já é inserido automaticamente para evitar erro
+    //@NotNull(message = "O tipo de usuário não pode estar vazio")
+    private TipoUsuarioEnum tipoUsuario;
     private RoleEnum role;
     private String caminhoFoto;
 
