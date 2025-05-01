@@ -28,8 +28,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
-                                "/swagger-ui.html",
-                                "/conectapro-api.azurewebsites.net"
+                                "/swagger-ui.html"
                         ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/usuarios/admin").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/usuarios/user").hasRole("USER")

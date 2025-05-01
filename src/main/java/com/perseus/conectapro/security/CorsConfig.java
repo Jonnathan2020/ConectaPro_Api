@@ -13,9 +13,9 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("https://conectapro-api.azurewebsites.net","http://localhost:3000", "http://localhost:8080", "http://localhost:1433") // ou coloque o domínio do front                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
+                registry.addMapping("")
+                        .allowedOrigins("http://localhost:3000", "http://localhost:8080", "http://localhost:1433") // ou coloque o domínio do front                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("")
                         .allowCredentials(true);
             }
         };
