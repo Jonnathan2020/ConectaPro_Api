@@ -1,9 +1,14 @@
 package com.perseus.conectapro.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,16 +26,22 @@ public class Orcamento {
     @JoinColumn(name = "ID_SERVICO")
     private Servico idServico;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "ID_PRESTADOR")
+    @JsonIgnore
     private Prestador idPrestador;
 
     @Column(name = "VALOR_ORCAMENTO")
-    private float valorOrcamento;
+    private BigDecimal valorOrcamento;
 
     @Column(name = "PREVISAO_INICIO")
-    private LocalDateTime previsaoInicio;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate previsaoInicio;
 
     @Column(name = "DURACAO_SERVICO")
     private int duracaoServico;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "FORMA_PAGTO")
+    private FormaPagtoEnum formaPagtoEnum;
 }

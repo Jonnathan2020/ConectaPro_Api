@@ -33,6 +33,9 @@ public class Prestador extends Usuario {
     private List<Avaliacao> avaliacoes;
 
     @OneToMany(mappedBy = "idPrestador")
+    private List<Orcamento> orcamentos;
+
+    @OneToMany(mappedBy = "idPrestador")
     private List<Servico> servicos;
 
     @PrePersist
