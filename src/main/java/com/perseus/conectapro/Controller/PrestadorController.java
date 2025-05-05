@@ -1,11 +1,13 @@
 package com.perseus.conectapro.Controller;
 
+import com.perseus.conectapro.DTO.OrcamentoDTO;
 import com.perseus.conectapro.DTO.PrestadorCreateDTO;
+import com.perseus.conectapro.DTO.PrestadorDTO;
 import com.perseus.conectapro.DTO.PrestadorUpdateDTO;
-import com.perseus.conectapro.Entity.EmpresaCliente;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
+import com.perseus.conectapro.Entity.Orcamento;
 import com.perseus.conectapro.Entity.Prestador;
-import com.perseus.conectapro.Entity.Usuario;
+import com.perseus.conectapro.Repository.OrcamentoRepository;
 import com.perseus.conectapro.Repository.PrestadorRepository;
 import com.perseus.conectapro.Service.PrestadorService;
 import jakarta.validation.Valid;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -31,10 +34,12 @@ public class PrestadorController {
     private PrestadorService prestadorService;
     @Autowired
     private PrestadorRepository prestadorRepository;
+    @Autowired
+    private OrcamentoRepository orcamentoRepository;
 
     //listar prestadores
     @GetMapping
-    public List<Prestador> consultarPrestadores(
+    public List<PrestadorDTO> consultarPrestadores(
             @And({
                     @Spec(path = "idUsuario", spec = Equal.class),
                     @Spec(path = "cpf", spec = Like.class),
@@ -43,41 +48,55 @@ public class PrestadorController {
             })Specification<Prestador> spec
             ){
 
-        List<Prestador> prestador = prestadorRepository.findAll(spec);
-        if (prestador.isEmpty()) {
+        List<Prestador> prestadores = prestadorRepository.findAll(spec);
+        if (prestadores.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum prestador encontrado com os filtros fornecidos.");
         }
-        return prestador;
+        return prestadores.stream().map(prestador -> {
+            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(prestador);
+
+            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
+                    .map(orcamento -> new OrcamentoDTO(
+                            orcamento.getIdOrcamento(),
+                            orcamento.getValorOrcamento(),
+                            orcamento.getDuracaoServico(),
+                            orcamento.getFormaPagtoEnum(),
+                            orcamento.getPrevisaoInicio(),
+                            orcamento.getNvlUrgencia(), orcamento.getTipoCategoriaEnum()))
+                    .collect(Collectors.toList());
+
+            return new PrestadorDTO(prestador, orcamentoDTOS);
+        }).collect(Collectors.toList());
 
     }
 
     //Buscar prestador por id
     @GetMapping("/{id}")
-    public List<Prestador> consultarPrestadorUnico(@PathVariable int id){
+    public PrestadorDTO consultarPrestadorUnico(@PathVariable int id){
         return prestadorService.consultarPrestadorUnico(id);
     }
 
     //Buscar prestador por nome
     @GetMapping("/nome/{nome}")
-    public List<Prestador> getPrestadoresByName(@PathVariable String nome){
+    public List<PrestadorDTO> consultarPrestadoresPorNome(@PathVariable String nome){
         return prestadorService.consultarPrestadorPorNome(nome);
     }
 
     //Buscar prestador por especialidade
     @GetMapping("/especialidade/{especialidade}")
-    public List<Prestador> getPrestadoresByEspecialidades(@PathVariable String especialidade) {
+    public List<PrestadorDTO> getPrestadoresByEspecialidades(@PathVariable String especialidade) {
         return prestadorService.consultarPrestadorPorEspecialidades(especialidade);
     }
 
     //Buscar prestador por status disponibilidade
     @GetMapping("/status/{status}")
-    public List<Prestador> getPrestadoresByStatusDisponibilidade(@PathVariable StatusDisponibilidadeEnum status) {
+    public List<PrestadorDTO> getPrestadoresByStatusDisponibilidade(@PathVariable StatusDisponibilidadeEnum status) {
         return prestadorService.consultarPrestadorPorStatusDisponiblidade(status);
     }
 
 
     @PutMapping("{id}")
-    public Prestador alterarPrestador(@RequestBody PrestadorUpdateDTO prestadorUpdateDTO, @PathVariable("id") int id){
+    public PrestadorDTO alterarPrestador(@RequestBody PrestadorUpdateDTO prestadorUpdateDTO, @PathVariable("id") int id){
             return prestadorService.alterarPrestador(id, prestadorUpdateDTO);
     }
 

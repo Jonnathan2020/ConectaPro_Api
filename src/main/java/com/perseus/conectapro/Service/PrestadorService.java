@@ -1,21 +1,17 @@
 package com.perseus.conectapro.Service;
 
-import com.perseus.conectapro.DTO.PrestadorCreateDTO;
-import com.perseus.conectapro.DTO.PrestadorUpdateDTO;
-import com.perseus.conectapro.DTO.ViaCepDTO;
-import com.perseus.conectapro.Entity.Endereco;
+import com.perseus.conectapro.DTO.*;
+import com.perseus.conectapro.Entity.*;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoUsuarioEnum;
-import com.perseus.conectapro.Entity.Plano;
-import com.perseus.conectapro.Entity.Prestador;
-import com.perseus.conectapro.Repository.AvaliacaoRepository;
-import com.perseus.conectapro.Repository.EnderecoRepository;
-import com.perseus.conectapro.Repository.PlanoRepository;
-import com.perseus.conectapro.Repository.PrestadorRepository;
+import com.perseus.conectapro.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Arrays.stream;
 
 @Service
 public class PrestadorService {
@@ -32,6 +28,10 @@ public class PrestadorService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private ViaCepService viaCepService;
+    @Autowired
+    private OrcamentoRepository orcamentoRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     //cadastrar as informaçoes alem do usuario, faltantes para um prestador
     public Prestador cadastrarPrestador(PrestadorCreateDTO prestadorDTO) {
@@ -78,29 +78,104 @@ public class PrestadorService {
     }
 
     //consultar somente prestadores de servico
-    public List<Prestador> consultarPrestadores() {
-        return prestadorRepository.findAll(); //precisa ser exibido somente usuarios que são prestadores de serviço
-    }
+    //public List<PrestadorDTO> consultarPrestadores(){}
 
     //consultar prestador especifico
-    public List<Prestador> consultarPrestadorUnico(int id) {
-        List<Prestador> prestadorEspecifico = prestadorRepository.findByIdUsuario(id);
-        //.orElseThrow(() -> new IllegalArgumentException("Prestador não encontrado!!"));
-        return prestadorEspecifico;
+    public PrestadorDTO consultarPrestadorUnico(int id) {
+        Prestador prestadorEspecifico = prestadorRepository.findByIdUsuario(id);
+        if (prestadorEspecifico == null) {
+            throw new IllegalArgumentException("Prestador não encontrado!");
+        }
+
+        List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(prestadorEspecifico);
+
+        List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
+                .map(orcamento -> new OrcamentoDTO(
+                        orcamento.getIdOrcamento(),
+                        orcamento.getValorOrcamento(),
+                        orcamento.getDuracaoServico(),
+                        orcamento.getFormaPagtoEnum(),
+                        orcamento.getPrevisaoInicio(),
+                        orcamento.getNvlUrgencia(), orcamento.getTipoCategoriaEnum())).collect(Collectors.toList());
+
+        return new PrestadorDTO(prestadorEspecifico, orcamentoDTOS);
     }
 
     //consultar pelo nome
-    public List<Prestador> consultarPrestadorPorNome(String nome){
-        return prestadorRepository.findByNomeContainingIgnoreCase(nome);
+    public List<PrestadorDTO> consultarPrestadorPorNome(String nome) {
+        List<Prestador> prestadores = prestadorRepository.findByNomeContainingIgnoreCase(nome);
+
+        if (prestadores == null) {
+            throw new IllegalArgumentException("Nenhum Prestador encontrado!");
+        }
+
+        return prestadores.stream().map(prestador -> {
+            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(prestador);
+
+            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
+                    .map(orcamento -> new OrcamentoDTO(
+                            orcamento.getIdOrcamento(),
+                            orcamento.getValorOrcamento(),
+                            orcamento.getDuracaoServico(),
+                            orcamento.getFormaPagtoEnum(),
+                            orcamento.getPrevisaoInicio(),
+                            orcamento.getNvlUrgencia(),
+                            orcamento.getTipoCategoriaEnum()))
+                    .collect(Collectors.toList());
+
+            return new PrestadorDTO(prestador, orcamentoDTOS);
+        }).collect(Collectors.toList());
     }
 
     //consultar pela especialidade
-    public List<Prestador> consultarPrestadorPorEspecialidades(String especialidades) {
-        return prestadorRepository.findByEspecialidadesContaining(especialidades);
+    public List<PrestadorDTO> consultarPrestadorPorEspecialidades(String especialidades) {
+        List<Prestador> prestadores = prestadorRepository.findByEspecialidadesContaining(especialidades);
+
+        if (prestadores == null) {
+            throw new IllegalArgumentException("Nenhum Prestador encontrado!");
+        }
+
+        return prestadores.stream().map(prestador -> {
+            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(prestador); // ou .findByPrestadorId(prestador.getId())
+
+            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
+                    .map(orcamento -> new OrcamentoDTO(
+                            orcamento.getIdOrcamento(),
+                            orcamento.getValorOrcamento(),
+                            orcamento.getDuracaoServico(),
+                            orcamento.getFormaPagtoEnum(),
+                            orcamento.getPrevisaoInicio(),
+                            orcamento.getNvlUrgencia(),
+                            orcamento.getTipoCategoriaEnum()))
+                    .collect(Collectors.toList());
+
+            return new PrestadorDTO(prestador, orcamentoDTOS);
+        }).collect(Collectors.toList());
     }
 
-    public List<Prestador> consultarPrestadorPorStatusDisponiblidade(StatusDisponibilidadeEnum status) {
-        return prestadorRepository.findByStatusDisponibilidade(status);
+    public List<PrestadorDTO> consultarPrestadorPorStatusDisponiblidade(StatusDisponibilidadeEnum status) {
+        List<Prestador> prestadores = prestadorRepository.findByStatusDisponibilidade(status);
+
+        if (prestadores == null) {
+            throw new IllegalArgumentException("Nenhum Prestador encontrado!");
+        }
+
+        return prestadores.stream().map(prestador -> {
+            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(prestador); // ou .findByPrestadorId(prestador.getId())
+
+            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
+                    .map(orcamento -> new OrcamentoDTO(
+                            orcamento.getIdOrcamento(),
+                            orcamento.getValorOrcamento(),
+                            orcamento.getDuracaoServico(),
+                            orcamento.getFormaPagtoEnum(),
+                            orcamento.getPrevisaoInicio(),
+                            orcamento.getNvlUrgencia(),
+                            orcamento.getTipoCategoriaEnum()))
+                    .collect(Collectors.toList());
+
+            return new PrestadorDTO(prestador, orcamentoDTOS);
+        }).collect(Collectors.toList());
     }
 
     // Metodo para validação das informações durante a atualização do prestador
@@ -125,9 +200,8 @@ public class PrestadorService {
         }
     }
 
-
     //alterar informaçoes somente do prestador
-    public Prestador alterarPrestador(int idUsuario, PrestadorUpdateDTO prestadorUpdateDTO) {
+    public PrestadorDTO alterarPrestador(int idUsuario, PrestadorUpdateDTO prestadorUpdateDTO) {
         validarAtualizacaoPrestador(prestadorUpdateDTO);
 
         Prestador prestadorExistente = prestadorRepository.findById(idUsuario)
@@ -146,9 +220,21 @@ public class PrestadorService {
         if (prestadorUpdateDTO.getStatusDisponibilidade() != null){
             prestadorExistente.setStatusDisponibilidade(prestadorUpdateDTO.getStatusDisponibilidade());
         }
+        List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(prestadorExistente);
+
+        List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
+                .map(orcamento -> new OrcamentoDTO(
+                        orcamento.getIdOrcamento(),
+                        orcamento.getValorOrcamento(),
+                        orcamento.getDuracaoServico(),
+                        orcamento.getFormaPagtoEnum(),
+                        orcamento.getPrevisaoInicio(),
+                        orcamento.getNvlUrgencia(),
+                        orcamento.getTipoCategoriaEnum())).collect(Collectors.toList());
 
         //metodo que salva as informaçoes do prestador
-        return prestadorRepository.save(prestadorExistente);
+        Prestador prestadorAtualizado = prestadorRepository.save(prestadorExistente);
+        return new PrestadorDTO(prestadorAtualizado, orcamentoDTOS);
     }
 
     //deletar usuario pelo id

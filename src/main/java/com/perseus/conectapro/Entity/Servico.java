@@ -1,10 +1,15 @@
 package com.perseus.conectapro.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.perseus.conectapro.Entity.Enuns.NvlUrgencia;
 import com.perseus.conectapro.Entity.Enuns.SituacaoServicoEnum;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
+import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,13 +29,17 @@ public class Servico {
     @JoinColumn(name = "ID_PRESTADOR")
     private Prestador idPrestador;
 
+    @ManyToOne
+    @JoinColumn(name = "ID_EMPRESA_CLIENTE")
+    private EmpresaCliente idEmpresaCliente;
+
     @OneToOne
     @JoinColumn(name = "ID_SEGMENTO")
     private Segmento idSegmento;
 
     @ManyToOne
-    @JoinColumn(name = "ID_EMPRESA_CLIENTE")
-    private EmpresaCliente idEmpresaCliente;
+    @JoinColumn(name = "ID_ORCAMENTO")
+    private Orcamento orcamento;
 
     @Column(name = "VALOR_CONTRATACAO")
     private Float valorContratacao;
@@ -50,4 +59,14 @@ public class Servico {
     @Enumerated(EnumType.STRING)
     @Column(name = "SITUACAO_SERVICO")
     private SituacaoServicoEnum situacaoServico;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "NIVEL_URGENCIA")
+    private NvlUrgencia nvlUrgencia;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TIPO_CATEGORIA")
+    private TipoCategoriaEnum tipoCategoriaEnum;
+
+
 }

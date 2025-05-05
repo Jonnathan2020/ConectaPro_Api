@@ -1,10 +1,13 @@
 package com.perseus.conectapro.Controller;
 
 import com.perseus.conectapro.DTO.EmpresaClienteCreateDTO;
+import com.perseus.conectapro.DTO.EmpresaClienteDTO;
 import com.perseus.conectapro.DTO.EmpresaClienteUpdateDTO;
+import com.perseus.conectapro.DTO.OrcamentoDTO;
 import com.perseus.conectapro.Entity.EmpresaCliente;
-import com.perseus.conectapro.Entity.Usuario;
+import com.perseus.conectapro.Entity.Orcamento;
 import com.perseus.conectapro.Repository.EmpresaClienteRepository;
+import com.perseus.conectapro.Repository.OrcamentoRepository;
 import com.perseus.conectapro.Service.EmpresaClienteService;
 import jakarta.validation.Valid;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -29,10 +33,12 @@ public class EmpresaClienteController {
     private EmpresaClienteService empresaClienteService;
     @Autowired
     private EmpresaClienteRepository empresaClienteRepository;
+    @Autowired
+    private OrcamentoRepository orcamentoRepository;
 
     //listar empresas
     @GetMapping
-    public List<EmpresaCliente> consultarEmpresas(
+    public List<EmpresaClienteDTO> consultarEmpresas(
             @And({
                     @Spec(path = "idUsuario", spec = Equal.class),
                     @Spec(path = "cnpj", spec = Like.class),
@@ -45,18 +51,33 @@ public class EmpresaClienteController {
             if (clientes.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhuma empresa encontrada com os filtros fornecidos.");
             }
-            return clientes;
+
+        return clientes.stream().map(empresaCliente -> {
+            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(empresaCliente);
+
+            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
+                    .map(orcamento -> new OrcamentoDTO(
+                            orcamento.getIdOrcamento(),
+                            orcamento.getValorOrcamento(),
+                            orcamento.getDuracaoServico(),
+                            orcamento.getFormaPagtoEnum(),
+                            orcamento.getPrevisaoInicio(),
+                            orcamento.getNvlUrgencia(), orcamento.getTipoCategoriaEnum()))
+                    .collect(Collectors.toList());
+
+            return new EmpresaClienteDTO(empresaCliente, orcamentoDTOS);
+        }).collect(Collectors.toList());
     }
 
     //Buscar empresa por id
     @GetMapping("/{id}")
-    public EmpresaCliente consultarEmpresa(@PathVariable int id){
+    public EmpresaClienteDTO consultarEmpresaEspecifica(@PathVariable int id){
         return empresaClienteService.consultarEmpresaEspecifica(id);
     }
 
     //Buscar empresa por nome
     @GetMapping("/nome/{nome}")
-    public List<EmpresaCliente> getEmpresaByName(@PathVariable String nome){
+    public List<EmpresaClienteDTO> getEmpresaByName(@PathVariable String nome){
         return empresaClienteService.consultarEmpresaPorNome(nome);
     }
 
@@ -68,8 +89,8 @@ public class EmpresaClienteController {
 
     //Alterar informações da empresa
     @PutMapping("/{id}")
-    public ResponseEntity<EmpresaCliente> alterarEmpresa(@RequestBody EmpresaClienteUpdateDTO empresaClienteUpdateDTO, @PathVariable("id") int id){
-            EmpresaCliente empresaAtualizada = empresaClienteService.alterarEmpresaCliente(id, empresaClienteUpdateDTO);
+    public ResponseEntity<EmpresaClienteDTO> alterarEmpresa(@RequestBody EmpresaClienteUpdateDTO empresaClienteUpdateDTO, @PathVariable("id") int id){
+            EmpresaClienteDTO empresaAtualizada = empresaClienteService.alterarEmpresaCliente(id, empresaClienteUpdateDTO);
             return ResponseEntity.status(HttpStatus.OK).body(empresaAtualizada);
     }
 

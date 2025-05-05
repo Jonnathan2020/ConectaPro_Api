@@ -1,27 +1,98 @@
 package com.perseus.conectapro.Service;
 
-import com.perseus.conectapro.DTO.ServicoUpdateDTO;
-import com.perseus.conectapro.Entity.Servico;
+import ch.qos.logback.classic.Logger;
+import com.perseus.conectapro.DTO.*;
+import com.perseus.conectapro.Entity.*;
+import com.perseus.conectapro.Entity.Enuns.SituacaoServicoEnum;
+import com.perseus.conectapro.Entity.Enuns.TipoUsuarioEnum;
+import com.perseus.conectapro.Repository.EmpresaClienteRepository;
+import com.perseus.conectapro.Repository.OrcamentoRepository;
+import com.perseus.conectapro.Repository.PrestadorRepository;
 import com.perseus.conectapro.Repository.ServicoRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
+@Slf4j
 @Service
 public class ServicoService {
-
+    @Autowired
+    private PrestadorRepository prestadorRepository;
+    @Autowired
+    private EmpresaClienteRepository empresaClienteRepository;
     @Autowired
     private ServicoRepository servicoRepository;
+    @Autowired
+    private OrcamentoRepository orcamentoRepository;
 
     //cadastrar servico utilizando jpa repository
-    public Servico cadastrarServico(Servico servico){
-        return servicoRepository.save(servico);
+    public ServicoDTO cadastrarServico(ServicoCreateDTO servicoCreateDTO){
+
+
+        Orcamento orcamento = orcamentoRepository.findById(servicoCreateDTO.getIdOrcamento())
+                .orElseThrow(() -> new IllegalArgumentException("Orçamento não encontrado"));
+
+
+        Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        Servico servico = new Servico();
+
+        if (usuario == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário não encontrado");
+        }
+
+        if (usuario instanceof Prestador) {
+            Prestador prestador = (Prestador) usuario;
+            servico.setIdPrestador(prestador);
+            EmpresaCliente cliente = orcamento.getIdEmpresaCliente();
+            servico.setIdEmpresaCliente(cliente);
+        }
+        else if (usuario instanceof EmpresaCliente) {
+            EmpresaCliente cliente = (EmpresaCliente) usuario;
+            servico.setIdEmpresaCliente(cliente);
+            servico.setIdPrestador(orcamento.getIdPrestador());
+
+        }
+        else {
+            throw new IllegalArgumentException("Tipo de usuário não suportado para criar serviço.");
+        }
+
+        servico.setOrcamento(orcamento);
+        servico.setSituacaoServico(SituacaoServicoEnum.ORCAMENTO);
+        servico.setDataInclusao(servicoCreateDTO.getDataInclusao());
+        servico.setDataAprovacao(servicoCreateDTO.getDataAprovacao());
+        servico.setDataExecucao(servicoCreateDTO.getDataExecucao());
+        servico.setDataPagamento(servicoCreateDTO.getDataPagamento());
+        servico.setIdSegmento(servicoCreateDTO.getIdSegmento());
+        servico.setValorContratacao(servicoCreateDTO.getValorContratacao());
+
+        Servico servicoCriado = servicoRepository.save(servico);
+        return new ServicoDTO(servicoCriado);
     }
 
     //consultar servicos
-    public List<Servico> consultarServicos(){
-        return servicoRepository.findAll();
+    public List<ServicoDTO> consultarServicos(){
+        List<Servico> servicos  =  servicoRepository.findAll();
+        if(servicos.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return servicos.stream()
+                .map(ServicoDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public ServicoDTO consultarServicoPorId(int idServico) {
+        Servico servicoEspecifico = servicoRepository.findById(idServico)
+                .orElseThrow(() -> new IllegalArgumentException(("Nenhum orçamento encontrado com essas informações,!")));
+        return new ServicoDTO(servicoEspecifico);
     }
 
     //alterar informações do usuario
@@ -29,8 +100,8 @@ public class ServicoService {
         Servico servicoExistente = servicoRepository.findById(idServico)
                 .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado!!"));
 
-        if(servicoUpdateDTO.getIdSituacaoServico() != null){
-            servicoExistente.setSituacaoServico(servicoUpdateDTO.getIdSituacaoServico());
+        if(servicoUpdateDTO.getSituacaoServicoEnum() != null){
+            servicoExistente.setSituacaoServico(servicoUpdateDTO.getSituacaoServicoEnum());
         }
         if(servicoUpdateDTO.getDataInclusao() != null){
             servicoExistente.setDataInclusao(servicoUpdateDTO.getDataInclusao());
@@ -55,12 +126,5 @@ public class ServicoService {
     //deletar servico
     public void delete(int idServico){
         servicoRepository.deleteById(idServico);
-    }
-
-    public Servico consultarServicoPorId(int idServico) {
-        Servico servicoEspecifico = servicoRepository.findById(idServico)
-                .orElseThrow(() -> new IllegalArgumentException("Servico não encontrado!!"));
-
-        return servicoEspecifico;
     }
 }

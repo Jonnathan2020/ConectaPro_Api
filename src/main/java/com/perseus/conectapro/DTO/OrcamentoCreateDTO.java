@@ -1,0 +1,25 @@
+package com.perseus.conectapro.DTO;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
+import com.perseus.conectapro.Entity.Enuns.NvlUrgencia;
+import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
+import com.perseus.conectapro.Entity.Prestador;
+import lombok.Getter;
+import lombok.Setter;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+@Getter
+@Setter
+public class OrcamentoCreateDTO {
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "0.000,00")
+    private BigDecimal valorOrcamento;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    private LocalDate previsaoInicio;
+    private int duracaoServico;
+    private FormaPagtoEnum formaPagtoEnum;
+    private NvlUrgencia nvlUrgencia;
+    private TipoCategoriaEnum tipoCategoriaEnum;
+}

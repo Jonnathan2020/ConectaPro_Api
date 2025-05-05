@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 public class ServicoUpdateDTO {
 
-    private SituacaoServicoEnum idSituacaoServico;
+    private SituacaoServicoEnum situacaoServicoEnum;
     private Float valorContratacao;
     private LocalDateTime dataAprovacao;
     private LocalDateTime dataExecucao;

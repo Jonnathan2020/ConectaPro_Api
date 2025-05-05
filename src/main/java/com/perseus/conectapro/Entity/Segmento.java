@@ -9,7 +9,6 @@ import lombok.Setter;
 @Setter
 @Table(name = "TBL_SEGMENTO")
 public class Segmento {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID_SEGMENTO")
@@ -17,6 +16,4 @@ public class Segmento {
 
     @Column(name = "DESC_SEGMENTO")
     private String descSegmento;
-
-
 }

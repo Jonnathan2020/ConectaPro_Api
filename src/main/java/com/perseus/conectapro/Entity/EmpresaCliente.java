@@ -23,6 +23,9 @@ public class EmpresaCliente extends Usuario {
     @OneToMany(mappedBy = "idEmpresaCliente")
     private List<Servico> servicos;
 
+    @OneToMany(mappedBy = "idPrestador")
+    private List<Orcamento> orcamentos;
+
     @PrePersist
     @PreUpdate
     public void formatarCnpj() {

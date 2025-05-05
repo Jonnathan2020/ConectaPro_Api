@@ -1,19 +1,18 @@
 package com.perseus.conectapro.Service;
 
-import com.perseus.conectapro.DTO.EmpresaClienteCreateDTO;
-import com.perseus.conectapro.DTO.EmpresaClienteUpdateDTO;
-import com.perseus.conectapro.DTO.ViaCepDTO;
-import com.perseus.conectapro.Entity.EmpresaCliente;
-import com.perseus.conectapro.Entity.Endereco;
+import com.perseus.conectapro.DTO.*;
+import com.perseus.conectapro.Entity.*;
 import com.perseus.conectapro.Entity.Enuns.TipoUsuarioEnum;
-import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.EmpresaClienteRepository;
 import com.perseus.conectapro.Repository.EnderecoRepository;
+import com.perseus.conectapro.Repository.OrcamentoRepository;
+import com.perseus.conectapro.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmpresaClienteService {
@@ -27,10 +26,10 @@ public class EmpresaClienteService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private ViaCepService viaCepService;
-
-    public List<EmpresaCliente> consultarEmpresaPorNome(String nome) {
-        return empresaClienteRepository.findByNomeContainingIgnoreCase(nome);
-    }
+    @Autowired
+    private OrcamentoRepository orcamentoRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     //cadastrar as informaçoes alem do usuario, faltantes para uma empresa cliente
     public EmpresaCliente cadastrarEmpresaCliente(EmpresaClienteCreateDTO empresaClienteCreateDTO) {
@@ -51,7 +50,7 @@ public class EmpresaClienteService {
 
         //Persistindo o Endereco
         endereco = enderecoRepository.save(endereco);
-        
+
         EmpresaCliente empresaCliente = new EmpresaCliente();
         empresaCliente.setCnpj(empresaClienteCreateDTO.getCnpj());
         empresaCliente.setRazaoSocial(empresaClienteCreateDTO.getRazaoSocial());
@@ -75,10 +74,52 @@ public class EmpresaClienteService {
     }
 
     //consultar empresa cliente especifica
-    public EmpresaCliente consultarEmpresaEspecifica(int idUsuario){
-        EmpresaCliente empresaClienteEspecifica = empresaClienteRepository.findById(idUsuario).orElseThrow(() -> new IllegalArgumentException("Empresa não encontrada!!"));
+    public EmpresaClienteDTO consultarEmpresaEspecifica(int id){
 
-        return empresaClienteEspecifica;
+        EmpresaCliente empresaClienteEspecifico = empresaClienteRepository.findByIdUsuario(id);
+
+        if (empresaClienteEspecifico == null) {
+            throw new IllegalArgumentException("Cliente não encontrado!");
+        }
+
+        List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(empresaClienteEspecifico);
+
+        List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
+                .map(orcamento -> new OrcamentoDTO(
+                        orcamento.getIdOrcamento(),
+                        orcamento.getValorOrcamento(),
+                        orcamento.getDuracaoServico(),
+                        orcamento.getFormaPagtoEnum(),
+                        orcamento.getPrevisaoInicio(),
+                        orcamento.getNvlUrgencia(), orcamento.getTipoCategoriaEnum())).collect(Collectors.toList());
+
+        return new EmpresaClienteDTO(empresaClienteEspecifico, orcamentoDTOS);
+    }
+
+    public List<EmpresaClienteDTO> consultarEmpresaPorNome(String nome) {
+        List<EmpresaCliente> clientes = empresaClienteRepository.findByNomeContainingIgnoreCase(nome);
+
+        if (clientes == null){
+            throw new IllegalArgumentException("Nenhum usuário cliente encontrado!!");
+        }
+
+        return clientes.stream().map(empresaCliente -> {
+            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(empresaCliente);
+
+            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
+                    .map(orcamento -> new OrcamentoDTO(
+                            orcamento.getIdOrcamento(),
+                            orcamento.getValorOrcamento(),
+                            orcamento.getDuracaoServico(),
+                            orcamento.getFormaPagtoEnum(),
+                            orcamento.getPrevisaoInicio(),
+                            orcamento.getNvlUrgencia(),
+                            orcamento.getTipoCategoriaEnum()
+                    ))
+                    .collect(Collectors.toList());
+
+            return new EmpresaClienteDTO(empresaCliente, orcamentoDTOS);
+        }).collect(Collectors.toList());
     }
 
     // Metodo para validacao das informacoes durante a atualizacao da empresa
@@ -100,24 +141,37 @@ public class EmpresaClienteService {
     }
 
     //alterar informaçoes somente da empresa
-    public EmpresaCliente alterarEmpresaCliente(int idUsuario, EmpresaClienteUpdateDTO empresaClienteUpdateDTO){
-       validarAtualizacaoEmpresa(empresaClienteUpdateDTO);
+    public EmpresaClienteDTO alterarEmpresaCliente(int idUsuario, EmpresaClienteUpdateDTO empresaClienteUpdateDTO){
+        validarAtualizacaoEmpresa(empresaClienteUpdateDTO);
 
-        EmpresaCliente empresaExistente = empresaClienteRepository.findById(idUsuario)
-                .orElseThrow(() -> new IllegalArgumentException("Empresa não encontrada!!"));
+        EmpresaCliente clienteExistente = empresaClienteRepository.findById(idUsuario)
+                .orElseThrow(() -> new IllegalArgumentException("Prestador não encontrado!!"));
 
         if(empresaClienteUpdateDTO.getCnpj() != null){
-            empresaExistente.setCnpj(empresaClienteUpdateDTO.getCnpj());
+            clienteExistente.setCnpj(empresaClienteUpdateDTO.getCnpj());
         }
         if(empresaClienteUpdateDTO.getRazaoSocial() != null){
-            empresaExistente.setRazaoSocial(empresaClienteUpdateDTO.getRazaoSocial());
+            clienteExistente.setRazaoSocial(empresaClienteUpdateDTO.getRazaoSocial());
         }
         if(empresaClienteUpdateDTO.getNomeFantasia() != null){
-            empresaExistente.setNomeFantasia(empresaClienteUpdateDTO.getNomeFantasia());
+            clienteExistente.setNomeFantasia(empresaClienteUpdateDTO.getNomeFantasia());
         }
+        List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(clienteExistente);
+
+        List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
+                .map(orcamento -> new OrcamentoDTO(
+                        orcamento.getIdOrcamento(),
+                        orcamento.getValorOrcamento(),
+                        orcamento.getDuracaoServico(),
+                        orcamento.getFormaPagtoEnum(),
+                        orcamento.getPrevisaoInicio(),
+                        orcamento.getNvlUrgencia(),
+                        orcamento.getTipoCategoriaEnum())).collect(Collectors.toList());
 
         //metodo que salva as informaçoes do prestador
-        return empresaClienteRepository.save(empresaExistente);
+        EmpresaCliente clienteAtualizado = empresaClienteRepository.save(clienteExistente);
+        return new EmpresaClienteDTO(clienteAtualizado, orcamentoDTOS);
+
     }
 
     //deletar usuario pelo id

@@ -1,9 +1,7 @@
 package com.perseus.conectapro.Repository;
 
 
-import com.perseus.conectapro.Entity.EmpresaCliente;
-import com.perseus.conectapro.Entity.Prestador;
-import com.perseus.conectapro.Entity.Servico;
+import com.perseus.conectapro.Entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;

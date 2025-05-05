@@ -1,5 +1,6 @@
 package com.perseus.conectapro.Entity;
 
+import com.perseus.conectapro.DTO.OrcamentoDTO;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -16,7 +17,7 @@ public class Prestador extends Usuario {
     @Column(name = "CPF")
     private String cpf;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "ESPECIALIDADES", joinColumns = @JoinColumn(name = "ID_USUARIO"))
     @Column(name = "ESPECIALIDADE")
     private List<String> especialidades;
@@ -31,6 +32,9 @@ public class Prestador extends Usuario {
 
     @OneToMany(mappedBy = "idPrestador")
     private List<Avaliacao> avaliacoes;
+
+    @OneToMany(mappedBy = "idPrestador")
+    private List<Orcamento> orcamentos;
 
     @OneToMany(mappedBy = "idPrestador")
     private List<Servico> servicos;
