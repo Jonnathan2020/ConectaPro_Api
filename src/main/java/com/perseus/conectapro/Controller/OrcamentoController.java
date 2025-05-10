@@ -7,6 +7,7 @@ import com.perseus.conectapro.Entity.Orcamento;
 import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Repository.OrcamentoRepository;
 import com.perseus.conectapro.Service.OrcamentoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@SecurityRequirement(name = "bearerAuth")
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/orcamento")

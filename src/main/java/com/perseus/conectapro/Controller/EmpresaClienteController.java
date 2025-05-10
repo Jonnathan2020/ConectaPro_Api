@@ -6,6 +6,7 @@ import com.perseus.conectapro.Entity.EmpresaCliente;
 import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.EmpresaClienteRepository;
 import com.perseus.conectapro.Service.EmpresaClienteService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
@@ -31,6 +32,7 @@ public class EmpresaClienteController {
     private EmpresaClienteRepository empresaClienteRepository;
 
     //listar empresas
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping
     public List<EmpresaCliente> consultarEmpresas(
             @And({
@@ -49,16 +51,19 @@ public class EmpresaClienteController {
     }
 
     //Buscar empresa por id
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/{id}")
     public EmpresaCliente consultarEmpresa(@PathVariable int id){
         return empresaClienteService.consultarEmpresaEspecifica(id);
     }
 
     //Buscar empresa por nome
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/nome/{nome}")
     public List<EmpresaCliente> getEmpresaByName(@PathVariable String nome){
         return empresaClienteService.consultarEmpresaPorNome(nome);
     }
+
 
     @PostMapping("/registro")
     public ResponseEntity<EmpresaCliente> cadastrarEmpresa(@RequestBody @Valid EmpresaClienteCreateDTO empresaClienteDTO){
@@ -67,12 +72,14 @@ public class EmpresaClienteController {
     }
 
     //Alterar informações da empresa
+    @SecurityRequirement(name = "bearerAuth")
     @PutMapping("/{id}")
     public ResponseEntity<EmpresaCliente> alterarEmpresa(@RequestBody EmpresaClienteUpdateDTO empresaClienteUpdateDTO, @PathVariable("id") int id){
             EmpresaCliente empresaAtualizada = empresaClienteService.alterarEmpresaCliente(id, empresaClienteUpdateDTO);
             return ResponseEntity.status(HttpStatus.OK).body(empresaAtualizada);
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id){
         empresaClienteService.delete(id);

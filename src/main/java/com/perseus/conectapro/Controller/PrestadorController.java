@@ -2,12 +2,11 @@ package com.perseus.conectapro.Controller;
 
 import com.perseus.conectapro.DTO.PrestadorCreateDTO;
 import com.perseus.conectapro.DTO.PrestadorUpdateDTO;
-import com.perseus.conectapro.Entity.EmpresaCliente;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Prestador;
-import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.PrestadorRepository;
 import com.perseus.conectapro.Service.PrestadorService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
@@ -33,6 +32,7 @@ public class PrestadorController {
     private PrestadorRepository prestadorRepository;
 
     //listar prestadores
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping
     public List<Prestador> consultarPrestadores(
             @And({
@@ -52,30 +52,35 @@ public class PrestadorController {
     }
 
     //Buscar prestador por id
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/{id}")
     public List<Prestador> consultarPrestadorUnico(@PathVariable int id){
         return prestadorService.consultarPrestadorUnico(id);
     }
 
     //Buscar prestador por nome
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/nome/{nome}")
     public List<Prestador> getPrestadoresByName(@PathVariable String nome){
         return prestadorService.consultarPrestadorPorNome(nome);
     }
 
     //Buscar prestador por especialidade
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/especialidade/{especialidade}")
     public List<Prestador> getPrestadoresByEspecialidades(@PathVariable String especialidade) {
         return prestadorService.consultarPrestadorPorEspecialidades(especialidade);
     }
 
     //Buscar prestador por status disponibilidade
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/status/{status}")
     public List<Prestador> getPrestadoresByStatusDisponibilidade(@PathVariable StatusDisponibilidadeEnum status) {
         return prestadorService.consultarPrestadorPorStatusDisponiblidade(status);
     }
 
 
+    @SecurityRequirement(name = "bearerAuth")
     @PutMapping("{id}")
     public Prestador alterarPrestador(@RequestBody PrestadorUpdateDTO prestadorUpdateDTO, @PathVariable("id") int id){
             return prestadorService.alterarPrestador(id, prestadorUpdateDTO);
@@ -87,6 +92,7 @@ public class PrestadorController {
         return ResponseEntity.status(HttpStatus.CREATED).body(prestadorCriado);
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id){
         prestadorService.delete(id);

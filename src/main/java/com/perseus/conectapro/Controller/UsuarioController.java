@@ -5,6 +5,7 @@ import com.perseus.conectapro.DTO.UsuarioUpdateDTO;
 import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.UsuarioRepository;
 import com.perseus.conectapro.Service.UsuarioService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
@@ -34,12 +35,14 @@ public class UsuarioController {
     //                         "senha": "senhaforte123"
 
     //Rota somente para admin
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/admin")
     private String getAdmin(){
         return "Permissão de administrador";
     }
 
     //Rota somente para usuario
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/user")
     private String getUser(){
         return "Permissão de usuário";
@@ -47,6 +50,7 @@ public class UsuarioController {
 
 
     //Listar usuario
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping
     public List<Usuario> listarUsuario(
             @And({
@@ -70,18 +74,21 @@ public class UsuarioController {
     }
 
     //Buscar usuário por id
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/{id}")
     public Usuario consultarUsuarioPorId(@PathVariable int id){
         return usuarioService.consultarUsuarioPorId(id);
     }
 
     //Buscar usuário pelo nome
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/nome/{nome}")
     public List<Usuario> getUsuarioByName(@PathVariable String nome){
         return usuarioService.consultarUsuarioPorNome(nome);
     }
 
     //Alterar usuário
+    @SecurityRequirement(name = "bearerAuth")
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> alterarUsuario(@RequestBody UsuarioUpdateDTO usuarioUpdateDTO, @PathVariable("id") int id){
         Usuario usuarioAtualizado = usuarioService.alterarUsuario(id, usuarioUpdateDTO);
@@ -95,6 +102,7 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioCriado);
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id){
         usuarioService.delete(id);

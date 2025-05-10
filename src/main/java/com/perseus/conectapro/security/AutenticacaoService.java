@@ -29,12 +29,7 @@ public class AutenticacaoService implements TokenService {
         return usuarioRepository.findByEmail(email);
     }
 
-    @Override
-    public String obterToken(LoginDTO loginDTO) {
-        Usuario usuario = usuarioRepository.findByEmail(loginDTO.email());
 
-        return gerarTokenJwt(usuario);
-    }
 
     public String gerarTokenJwt(Usuario usuario){
         try {
@@ -49,6 +44,13 @@ public class AutenticacaoService implements TokenService {
         } catch (JWTCreationException exception) {
             throw new RuntimeException("Erro ao tentar gerar o token!!" + exception.getMessage());
         }
+    }
+
+    @Override
+    public String obterToken(LoginDTO loginDTO) {
+        Usuario usuario = usuarioRepository.findByEmail(loginDTO.email());
+
+        return gerarTokenJwt(usuario);
     }
 
     public String validarTokenJwt(String token){
