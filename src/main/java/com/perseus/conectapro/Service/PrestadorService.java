@@ -8,14 +8,15 @@ import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoUsuarioEnum;
 import com.perseus.conectapro.Entity.Plano;
 import com.perseus.conectapro.Entity.Prestador;
-import com.perseus.conectapro.Repository.AvaliacaoRepository;
-import com.perseus.conectapro.Repository.EnderecoRepository;
-import com.perseus.conectapro.Repository.PlanoRepository;
-import com.perseus.conectapro.Repository.PrestadorRepository;
+import com.perseus.conectapro.Entity.Segmento;
+import com.perseus.conectapro.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PrestadorService {
@@ -32,36 +33,45 @@ public class PrestadorService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private ViaCepService viaCepService;
+    @Autowired
+    private SegmentoRepository segmentoRepository;
+
 
     //cadastrar as informaçoes alem do usuario, faltantes para um prestador
     public Prestador cadastrarPrestador(PrestadorCreateDTO prestadorDTO) {
 
+        if (prestadorRepository.existsByEmail(prestadorDTO.getEmail())) {
+            throw new RuntimeException("E-mail já cadastrado");
+        }
+
         Plano plano = planoRepository.findById(prestadorDTO.getIdPlano())
                 .orElseThrow(() -> new RuntimeException("Plano não encontrado"));
+
+        List<Segmento> segmentos = new ArrayList<>();
+        if (prestadorDTO.getSegmentos() != null && !prestadorDTO.getSegmentos().contains(null)) {
+            segmentos = segmentoRepository.findAllById(prestadorDTO.getSegmentos());
+
+            if (segmentos.size() != prestadorDTO.getSegmentos().size()) {
+                throw new RuntimeException("Um ou mais Segmentos não foram encontrados");
+            }
+        }
 
         ViaCepDTO viaCep = viaCepService.buscarEnderecoPorCep(prestadorDTO.getCep());
 
         Endereco endereco = new Endereco();
-        //Serao definidos após a inserção do cep
         endereco.setCep(viaCep.getCep());
         endereco.setLogradouro(viaCep.getLogradouro());
         endereco.setBairro(viaCep.getBairro());
         endereco.setCidade(viaCep.getLocalidade());
         endereco.setUf(viaCep.getUf());
-
-        //Usuario definirá manualmente
         endereco.setNumero(prestadorDTO.getNumero());
         endereco.setComplemento(prestadorDTO.getComplemento());
-
-        // Persistindo o Endereco
         endereco = enderecoRepository.save(endereco);
 
         Prestador prestador = new Prestador();
         prestador.setCpf(prestadorDTO.getCpf());
         prestador.setNome(prestadorDTO.getNome());
         prestador.setEmail(prestadorDTO.getEmail());
-
-        //Criptografia da senha
         prestador.setSenha(passwordEncoder.encode(prestadorDTO.getSenha()));
         prestador.setTelefone(prestadorDTO.getTelefone());
         prestador.setTipoUsuario(TipoUsuarioEnum.PRESTADOR);
@@ -71,11 +81,12 @@ public class PrestadorService {
         prestador.setDescPrestador(prestadorDTO.getDescPrestador());
         prestador.setEspecialidades(prestadorDTO.getEspecialidades());
         prestador.setStatusDisponibilidade(prestadorDTO.getStatusDisponibilidade());
+        prestador.setSegmentos(segmentos); // lista pode estar vazia, sem problemas
         prestador.setEndereco(endereco);
-
 
         return prestadorRepository.save(prestador);
     }
+
 
     //consultar somente prestadores de servico
     public List<Prestador> consultarPrestadores() {

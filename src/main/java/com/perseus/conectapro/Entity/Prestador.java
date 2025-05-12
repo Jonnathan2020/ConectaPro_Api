@@ -16,6 +16,14 @@ public class Prestador extends Usuario {
     @Column(name = "CPF")
     private String cpf;
 
+    @ManyToMany
+    @JoinTable(
+            name = "TBL_SEGMENTO_PRESTADOR",
+            joinColumns = @JoinColumn(name = "ID_USUARIO"),
+            inverseJoinColumns = @JoinColumn(name = "ID_SEGMENTO")
+    )
+    private List<Segmento> segmentos;
+
     @ElementCollection
     @CollectionTable(name = "ESPECIALIDADES", joinColumns = @JoinColumn(name = "ID_USUARIO"))
     @Column(name = "ESPECIALIDADE")

@@ -35,6 +35,10 @@ public class EmpresaClienteService {
     //cadastrar as informaçoes alem do usuario, faltantes para uma empresa cliente
     public EmpresaCliente cadastrarEmpresaCliente(EmpresaClienteCreateDTO empresaClienteCreateDTO) {
 
+        if (empresaClienteRepository.existsByEmail(empresaClienteCreateDTO.getEmail())) {
+            throw new RuntimeException("E-mail já cadastrado");
+        }
+
         ViaCepDTO viaCep = viaCepService.buscarEnderecoPorCep(empresaClienteCreateDTO.getCep());
 
         Endereco endereco = new Endereco();

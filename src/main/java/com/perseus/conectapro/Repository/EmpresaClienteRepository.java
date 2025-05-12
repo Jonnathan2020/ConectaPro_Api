@@ -13,4 +13,6 @@ import java.util.List;
 public interface EmpresaClienteRepository extends JpaRepository<EmpresaCliente, Integer>, JpaSpecificationExecutor<EmpresaCliente> {
     List<EmpresaCliente> findByNomeContainingIgnoreCase(String name);
     List<EmpresaCliente> findByTipoUsuario(String tipoUsuario);
+    boolean existsByEmail(String email);
+
 }

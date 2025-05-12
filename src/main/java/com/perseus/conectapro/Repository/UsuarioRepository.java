@@ -12,5 +12,7 @@ import java.util.List;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>, JpaSpecificationExecutor<Usuario> {
     List<Usuario> findByNomeContainingIgnoreCase(String name);
     Usuario findByEmail(String email);
+    boolean existsByEmail(String email);
+
 
 }

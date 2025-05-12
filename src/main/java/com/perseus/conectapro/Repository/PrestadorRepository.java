@@ -14,5 +14,6 @@ public interface PrestadorRepository extends JpaRepository<Prestador, Integer>, 
     List<Prestador> findByNomeContainingIgnoreCase(String name);
     List<Prestador> findByEspecialidadesContaining(String especialidade);
     List<Prestador> findByStatusDisponibilidade(StatusDisponibilidadeEnum statusDisponibilidadeEnum);
+    boolean existsByEmail(String email);
 
 }
