@@ -3,6 +3,7 @@ package com.perseus.conectapro.Controller;
 import com.perseus.conectapro.DTO.SegmentoCreateDTO;
 import com.perseus.conectapro.Entity.Segmento;
 import com.perseus.conectapro.Service.SegmentoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/segmento")
 public class SegmentoController {
