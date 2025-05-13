@@ -39,7 +39,15 @@ public class EmpresaClienteController {
                     @Spec(path = "idUsuario", spec = Equal.class),
                     @Spec(path = "cnpj", spec = Like.class),
                     @Spec(path = "razaoSocial",  spec = Like.class),
-                    @Spec(path = "nomeFantasia", spec = Like.class)
+                    @Spec(path = "nomeFantasia", spec = Like.class),
+                    @Spec(path = "nome", spec = Like.class),
+                    @Spec(path = "email", spec = Equal.class),
+                    @Spec(path = "telefone", spec = Like.class), // Adicionando filtro para telefone
+                    @Spec(path = "tipoUsuario", spec = Equal.class), // Filtro para tipo de usuário
+                    @Spec(path = "role", spec = Equal.class),
+                    @Spec(path = "endereco.cidade", spec = Like.class), // Filtro para o relacionamento com Endereco, caso queira filtrar por algum atributo do endereço
+                    @Spec(path = "endereco.uf", spec = Equal.class),
+                    @Spec(path = "endereco.cep", spec = Like.class)
             })Specification<EmpresaCliente> spec
             ){
 

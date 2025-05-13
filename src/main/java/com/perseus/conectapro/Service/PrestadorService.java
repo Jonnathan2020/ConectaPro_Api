@@ -11,8 +11,10 @@ import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Entity.Segmento;
 import com.perseus.conectapro.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +111,21 @@ public class PrestadorService {
     public List<Prestador> consultarPrestadorPorEspecialidades(String especialidades) {
         return prestadorRepository.findByEspecialidadesContaining(especialidades);
     }
+
+    //consultar pelo segmento
+    public List<Prestador> consultarPrestadoresPorSegmento(int idSegmento) {
+        Segmento segmento = segmentoRepository.findById(idSegmento)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Segmento não encontrado"));
+
+        List<Prestador> prestadores = prestadorRepository.findBySegmentosContaining(segmento);
+
+        if (prestadores.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum prestador encontrado para o segmento informado.");
+        }
+
+        return prestadores;
+    }
+
 
     public List<Prestador> consultarPrestadorPorStatusDisponiblidade(StatusDisponibilidadeEnum status) {
         return prestadorRepository.findByStatusDisponibilidade(status);

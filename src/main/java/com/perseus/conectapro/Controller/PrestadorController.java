@@ -12,6 +12,7 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import net.kaczmarzyk.spring.data.jpa.domain.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,15 @@ public class PrestadorController {
                     @Spec(path = "idUsuario", spec = Equal.class),
                     @Spec(path = "cpf", spec = Like.class),
                     @Spec(path = "statusDisponibilidade", spec = Equal.class),
-                    @Spec(path = "idPlano.idPlano", spec = Equal.class)
+                    @Spec(path = "idPlano.idPlano", spec = Equal.class),
+                    @Spec(path = "nome", spec = Like.class),
+                    @Spec(path = "email", spec = Equal.class),
+                    @Spec(path = "telefone", spec = Like.class), // Adicionando filtro para telefone
+                    @Spec(path = "tipoUsuario", spec = Equal.class), // Filtro para tipo de usuário
+                    @Spec(path = "role", spec = Equal.class),
+                    @Spec(path = "endereco.cidade", spec = Like.class), // Filtro para o relacionamento com Endereco, caso queira filtrar por algum atributo do endereço
+                    @Spec(path = "endereco.uf", spec = Equal.class),
+                    @Spec(path = "endereco.cep", spec = Like.class)
             })Specification<Prestador> spec
             ){
 
@@ -49,6 +58,12 @@ public class PrestadorController {
         }
         return prestador;
 
+    }
+
+    //Buscar prestador pelo segmento
+    @GetMapping("/segmento/{idSegmento}")
+    public List<Prestador> consultarPrestadoresPorSegmento(@PathVariable int idSegmento) {
+        return prestadorService.consultarPrestadoresPorSegmento(idSegmento);
     }
 
     //Buscar prestador por id
