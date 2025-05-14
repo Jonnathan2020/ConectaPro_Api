@@ -1,9 +1,12 @@
 package com.perseus.conectapro.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -45,6 +48,10 @@ public class Prestador extends Usuario {
 
     @OneToMany(mappedBy = "idPrestador")
     private List<Servico> servicos;
+
+    @Column(name = "DATA_NASCIMENTO")
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate dataNascimento;
 
     @PrePersist
     @PreUpdate

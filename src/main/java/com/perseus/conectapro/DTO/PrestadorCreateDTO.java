@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -20,5 +21,6 @@ public class PrestadorCreateDTO extends UsuarioCreateDTO{
     private List<String> especialidades;
     private StatusDisponibilidadeEnum statusDisponibilidade;
     private Long idPlano;
+    private LocalDate dataNascimento;
 
 }

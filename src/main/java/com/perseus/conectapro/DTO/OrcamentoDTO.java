@@ -2,6 +2,7 @@ package com.perseus.conectapro.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
+import com.perseus.conectapro.Entity.Enuns.StatusOrcamentoEnum;
 import com.perseus.conectapro.Entity.Orcamento;
 import com.perseus.conectapro.Entity.Servico;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class OrcamentoDTO {
     private LocalDate previsaoInicio;
     private int duracaoServico;
     private FormaPagtoEnum formaPagtoEnum;
+    private StatusOrcamentoEnum statusOrcamento;
 
     public OrcamentoDTO(Orcamento orcamento) {
         this.idOrcamento = orcamento.getIdOrcamento();
@@ -30,5 +32,6 @@ public class OrcamentoDTO {
         this.previsaoInicio = orcamento.getPrevisaoInicio();
         this.duracaoServico = orcamento.getDuracaoServico();
         this.formaPagtoEnum = orcamento.getFormaPagtoEnum();
+        this.statusOrcamento = orcamento.getStatusOrcamento();
     }
 }

@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,6 +78,7 @@ public class PrestadorService {
         prestador.setEmail(prestadorDTO.getEmail());
         prestador.setSenha(passwordEncoder.encode(prestadorDTO.getSenha()));
         prestador.setTelefone(prestadorDTO.getTelefone());
+        prestador.setDataNascimento(prestadorDTO.getDataNascimento());
         prestador.setTipoUsuario(TipoUsuarioEnum.PRESTADOR);
         prestador.setCaminhoFoto(prestadorDTO.getCaminhoFoto());
         prestador.setIdPlano(plano);
@@ -151,6 +154,22 @@ public class PrestadorService {
         if (dto.getStatusDisponibilidade() != null && !dto.getStatusDisponibilidade().name().isBlank()) {
             throw new IllegalArgumentException("Status de disponibilidade inválido");
         }
+
+        if (dto.getDataNascimento() != null) {
+            LocalDate hoje = LocalDate.now();
+            LocalDate dataNascimento = dto.getDataNascimento();
+
+            if (dataNascimento.isAfter(hoje)) {
+                throw new IllegalArgumentException("A data de nascimento não pode ser no futuro");
+            }
+
+            // Exemplo: idade mínima de 18 anos
+            int idade = Period.between(dataNascimento, hoje).getYears();
+            if (idade < 18) {
+                throw new IllegalArgumentException("O prestador deve ter pelo menos 18 anos");
+            }
+        }
+
     }
 
 
@@ -173,6 +192,10 @@ public class PrestadorService {
         }
         if (prestadorUpdateDTO.getStatusDisponibilidade() != null){
             prestadorExistente.setStatusDisponibilidade(prestadorUpdateDTO.getStatusDisponibilidade());
+        }
+
+        if (prestadorUpdateDTO.getDataNascimento() != null) {
+            prestadorExistente.setDataNascimento(prestadorUpdateDTO.getDataNascimento());
         }
 
         //metodo que salva as informaçoes do prestador

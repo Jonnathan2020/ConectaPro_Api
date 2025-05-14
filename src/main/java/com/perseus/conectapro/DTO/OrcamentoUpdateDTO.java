@@ -2,6 +2,7 @@ package com.perseus.conectapro.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
+import com.perseus.conectapro.Entity.Enuns.StatusOrcamentoEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,4 +19,5 @@ public class OrcamentoUpdateDTO {
     private LocalDate previsaoInicio;
     private int duracaoServico;
     private FormaPagtoEnum formaPagtoEnum;
+    private StatusOrcamentoEnum statusOrcamento;
 }

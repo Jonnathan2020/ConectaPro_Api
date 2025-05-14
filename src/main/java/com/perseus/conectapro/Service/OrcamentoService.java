@@ -33,6 +33,7 @@ public class OrcamentoService {
         orcamento.setDuracaoServico(orcamentoCreateDTO.getDuracaoServico());
         orcamento.setValorOrcamento(orcamentoCreateDTO.getValorOrcamento());
         orcamento.setFormaPagtoEnum(orcamentoCreateDTO.getFormaPagtoEnum());
+        orcamento.setStatusOrcamento(orcamentoCreateDTO.getStatusOrcamento());
 
         return orcamentoRepository.save(orcamento);
     }
@@ -54,6 +55,11 @@ public class OrcamentoService {
         if(orcamentoUpdateDTO.getFormaPagtoEnum() !=null){
             orcamentoExistente.setFormaPagtoEnum(orcamentoUpdateDTO.getFormaPagtoEnum());
         }
+
+        if (orcamentoUpdateDTO.getStatusOrcamento() != null) {
+            orcamentoExistente.setStatusOrcamento(orcamentoUpdateDTO.getStatusOrcamento());
+        }
+
         return orcamentoRepository.save(orcamentoExistente);
     }
 

@@ -3,6 +3,7 @@ package com.perseus.conectapro.Entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
+import com.perseus.conectapro.Entity.Enuns.StatusOrcamentoEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,6 +41,10 @@ public class Orcamento {
 
     @Column(name = "DURACAO_SERVICO")
     private int duracaoServico;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS_ORCAMENTO")
+    private StatusOrcamentoEnum statusOrcamento;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "FORMA_PAGTO")
