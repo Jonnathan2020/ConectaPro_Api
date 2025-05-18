@@ -1,12 +1,12 @@
 package com.perseus.conectapro.Entity;
 
+import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
+import com.perseus.conectapro.Entity.Enuns.NvlUrgenciaEnum;
 import com.perseus.conectapro.Entity.Enuns.SituacaoServicoEnum;
-import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import java.text.DateFormat;
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,15 +22,15 @@ public class Servico {
 
     @ManyToOne
     @JoinColumn(name = "ID_PRESTADOR")
-    private Prestador idPrestador;
+    private Prestador prestador;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "ID_SEGMENTO")
-    private Segmento idSegmento;
+    private Segmento segmento;
 
     @ManyToOne
     @JoinColumn(name = "ID_EMPRESA_CLIENTE")
-    private EmpresaCliente idEmpresaCliente;
+    private EmpresaCliente empresaCliente;
 
     @Column(name = "VALOR_CONTRATACAO")
     private Float valorContratacao;
@@ -50,4 +50,24 @@ public class Servico {
     @Enumerated(EnumType.STRING)
     @Column(name = "SITUACAO_SERVICO")
     private SituacaoServicoEnum situacaoServico;
+
+    @Column(name = "TITULO")
+    private String titulo;
+
+    @Column(name = "DESCRICAO")
+    private String descricao;
+
+    @ManyToOne
+    @JoinColumn(name = "ID_ENDERECO")
+    private Endereco endereco;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "FORMA_PAGAMENTO")
+    private FormaPagtoEnum formaPagtoEnum;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "NIVEL_URGENCIA")
+    private NvlUrgenciaEnum nvlUrgenciaEnum;
+
+
 }

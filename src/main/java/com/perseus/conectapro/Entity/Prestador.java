@@ -38,15 +38,15 @@ public class Prestador extends Usuario {
 
     @JoinColumn(name = "ID_PLANO")
     @ManyToOne
-    private Plano idPlano;
+    private Plano plano;
 
-    @OneToMany(mappedBy = "idPrestador")
+    @OneToMany(mappedBy = "id")
     private List<Avaliacao> avaliacoes;
 
-    @OneToMany(mappedBy = "idPrestador")
+    @OneToMany(mappedBy = "idOrcamento")
     private List<Orcamento> orcamentos;
 
-    @OneToMany(mappedBy = "idPrestador")
+    @OneToMany(mappedBy = "idServico")
     private List<Servico> servicos;
 
     @Column(name = "DATA_NASCIMENTO")

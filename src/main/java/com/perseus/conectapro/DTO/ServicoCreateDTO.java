@@ -1,5 +1,6 @@
 package com.perseus.conectapro.DTO;
 
+
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
 import com.perseus.conectapro.Entity.Enuns.NvlUrgenciaEnum;
 import com.perseus.conectapro.Entity.Enuns.SituacaoServicoEnum;
@@ -10,20 +11,17 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class ServicoUpdateDTO {
-
-    private Integer idPrestador;
-    private SituacaoServicoEnum situacaoServico;
+public class ServicoCreateDTO {
+    private int idSegmento;
+    private int idEmpresaCliente;
     private Float valorContratacao;
+    private LocalDateTime dataInclusao;
+    private SituacaoServicoEnum situacaoServico;
     private String titulo;
     private String descricao;
     private String cep;
-    private Integer numero;
+    private int numero;
     private String complemento;
     private FormaPagtoEnum formaPagto;
     private NvlUrgenciaEnum nvlUrgencia;
-    private LocalDateTime dataAprovacao;
-    private LocalDateTime dataExecucao;
-    private LocalDateTime dataPagamento;
-
 }

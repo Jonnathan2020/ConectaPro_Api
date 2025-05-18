@@ -20,7 +20,6 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PrestadorService {
@@ -48,7 +47,7 @@ public class PrestadorService {
             throw new RuntimeException("E-mail já cadastrado");
         }
 
-        Plano plano = planoRepository.findById(prestadorDTO.getIdPlano())
+        Plano plano = planoRepository.findById(prestadorDTO.getPlano())
                 .orElseThrow(() -> new RuntimeException("Plano não encontrado"));
 
         List<Segmento> segmentos = new ArrayList<>();
@@ -81,7 +80,7 @@ public class PrestadorService {
         prestador.setDataNascimento(prestadorDTO.getDataNascimento());
         prestador.setTipoUsuario(TipoUsuarioEnum.PRESTADOR);
         prestador.setCaminhoFoto(prestadorDTO.getCaminhoFoto());
-        prestador.setIdPlano(plano);
+        prestador.setPlano(plano);
         prestador.setRole(prestadorDTO.getRole());
         prestador.setDescPrestador(prestadorDTO.getDescPrestador());
         prestador.setEspecialidades(prestadorDTO.getEspecialidades());

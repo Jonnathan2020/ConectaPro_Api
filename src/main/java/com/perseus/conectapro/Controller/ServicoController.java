@@ -1,5 +1,6 @@
 package com.perseus.conectapro.Controller;
 
+import com.perseus.conectapro.DTO.ServicoCreateDTO;
 import com.perseus.conectapro.DTO.ServicoUpdateDTO;
 import com.perseus.conectapro.Entity.Servico;
 import com.perseus.conectapro.Service.ServicoService;
@@ -22,7 +23,7 @@ public class ServicoController {
 
     //Cadastar servico
     @PostMapping("/registro")
-    public ResponseEntity<Servico> cadastrarServico(@RequestBody Servico servico){
+    public ResponseEntity<Servico> cadastrarServico(@RequestBody ServicoCreateDTO servico){
         Servico servicoCriado = servicoService.cadastrarServico(servico);
         return ResponseEntity.status(HttpStatus.CREATED).body(servicoCriado);
     }

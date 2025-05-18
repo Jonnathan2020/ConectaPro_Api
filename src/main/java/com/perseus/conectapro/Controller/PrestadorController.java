@@ -6,6 +6,7 @@ import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Repository.PrestadorRepository;
 import com.perseus.conectapro.Service.PrestadorService;
+import com.perseus.conectapro.specification.PrestadorComNomeOuSegmentoSpec;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
@@ -31,6 +32,40 @@ public class PrestadorController {
     private PrestadorService prestadorService;
     @Autowired
     private PrestadorRepository prestadorRepository;
+
+    @SecurityRequirement(name = "bearerAuth")
+    @GetMapping("/buscar")
+    public List<Prestador> buscarComFiltroAvancado(
+            @And({
+                    @Spec(path = "statusDisponibilidade", spec = Equal.class),
+                    @Spec(path = "idPlano.idPlano", spec = Equal.class),
+                    @Spec(path = "email", spec = Equal.class),
+                    @Spec(path = "telefone", spec = Like.class),
+                    @Spec(path = "tipoUsuario", spec = Equal.class),
+                    @Spec(path = "role", spec = Equal.class),
+                    @Spec(path = "endereco.cidade", spec = Like.class),
+                    @Spec(path = "endereco.uf", spec = Equal.class),
+                    @Spec(path = "endereco.cep", spec = Like.class)
+            }) Specification<Prestador> specPadrao,
+            @RequestParam(required = false) String termo
+    ) {
+        Specification<Prestador> specFinal = Specification.where(specPadrao);
+
+        if (termo != null && !termo.isBlank()) {
+            specFinal = specFinal.and(PrestadorComNomeOuSegmentoSpec.nomeOuSegmentoContem(termo));
+        }
+
+        List<Prestador> prestadores = prestadorRepository.findAll(specFinal);
+
+        if (prestadores.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum prestador encontrado.");
+        }
+
+        return prestadores;
+    }
+
+
+
 
     //listar prestadores
     @SecurityRequirement(name = "bearerAuth")

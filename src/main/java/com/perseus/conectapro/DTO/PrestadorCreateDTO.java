@@ -20,7 +20,7 @@ public class PrestadorCreateDTO extends UsuarioCreateDTO{
     private String descPrestador;
     private List<String> especialidades;
     private StatusDisponibilidadeEnum statusDisponibilidade;
-    private Long idPlano;
+    private Long plano;
     private LocalDate dataNascimento;
 
 }
