@@ -42,7 +42,6 @@ public class OrcamentoService {
         if (usuario == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário não encontrado");
         }
-        orcamento.setIdUsuario(usuario); // sempre seta o usuário principal
 
         if (usuario instanceof EmpresaCliente) {
             EmpresaCliente empresaCliente = (EmpresaCliente) usuario;
@@ -60,7 +59,7 @@ public class OrcamentoService {
         orcamento.setDuracaoServico(orcamentoCreateDTO.getDuracaoServico());
         orcamento.setValorOrcamento(orcamentoCreateDTO.getValorOrcamento());
         orcamento.setFormaPagtoEnum(orcamentoCreateDTO.getFormaPagtoEnum());
-        orcamento.setNvlUrgencia(orcamentoCreateDTO.getNvlUrgencia());
+        orcamento.setNvlUrgenciaEnum(orcamentoCreateDTO.getNvlUrgenciaEnum());
         orcamento.setTipoCategoriaEnum(orcamentoCreateDTO.getTipoCategoriaEnum());
 
         Orcamento orcamentoCriado = orcamentoRepository.save(orcamento);
@@ -95,8 +94,8 @@ public class OrcamentoService {
         if(orcamentoUpdateDTO.getFormaPagtoEnum() !=null){
             orcamentoExistente.setFormaPagtoEnum(orcamentoUpdateDTO.getFormaPagtoEnum());
         }
-        if(orcamentoUpdateDTO.getNvlUrgencia() !=null){
-            orcamentoExistente.setNvlUrgencia(orcamentoUpdateDTO.getNvlUrgencia());
+        if(orcamentoUpdateDTO.getNvlUrgenciaEnum() !=null){
+            orcamentoExistente.setNvlUrgenciaEnum(orcamentoUpdateDTO.getNvlUrgenciaEnum());
         }
         if(orcamentoUpdateDTO.getTipoCategoriaEnum() !=null){
             orcamentoExistente.setTipoCategoriaEnum(orcamentoUpdateDTO.getTipoCategoriaEnum());

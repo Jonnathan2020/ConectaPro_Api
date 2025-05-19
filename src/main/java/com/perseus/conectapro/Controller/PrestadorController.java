@@ -62,7 +62,7 @@ public class PrestadorController {
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
                             orcamento.getPrevisaoInicio(),
-                            orcamento.getNvlUrgencia(), orcamento.getTipoCategoriaEnum()))
+                            orcamento.getNvlUrgenciaEnum(), orcamento.getTipoCategoriaEnum()))
                     .collect(Collectors.toList());
 
             return new PrestadorDTO(prestador, orcamentoDTOS);

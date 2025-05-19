@@ -9,6 +9,7 @@ import com.perseus.conectapro.Entity.Orcamento;
 import com.perseus.conectapro.Repository.EmpresaClienteRepository;
 import com.perseus.conectapro.Repository.OrcamentoRepository;
 import com.perseus.conectapro.Service.EmpresaClienteService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
@@ -37,13 +38,22 @@ public class EmpresaClienteController {
     private OrcamentoRepository orcamentoRepository;
 
     //listar empresas
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping
     public List<EmpresaClienteDTO> consultarEmpresas(
             @And({
                     @Spec(path = "idUsuario", spec = Equal.class),
                     @Spec(path = "cnpj", spec = Like.class),
                     @Spec(path = "razaoSocial",  spec = Like.class),
-                    @Spec(path = "nomeFantasia", spec = Like.class)
+                    @Spec(path = "nomeFantasia", spec = Like.class),
+                    @Spec(path = "nome", spec = Like.class),
+                    @Spec(path = "email", spec = Equal.class),
+                    @Spec(path = "telefone", spec = Like.class), // Adicionando filtro para telefone
+                    @Spec(path = "tipoUsuario", spec = Equal.class), // Filtro para tipo de usuário
+                    @Spec(path = "role", spec = Equal.class),
+                    @Spec(path = "endereco.cidade", spec = Like.class), // Filtro para o relacionamento com Endereco, caso queira filtrar por algum atributo do endereço
+                    @Spec(path = "endereco.uf", spec = Equal.class),
+                    @Spec(path = "endereco.cep", spec = Like.class)
             })Specification<EmpresaCliente> spec
             ){
 
@@ -62,7 +72,7 @@ public class EmpresaClienteController {
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
                             orcamento.getPrevisaoInicio(),
-                            orcamento.getNvlUrgencia(), orcamento.getTipoCategoriaEnum()))
+                            orcamento.getNvlUrgenciaEnum(), orcamento.getTipoCategoriaEnum()))
                     .collect(Collectors.toList());
 
             return new EmpresaClienteDTO(empresaCliente, orcamentoDTOS);
@@ -70,16 +80,19 @@ public class EmpresaClienteController {
     }
 
     //Buscar empresa por id
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/{id}")
     public EmpresaClienteDTO consultarEmpresaEspecifica(@PathVariable int id){
         return empresaClienteService.consultarEmpresaEspecifica(id);
     }
 
     //Buscar empresa por nome
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/nome/{nome}")
     public List<EmpresaClienteDTO> getEmpresaByName(@PathVariable String nome){
         return empresaClienteService.consultarEmpresaPorNome(nome);
     }
+
 
     @PostMapping("/registro")
     public ResponseEntity<EmpresaCliente> cadastrarEmpresa(@RequestBody @Valid EmpresaClienteCreateDTO empresaClienteDTO){
@@ -88,12 +101,14 @@ public class EmpresaClienteController {
     }
 
     //Alterar informações da empresa
+    @SecurityRequirement(name = "bearerAuth")
     @PutMapping("/{id}")
     public ResponseEntity<EmpresaClienteDTO> alterarEmpresa(@RequestBody EmpresaClienteUpdateDTO empresaClienteUpdateDTO, @PathVariable("id") int id){
             EmpresaClienteDTO empresaAtualizada = empresaClienteService.alterarEmpresaCliente(id, empresaClienteUpdateDTO);
             return ResponseEntity.status(HttpStatus.OK).body(empresaAtualizada);
     }
 
+    @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable int id){
         empresaClienteService.delete(id);

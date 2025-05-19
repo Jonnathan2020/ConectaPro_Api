@@ -1,17 +1,12 @@
 package com.perseus.conectapro.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.perseus.conectapro.Entity.Enuns.NvlUrgencia;
+import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
+import com.perseus.conectapro.Entity.Enuns.NvlUrgenciaEnum;
 import com.perseus.conectapro.Entity.Enuns.SituacaoServicoEnum;
-import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -57,12 +52,16 @@ public class Servico {
     private LocalDateTime dataPagamento;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "FORMA_PAGTT")
+    private FormaPagtoEnum formaPagtoEnum;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "SITUACAO_SERVICO")
     private SituacaoServicoEnum situacaoServico;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "NIVEL_URGENCIA")
-    private NvlUrgencia nvlUrgencia;
+    private NvlUrgenciaEnum nvlUrgenciaEnum;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TIPO_CATEGORIA")

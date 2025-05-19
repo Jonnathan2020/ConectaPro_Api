@@ -13,4 +13,6 @@ public interface EmpresaClienteRepository extends JpaRepository<EmpresaCliente, 
     EmpresaCliente findByIdUsuario(int idUsuario);
     List<EmpresaCliente> findByNomeContainingIgnoreCase(String name);
     List<EmpresaCliente> findByTipoUsuario(String tipoUsuario);
+    boolean existsByEmail(String email);
+
 }

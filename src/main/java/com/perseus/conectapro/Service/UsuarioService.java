@@ -47,6 +47,10 @@ public class UsuarioService {
 
     public Usuario cadastrarUsuario(UsuarioCreateDTO usuarioCreateDTO) {
 
+        if (usuarioRepository.existsByEmail(usuarioCreateDTO.getEmail())) {
+            throw new RuntimeException("E-mail já cadastrado");
+        }
+
         Usuario usuarioExiste = usuarioRepository.findByEmail(usuarioCreateDTO.getEmail());
 
         if (usuarioExiste != null){

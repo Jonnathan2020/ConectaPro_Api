@@ -20,7 +20,7 @@ public class EmpresaCliente extends Usuario {
     @Column(name = "NOME_FANTASIA")
     private String nomeFantasia;
 
-    @OneToMany(mappedBy = "idEmpresaCliente")
+    @OneToMany(mappedBy = "idServico")
     private List<Servico> servicos;
 
     @OneToMany(mappedBy = "idPrestador")
