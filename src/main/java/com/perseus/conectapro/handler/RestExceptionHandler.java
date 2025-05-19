@@ -50,4 +50,11 @@ public class RestExceptionHandler {
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT) // ou BAD_REQUEST
+                .body(ex.getMessage());
+    }
 }

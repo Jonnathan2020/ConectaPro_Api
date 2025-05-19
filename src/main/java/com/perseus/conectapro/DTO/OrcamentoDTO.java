@@ -2,11 +2,12 @@ package com.perseus.conectapro.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
-import com.perseus.conectapro.Entity.Enuns.NvlUrgencia;
+import com.perseus.conectapro.Entity.Enuns.NvlUrgenciaEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
 import com.perseus.conectapro.Entity.Orcamento;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -21,7 +22,7 @@ public class OrcamentoDTO {
     private LocalDate previsaoInicio;
     private int duracaoServico;
     private FormaPagtoEnum formaPagtoEnum;
-    private NvlUrgencia nvlUrgencia;
+    private NvlUrgenciaEnum nvlUrgencia;
     private TipoCategoriaEnum tipoCategoriaEnum;
 
     public OrcamentoDTO(Orcamento orcamento) {
@@ -35,17 +36,17 @@ public class OrcamentoDTO {
         this.previsaoInicio = orcamento.getPrevisaoInicio();
         this.duracaoServico = orcamento.getDuracaoServico();
         this.formaPagtoEnum = orcamento.getFormaPagtoEnum();
-        this.nvlUrgencia = orcamento.getNvlUrgencia();
+        this.nvlUrgencia = orcamento.getNvlUrgenciaEnum();
         this.tipoCategoriaEnum = orcamento.getTipoCategoriaEnum();
     }
 
-    public OrcamentoDTO(int idOrcamento, BigDecimal valorOrcamento, int duracaoServico, FormaPagtoEnum formaPagtoEnum, LocalDate previsaoInicio, NvlUrgencia nvlUrgencia, TipoCategoriaEnum tipoCategoriaEnum) {
+    public OrcamentoDTO(int idOrcamento, BigDecimal valorOrcamento, int duracaoServico, FormaPagtoEnum formaPagtoEnum, LocalDate previsaoInicio, NvlUrgenciaEnum nvlUrgencia, TipoCategoriaEnum tipoCategoriaEnum) {
         this.idOrcamento = idOrcamento;
         this.valorOrcamento = valorOrcamento;
         this.duracaoServico = duracaoServico;
         this.formaPagtoEnum = formaPagtoEnum;
         this.previsaoInicio = previsaoInicio;
-        this.nvlUrgencia = this.nvlUrgencia;
-        this.tipoCategoriaEnum = this.tipoCategoriaEnum;
+        this.nvlUrgencia = nvlUrgencia;
+        this.tipoCategoriaEnum = tipoCategoriaEnum;
     }
 }

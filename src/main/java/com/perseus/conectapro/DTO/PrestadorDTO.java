@@ -2,6 +2,7 @@ package com.perseus.conectapro.DTO;
 
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Orcamento;
+import com.perseus.conectapro.Entity.Plano;
 import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Entity.Servico;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class PrestadorDTO {
     private List<ServicoDTO> servicos;
     private String caminhoFoto;
     private List<OrcamentoDTO> orcamentos;
+    private Plano idPlano;
 
     public PrestadorDTO(Prestador prestador, List<OrcamentoDTO> orcamentos){
         this.idPrestador = prestador.getIdUsuario();
@@ -31,6 +33,7 @@ public class PrestadorDTO {
         this.servicos = servicos;
         this.orcamentos = orcamentos;
         this.caminhoFoto = prestador.getCaminhoFoto();
+        this.idPlano = prestador.getIdPlano();
     }
 
 

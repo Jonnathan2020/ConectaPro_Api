@@ -34,6 +34,10 @@ public class EmpresaClienteService {
     //cadastrar as informaçoes alem do usuario, faltantes para uma empresa cliente
     public EmpresaCliente cadastrarEmpresaCliente(EmpresaClienteCreateDTO empresaClienteCreateDTO) {
 
+        if (empresaClienteRepository.existsByEmail(empresaClienteCreateDTO.getEmail())) {
+            throw new RuntimeException("E-mail já cadastrado");
+        }
+
         ViaCepDTO viaCep = viaCepService.buscarEnderecoPorCep(empresaClienteCreateDTO.getCep());
 
         Endereco endereco = new Endereco();
@@ -91,7 +95,9 @@ public class EmpresaClienteService {
                         orcamento.getDuracaoServico(),
                         orcamento.getFormaPagtoEnum(),
                         orcamento.getPrevisaoInicio(),
-                        orcamento.getNvlUrgencia(), orcamento.getTipoCategoriaEnum())).collect(Collectors.toList());
+                        orcamento.getNvlUrgenciaEnum(),
+                        orcamento.getTipoCategoriaEnum()))
+                .collect(Collectors.toList());
 
         return new EmpresaClienteDTO(empresaClienteEspecifico, orcamentoDTOS);
     }
@@ -113,7 +119,7 @@ public class EmpresaClienteService {
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
                             orcamento.getPrevisaoInicio(),
-                            orcamento.getNvlUrgencia(),
+                            orcamento.getNvlUrgenciaEnum(),
                             orcamento.getTipoCategoriaEnum()
                     ))
                     .collect(Collectors.toList());
@@ -165,7 +171,7 @@ public class EmpresaClienteService {
                         orcamento.getDuracaoServico(),
                         orcamento.getFormaPagtoEnum(),
                         orcamento.getPrevisaoInicio(),
-                        orcamento.getNvlUrgencia(),
+                        orcamento.getNvlUrgenciaEnum(),
                         orcamento.getTipoCategoriaEnum())).collect(Collectors.toList());
 
         //metodo que salva as informaçoes do prestador

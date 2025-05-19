@@ -1,6 +1,6 @@
 package com.perseus.conectapro.Entity.Enuns;
 
-public enum NvlUrgencia {
+public enum NvlUrgenciaEnum {
     EMERGENTE,
     URGENTE,
     POUCO_URGENTE,

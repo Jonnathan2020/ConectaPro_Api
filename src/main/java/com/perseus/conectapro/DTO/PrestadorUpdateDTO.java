@@ -4,6 +4,7 @@ import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -11,8 +12,11 @@ import java.util.List;
 public class PrestadorUpdateDTO extends UsuarioUpdateDTO {
 
     private String cpf;
+    //ID do segmento
+    private List<Long> segmento;
     private String descPrestador;
     private List<String> especialidades;
     private StatusDisponibilidadeEnum statusDisponibilidade;
+    private LocalDate dataNascimento;
 
 }

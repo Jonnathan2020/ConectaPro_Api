@@ -36,7 +36,7 @@ public class PrestadorService {
     //cadastrar as informaçoes alem do usuario, faltantes para um prestador
     public Prestador cadastrarPrestador(PrestadorCreateDTO prestadorDTO) {
 
-        Plano plano = planoRepository.findById(prestadorDTO.getIdPlano())
+        Plano plano = planoRepository.findById(prestadorDTO.getPlano())
                 .orElseThrow(() -> new RuntimeException("Plano não encontrado"));
 
         ViaCepDTO viaCep = viaCepService.buscarEnderecoPorCep(prestadorDTO.getCep());
@@ -96,7 +96,8 @@ public class PrestadorService {
                         orcamento.getDuracaoServico(),
                         orcamento.getFormaPagtoEnum(),
                         orcamento.getPrevisaoInicio(),
-                        orcamento.getNvlUrgencia(), orcamento.getTipoCategoriaEnum())).collect(Collectors.toList());
+                        orcamento.getNvlUrgenciaEnum(),
+                        orcamento.getTipoCategoriaEnum())).collect(Collectors.toList());
 
         return new PrestadorDTO(prestadorEspecifico, orcamentoDTOS);
     }
@@ -119,7 +120,7 @@ public class PrestadorService {
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
                             orcamento.getPrevisaoInicio(),
-                            orcamento.getNvlUrgencia(),
+                            orcamento.getNvlUrgenciaEnum(),
                             orcamento.getTipoCategoriaEnum()))
                     .collect(Collectors.toList());
 
@@ -145,7 +146,7 @@ public class PrestadorService {
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
                             orcamento.getPrevisaoInicio(),
-                            orcamento.getNvlUrgencia(),
+                            orcamento.getNvlUrgenciaEnum(),
                             orcamento.getTipoCategoriaEnum()))
                     .collect(Collectors.toList());
 
@@ -170,7 +171,7 @@ public class PrestadorService {
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
                             orcamento.getPrevisaoInicio(),
-                            orcamento.getNvlUrgencia(),
+                            orcamento.getNvlUrgenciaEnum(),
                             orcamento.getTipoCategoriaEnum()))
                     .collect(Collectors.toList());
 
@@ -229,7 +230,7 @@ public class PrestadorService {
                         orcamento.getDuracaoServico(),
                         orcamento.getFormaPagtoEnum(),
                         orcamento.getPrevisaoInicio(),
-                        orcamento.getNvlUrgencia(),
+                        orcamento.getNvlUrgenciaEnum(),
                         orcamento.getTipoCategoriaEnum())).collect(Collectors.toList());
 
         //metodo que salva as informaçoes do prestador
