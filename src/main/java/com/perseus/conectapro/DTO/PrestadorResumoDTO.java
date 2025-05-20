@@ -13,14 +13,14 @@ import java.util.List;
 public class PrestadorResumoDTO {
     private int idPrestador;
     private String nome;
-    //private List<String> especialidades;
+    private List<String> especialidades;
     private StatusDisponibilidadeEnum statusDisponibilidade;
     private String caminhoFoto;
 
     public PrestadorResumoDTO(Prestador prestador) {
         this.idPrestador = prestador.getIdUsuario();
         this.nome = prestador.getNome();
-        //this.especialidades = (prestador.getEspecialidades());
+        this.especialidades = prestador.getEspecialidades();
         this.statusDisponibilidade = prestador.getStatusDisponibilidade();
         this.caminhoFoto = prestador.getCaminhoFoto();
     }

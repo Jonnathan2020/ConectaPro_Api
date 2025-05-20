@@ -47,27 +47,7 @@ public class PrestadorController {
                     @Spec(path = "idPlano.idPlano", spec = Equal.class)
             })Specification<Prestador> spec
             ){
-
-        List<Prestador> prestadores = prestadorRepository.findAll(spec);
-        if (prestadores.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum prestador encontrado com os filtros fornecidos.");
-        }
-        return prestadores.stream().map(prestador -> {
-            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(prestador);
-
-            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
-                    .map(orcamento -> new OrcamentoDTO(
-                            orcamento.getIdOrcamento(),
-                            orcamento.getValorOrcamento(),
-                            orcamento.getDuracaoServico(),
-                            orcamento.getFormaPagtoEnum(),
-                            orcamento.getPrevisaoInicio(),
-                            orcamento.getNvlUrgenciaEnum(), orcamento.getTipoCategoriaEnum()))
-                    .collect(Collectors.toList());
-
-            return new PrestadorDTO(prestador, orcamentoDTOS);
-        }).collect(Collectors.toList());
-
+        return prestadorService.consultarPrestadores(spec);
     }
 
     //Buscar prestador por id

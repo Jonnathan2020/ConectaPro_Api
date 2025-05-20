@@ -15,6 +15,7 @@ public class EmpresaClienteDTO {
     private String cnpj;
     private String razaoSocial;
     private String nomeFantasia;
+    private String descCliente;
     private List<Servico> servicos;
     //private String caminhoFoto;
     private List<OrcamentoDTO> orcamentos;
@@ -23,6 +24,7 @@ public class EmpresaClienteDTO {
         this.idEmpresaCliente = empresaCliente.getIdUsuario();
         this.razaoSocial = empresaCliente.getRazaoSocial();
         this.nomeFantasia = empresaCliente.getNomeFantasia();
+        this.descCliente = empresaCliente.getDescCliente();
         this.cnpj = empresaCliente.getCnpj();
         this.servicos = empresaCliente.getServicos();
         this.orcamentos = orcamentos;

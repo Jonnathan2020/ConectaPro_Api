@@ -37,11 +37,10 @@ public class OrcamentoService {
         Orcamento orcamento = new Orcamento();
         Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        //Usuario usuario = usuarioRepository.findByIdUsuario(orcamentoCreateDTO.getIdUsuario());
-
         if (usuario == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário não encontrado");
         }
+
 
         if (usuario instanceof EmpresaCliente) {
             EmpresaCliente empresaCliente = (EmpresaCliente) usuario;
@@ -55,12 +54,15 @@ public class OrcamentoService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de usuário inválido.");
         }
 
+        orcamento.setIdUsuario(usuario); //<- satifaz o a busca por usuario
+        orcamento.setDataInclusao(orcamentoCreateDTO.getDataInclusao());
         orcamento.setPrevisaoInicio(orcamentoCreateDTO.getPrevisaoInicio());
         orcamento.setDuracaoServico(orcamentoCreateDTO.getDuracaoServico());
         orcamento.setValorOrcamento(orcamentoCreateDTO.getValorOrcamento());
         orcamento.setFormaPagtoEnum(orcamentoCreateDTO.getFormaPagtoEnum());
         orcamento.setNvlUrgenciaEnum(orcamentoCreateDTO.getNvlUrgenciaEnum());
         orcamento.setTipoCategoriaEnum(orcamentoCreateDTO.getTipoCategoriaEnum());
+        orcamento.setStatusOrcamentoEnum(orcamentoCreateDTO.getStatusOrcamentoEnum());
 
         Orcamento orcamentoCriado = orcamentoRepository.save(orcamento);
         return new OrcamentoDTO(orcamentoCriado);

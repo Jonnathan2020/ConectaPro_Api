@@ -13,5 +13,6 @@ public class EmpresaClienteCreateDTO extends UsuarioCreateDTO {
 
     private String razaoSocial;
     private String nomeFantasia;
+    private String descCliente;
 
 }

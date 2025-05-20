@@ -15,6 +15,7 @@ public class EmpresaClienteResumoDTO {
     private String cnpj;
     private String razaoSocial;
     private String nomeFantasia;
+    private String descCliente;
     private String caminhoFoto;
 
     public EmpresaClienteResumoDTO(EmpresaCliente cliente) {
@@ -23,5 +24,6 @@ public class EmpresaClienteResumoDTO {
         this.razaoSocial = cliente.getRazaoSocial();
         this.nomeFantasia = cliente.getNomeFantasia();
         this.caminhoFoto = cliente.getCaminhoFoto();
+        this.descCliente = cliente.getDescCliente();
     }
 }

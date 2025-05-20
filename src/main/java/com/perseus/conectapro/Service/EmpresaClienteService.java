@@ -8,8 +8,11 @@ import com.perseus.conectapro.Repository.EnderecoRepository;
 import com.perseus.conectapro.Repository.OrcamentoRepository;
 import com.perseus.conectapro.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,6 +44,7 @@ public class EmpresaClienteService {
         ViaCepDTO viaCep = viaCepService.buscarEnderecoPorCep(empresaClienteCreateDTO.getCep());
 
         Endereco endereco = new Endereco();
+
         //Serao definidos após a inserção do cep
         endereco.setLogradouro(viaCep.getLogradouro());
         endereco.setBairro(viaCep.getBairro());
@@ -72,9 +76,31 @@ public class EmpresaClienteService {
     }
 
     //consultar somente empresas clientes
-    public List<EmpresaCliente> consultarEmpresasCliente(){
+    public List<EmpresaClienteDTO> consultarEmpresas(Specification<EmpresaCliente> spec){
 
-        return empresaClienteRepository.findByTipoUsuario("CLIENTE");
+        List<EmpresaCliente> clientes = empresaClienteRepository.findAll(spec);
+        if (clientes.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhuma empresa encontrada com os filtros fornecidos.");
+        }
+
+        return clientes.stream().map(empresaCliente -> {
+            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(empresaCliente);
+
+            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
+                    .map(orcamento -> new OrcamentoDTO(
+                            orcamento.getIdOrcamento(),
+                            orcamento.getValorOrcamento(),
+                            orcamento.getDataInclusao(),
+                            orcamento.getPrevisaoInicio(),
+                            orcamento.getDuracaoServico(),
+                            orcamento.getFormaPagtoEnum(),
+                            orcamento.getNvlUrgenciaEnum(),
+                            orcamento.getTipoCategoriaEnum(),
+                            orcamento.getStatusOrcamentoEnum()
+                    )).collect(Collectors.toList());
+
+            return new EmpresaClienteDTO(empresaCliente, orcamentoDTOS);
+        }).collect(Collectors.toList());
     }
 
     //consultar empresa cliente especifica
@@ -92,11 +118,13 @@ public class EmpresaClienteService {
                 .map(orcamento -> new OrcamentoDTO(
                         orcamento.getIdOrcamento(),
                         orcamento.getValorOrcamento(),
+                        orcamento.getDataInclusao(),
+                        orcamento.getPrevisaoInicio(),
                         orcamento.getDuracaoServico(),
                         orcamento.getFormaPagtoEnum(),
-                        orcamento.getPrevisaoInicio(),
                         orcamento.getNvlUrgenciaEnum(),
-                        orcamento.getTipoCategoriaEnum()))
+                        orcamento.getTipoCategoriaEnum(),
+                        orcamento.getStatusOrcamentoEnum()))
                 .collect(Collectors.toList());
 
         return new EmpresaClienteDTO(empresaClienteEspecifico, orcamentoDTOS);
@@ -116,11 +144,13 @@ public class EmpresaClienteService {
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
                             orcamento.getValorOrcamento(),
+                            orcamento.getDataInclusao(),
+                            orcamento.getPrevisaoInicio(),
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
-                            orcamento.getPrevisaoInicio(),
                             orcamento.getNvlUrgenciaEnum(),
-                            orcamento.getTipoCategoriaEnum()
+                            orcamento.getTipoCategoriaEnum(),
+                            orcamento.getStatusOrcamentoEnum()
                     ))
                     .collect(Collectors.toList());
 
@@ -168,11 +198,14 @@ public class EmpresaClienteService {
                 .map(orcamento -> new OrcamentoDTO(
                         orcamento.getIdOrcamento(),
                         orcamento.getValorOrcamento(),
+                        orcamento.getDataInclusao(),
+                        orcamento.getPrevisaoInicio(),
                         orcamento.getDuracaoServico(),
                         orcamento.getFormaPagtoEnum(),
-                        orcamento.getPrevisaoInicio(),
                         orcamento.getNvlUrgenciaEnum(),
-                        orcamento.getTipoCategoriaEnum())).collect(Collectors.toList());
+                        orcamento.getTipoCategoriaEnum(),
+                        orcamento.getStatusOrcamentoEnum()
+                )).collect(Collectors.toList());
 
         //metodo que salva as informaçoes do prestador
         EmpresaCliente clienteAtualizado = empresaClienteRepository.save(clienteExistente);

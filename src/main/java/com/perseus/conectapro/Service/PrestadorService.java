@@ -6,8 +6,12 @@ import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoUsuarioEnum;
 import com.perseus.conectapro.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -78,7 +82,32 @@ public class PrestadorService {
     }
 
     //consultar somente prestadores de servico
-    //public List<PrestadorDTO> consultarPrestadores(){}
+    public List<PrestadorDTO> consultarPrestadores(Specification<Prestador> spec) {
+        List<Prestador> prestadores = prestadorRepository.findAll(spec);
+
+        if (prestadores.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum prestador encontrado com os filtros fornecidos.");
+        }
+
+        return prestadores.stream().map(prestador -> {
+            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(prestador);
+
+            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
+                    .map(orcamento -> new OrcamentoDTO(
+                            orcamento.getIdOrcamento(),
+                            orcamento.getValorOrcamento(),
+                            orcamento.getDataInclusao(),
+                            orcamento.getPrevisaoInicio(),
+                            orcamento.getDuracaoServico(),
+                            orcamento.getFormaPagtoEnum(),
+                            orcamento.getNvlUrgenciaEnum(),
+                            orcamento.getTipoCategoriaEnum(),
+                            orcamento.getStatusOrcamentoEnum()
+                    )).collect(Collectors.toList());
+
+            return new PrestadorDTO(prestador, orcamentoDTOS);
+        }).collect(Collectors.toList());
+    }
 
     //consultar prestador especifico
     public PrestadorDTO consultarPrestadorUnico(int id) {
@@ -93,11 +122,14 @@ public class PrestadorService {
                 .map(orcamento -> new OrcamentoDTO(
                         orcamento.getIdOrcamento(),
                         orcamento.getValorOrcamento(),
+                        orcamento.getDataInclusao(),
+                        orcamento.getPrevisaoInicio(),
                         orcamento.getDuracaoServico(),
                         orcamento.getFormaPagtoEnum(),
-                        orcamento.getPrevisaoInicio(),
                         orcamento.getNvlUrgenciaEnum(),
-                        orcamento.getTipoCategoriaEnum())).collect(Collectors.toList());
+                        orcamento.getTipoCategoriaEnum(),
+                        orcamento.getStatusOrcamentoEnum()
+                )).collect(Collectors.toList());
 
         return new PrestadorDTO(prestadorEspecifico, orcamentoDTOS);
     }
@@ -117,12 +149,14 @@ public class PrestadorService {
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
                             orcamento.getValorOrcamento(),
+                            orcamento.getDataInclusao(),
+                            orcamento.getPrevisaoInicio(),
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
-                            orcamento.getPrevisaoInicio(),
                             orcamento.getNvlUrgenciaEnum(),
-                            orcamento.getTipoCategoriaEnum()))
-                    .collect(Collectors.toList());
+                            orcamento.getTipoCategoriaEnum(),
+                            orcamento.getStatusOrcamentoEnum()
+                    )).collect(Collectors.toList());
 
             return new PrestadorDTO(prestador, orcamentoDTOS);
         }).collect(Collectors.toList());
@@ -143,12 +177,14 @@ public class PrestadorService {
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
                             orcamento.getValorOrcamento(),
+                            orcamento.getDataInclusao(),
+                            orcamento.getPrevisaoInicio(),
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
-                            orcamento.getPrevisaoInicio(),
                             orcamento.getNvlUrgenciaEnum(),
-                            orcamento.getTipoCategoriaEnum()))
-                    .collect(Collectors.toList());
+                            orcamento.getTipoCategoriaEnum(),
+                            orcamento.getStatusOrcamentoEnum()
+                    )).collect(Collectors.toList());
 
             return new PrestadorDTO(prestador, orcamentoDTOS);
         }).collect(Collectors.toList());
@@ -168,12 +204,14 @@ public class PrestadorService {
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
                             orcamento.getValorOrcamento(),
+                            orcamento.getDataInclusao(),
+                            orcamento.getPrevisaoInicio(),
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
-                            orcamento.getPrevisaoInicio(),
                             orcamento.getNvlUrgenciaEnum(),
-                            orcamento.getTipoCategoriaEnum()))
-                    .collect(Collectors.toList());
+                            orcamento.getTipoCategoriaEnum(),
+                            orcamento.getStatusOrcamentoEnum()
+                    )).collect(Collectors.toList());
 
             return new PrestadorDTO(prestador, orcamentoDTOS);
         }).collect(Collectors.toList());
@@ -227,11 +265,14 @@ public class PrestadorService {
                 .map(orcamento -> new OrcamentoDTO(
                         orcamento.getIdOrcamento(),
                         orcamento.getValorOrcamento(),
+                        orcamento.getDataInclusao(),
+                        orcamento.getPrevisaoInicio(),
                         orcamento.getDuracaoServico(),
                         orcamento.getFormaPagtoEnum(),
-                        orcamento.getPrevisaoInicio(),
                         orcamento.getNvlUrgenciaEnum(),
-                        orcamento.getTipoCategoriaEnum())).collect(Collectors.toList());
+                        orcamento.getTipoCategoriaEnum(),
+                        orcamento.getStatusOrcamentoEnum()
+                )).collect(Collectors.toList());
 
         //metodo que salva as informaçoes do prestador
         Prestador prestadorAtualizado = prestadorRepository.save(prestadorExistente);
