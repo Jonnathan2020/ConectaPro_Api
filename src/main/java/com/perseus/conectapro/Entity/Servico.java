@@ -36,6 +36,9 @@ public class Servico {
     @JoinColumn(name = "ID_ORCAMENTO")
     private Orcamento orcamento;
 
+    @Column(name = "DESC_SERVICO")
+    private String descServico;
+
     @Column(name = "VALOR_CONTRATACAO")
     private Float valorContratacao;
 

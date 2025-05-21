@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.Hibernate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,7 +21,7 @@ public class PrestadorResumoDTO {
     public PrestadorResumoDTO(Prestador prestador) {
         this.idPrestador = prestador.getIdUsuario();
         this.nome = prestador.getNome();
-        this.especialidades = prestador.getEspecialidades();
+        this.especialidades = new ArrayList<>(prestador.getEspecialidades());
         this.statusDisponibilidade = prestador.getStatusDisponibilidade();
         this.caminhoFoto = prestador.getCaminhoFoto();
     }

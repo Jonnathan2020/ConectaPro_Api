@@ -95,6 +95,7 @@ public class PrestadorService {
             List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
+                            orcamento.getDescOrcamento(),
                             orcamento.getValorOrcamento(),
                             orcamento.getDataInclusao(),
                             orcamento.getPrevisaoInicio(),
@@ -104,6 +105,7 @@ public class PrestadorService {
                             orcamento.getTipoCategoriaEnum(),
                             orcamento.getStatusOrcamentoEnum()
                     )).collect(Collectors.toList());
+
 
             return new PrestadorDTO(prestador, orcamentoDTOS);
         }).collect(Collectors.toList());
@@ -121,6 +123,7 @@ public class PrestadorService {
         List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                 .map(orcamento -> new OrcamentoDTO(
                         orcamento.getIdOrcamento(),
+                        orcamento.getDescOrcamento(),
                         orcamento.getValorOrcamento(),
                         orcamento.getDataInclusao(),
                         orcamento.getPrevisaoInicio(),
@@ -130,6 +133,7 @@ public class PrestadorService {
                         orcamento.getTipoCategoriaEnum(),
                         orcamento.getStatusOrcamentoEnum()
                 )).collect(Collectors.toList());
+
 
         return new PrestadorDTO(prestadorEspecifico, orcamentoDTOS);
     }
@@ -148,6 +152,7 @@ public class PrestadorService {
             List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
+                            orcamento.getDescOrcamento(),
                             orcamento.getValorOrcamento(),
                             orcamento.getDataInclusao(),
                             orcamento.getPrevisaoInicio(),
@@ -157,6 +162,7 @@ public class PrestadorService {
                             orcamento.getTipoCategoriaEnum(),
                             orcamento.getStatusOrcamentoEnum()
                     )).collect(Collectors.toList());
+
 
             return new PrestadorDTO(prestador, orcamentoDTOS);
         }).collect(Collectors.toList());
@@ -176,6 +182,7 @@ public class PrestadorService {
             List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
+                            orcamento.getDescOrcamento(),
                             orcamento.getValorOrcamento(),
                             orcamento.getDataInclusao(),
                             orcamento.getPrevisaoInicio(),
@@ -185,6 +192,7 @@ public class PrestadorService {
                             orcamento.getTipoCategoriaEnum(),
                             orcamento.getStatusOrcamentoEnum()
                     )).collect(Collectors.toList());
+
 
             return new PrestadorDTO(prestador, orcamentoDTOS);
         }).collect(Collectors.toList());
@@ -203,6 +211,7 @@ public class PrestadorService {
             List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
+                            orcamento.getDescOrcamento(),
                             orcamento.getValorOrcamento(),
                             orcamento.getDataInclusao(),
                             orcamento.getPrevisaoInicio(),
@@ -212,6 +221,7 @@ public class PrestadorService {
                             orcamento.getTipoCategoriaEnum(),
                             orcamento.getStatusOrcamentoEnum()
                     )).collect(Collectors.toList());
+
 
             return new PrestadorDTO(prestador, orcamentoDTOS);
         }).collect(Collectors.toList());
@@ -264,6 +274,7 @@ public class PrestadorService {
         List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                 .map(orcamento -> new OrcamentoDTO(
                         orcamento.getIdOrcamento(),
+                        orcamento.getDescOrcamento(),
                         orcamento.getValorOrcamento(),
                         orcamento.getDataInclusao(),
                         orcamento.getPrevisaoInicio(),
@@ -273,6 +284,7 @@ public class PrestadorService {
                         orcamento.getTipoCategoriaEnum(),
                         orcamento.getStatusOrcamentoEnum()
                 )).collect(Collectors.toList());
+
 
         //metodo que salva as informaçoes do prestador
         Prestador prestadorAtualizado = prestadorRepository.save(prestadorExistente);

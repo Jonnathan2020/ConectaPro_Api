@@ -17,14 +17,6 @@ public enum StatusDisponibilidadeEnum {
         this.descricao = descricao;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
     // Sobrescrita do metodo toString para retorno da descrição
     @Override
     public String toString() {

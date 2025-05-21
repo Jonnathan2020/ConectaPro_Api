@@ -89,6 +89,7 @@ public class EmpresaClienteService {
             List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
+                            orcamento.getDescOrcamento(),
                             orcamento.getValorOrcamento(),
                             orcamento.getDataInclusao(),
                             orcamento.getPrevisaoInicio(),
@@ -117,6 +118,7 @@ public class EmpresaClienteService {
         List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                 .map(orcamento -> new OrcamentoDTO(
                         orcamento.getIdOrcamento(),
+                        orcamento.getDescOrcamento(),
                         orcamento.getValorOrcamento(),
                         orcamento.getDataInclusao(),
                         orcamento.getPrevisaoInicio(),
@@ -124,8 +126,9 @@ public class EmpresaClienteService {
                         orcamento.getFormaPagtoEnum(),
                         orcamento.getNvlUrgenciaEnum(),
                         orcamento.getTipoCategoriaEnum(),
-                        orcamento.getStatusOrcamentoEnum()))
-                .collect(Collectors.toList());
+                        orcamento.getStatusOrcamentoEnum()
+                )).collect(Collectors.toList());
+
 
         return new EmpresaClienteDTO(empresaClienteEspecifico, orcamentoDTOS);
     }
@@ -143,6 +146,7 @@ public class EmpresaClienteService {
             List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
+                            orcamento.getDescOrcamento(),
                             orcamento.getValorOrcamento(),
                             orcamento.getDataInclusao(),
                             orcamento.getPrevisaoInicio(),
@@ -151,8 +155,8 @@ public class EmpresaClienteService {
                             orcamento.getNvlUrgenciaEnum(),
                             orcamento.getTipoCategoriaEnum(),
                             orcamento.getStatusOrcamentoEnum()
-                    ))
-                    .collect(Collectors.toList());
+                    )).collect(Collectors.toList());
+
 
             return new EmpresaClienteDTO(empresaCliente, orcamentoDTOS);
         }).collect(Collectors.toList());
@@ -197,6 +201,7 @@ public class EmpresaClienteService {
         List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                 .map(orcamento -> new OrcamentoDTO(
                         orcamento.getIdOrcamento(),
+                        orcamento.getDescOrcamento(),
                         orcamento.getValorOrcamento(),
                         orcamento.getDataInclusao(),
                         orcamento.getPrevisaoInicio(),
@@ -206,6 +211,7 @@ public class EmpresaClienteService {
                         orcamento.getTipoCategoriaEnum(),
                         orcamento.getStatusOrcamentoEnum()
                 )).collect(Collectors.toList());
+
 
         //metodo que salva as informaçoes do prestador
         EmpresaCliente clienteAtualizado = empresaClienteRepository.save(clienteExistente);

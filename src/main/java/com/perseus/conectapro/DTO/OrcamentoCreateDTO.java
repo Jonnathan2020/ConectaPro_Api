@@ -14,11 +14,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class OrcamentoCreateDTO {
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "0.000,00")
+    private String descOrcamento;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "#.##0,00")
     private BigDecimal valorOrcamento;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy - HH:mm", timezone = "America/Sao_Paulo")
     private LocalDateTime dataInclusao;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate previsaoInicio;
     private int duracaoServico;
     private FormaPagtoEnum formaPagtoEnum;

@@ -23,6 +23,9 @@ public class Orcamento {
     @Column(name = "ID_ORCAMENTO")
     private int idOrcamento;
 
+    @Column(name = "DESC_ORCAMENTO")
+    private String descOrcamento;
+
     @OneToOne
     @JoinColumn(name = "ID_SERVICO")
     private Servico idServico;

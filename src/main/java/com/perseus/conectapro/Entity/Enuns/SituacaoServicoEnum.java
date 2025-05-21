@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 public enum SituacaoServicoEnum {
     ORCAMENTO(1, "ORÇAMENTO"),
     APROVADO(2, "APROVADO"),
+    PENDENTE_PAGTO(3, "PENDENTE PAGAMENTO"),
     AGENDADO(3, "AGENDADO"),
     CANCELADO(4, "CANCELADO"),
     FINALIZADO(5, "FINALIZADO");
