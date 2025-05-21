@@ -56,7 +56,27 @@ public class EmpresaClienteController {
                     @Spec(path = "endereco.cep", spec = Like.class)
             })Specification<EmpresaCliente> spec
             ){
-        return empresaClienteService.consultarEmpresas(spec);
+
+            List<EmpresaCliente> clientes = empresaClienteRepository.findAll(spec);
+            if (clientes.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhuma empresa encontrada com os filtros fornecidos.");
+            }
+
+        return clientes.stream().map(empresaCliente -> {
+            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(empresaCliente);
+
+            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
+                    .map(orcamento -> new OrcamentoDTO(
+                            orcamento.getIdOrcamento(),
+                            orcamento.getValorOrcamento(),
+                            orcamento.getDuracaoServico(),
+                            orcamento.getFormaPagtoEnum(),
+                            orcamento.getPrevisaoInicio(),
+                            orcamento.getNvlUrgenciaEnum(), orcamento.getTipoCategoriaEnum()))
+                    .collect(Collectors.toList());
+
+            return new EmpresaClienteDTO(empresaCliente, orcamentoDTOS);
+        }).collect(Collectors.toList());
     }
 
     //Buscar empresa por id

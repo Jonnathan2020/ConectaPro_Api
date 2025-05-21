@@ -2,7 +2,6 @@ package com.perseus.conectapro.Entity;
 
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
 import com.perseus.conectapro.Entity.Enuns.NvlUrgenciaEnum;
-import com.perseus.conectapro.Entity.Enuns.StatusOrcamentoEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -30,15 +29,11 @@ public class Orcamento {
     @JoinColumn(name = "ID_SERVICO")
     private Servico idServico;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_USUARIO")
-    private Usuario idUsuario;
-
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "ID_EMPRESACLIENTE")
     private EmpresaCliente idEmpresaCliente;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "ID_PRESTADOR")
     private Prestador idPrestador;
 
@@ -66,8 +61,6 @@ public class Orcamento {
     @Column(name = "FORMA_PAGTT")
     private FormaPagtoEnum formaPagtoEnum;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "STATUS_ORCAMENTO")
-    private StatusOrcamentoEnum statusOrcamentoEnum;
+
 
 }
