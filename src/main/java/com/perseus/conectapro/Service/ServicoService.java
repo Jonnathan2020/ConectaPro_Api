@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,12 +68,16 @@ public class ServicoService {
 
         servico.setOrcamento(orcamento);
         servico.setSituacaoServico(SituacaoServicoEnum.ORCAMENTO);
-        servico.setDataInclusao(servicoCreateDTO.getDataInclusao());
+        servico.setDescServico(servicoCreateDTO.getDescServico());
+        servico.setDataInclusao(LocalDateTime.now());
         servico.setDataAprovacao(servicoCreateDTO.getDataAprovacao());
         servico.setDataExecucao(servicoCreateDTO.getDataExecucao());
         servico.setDataPagamento(servicoCreateDTO.getDataPagamento());
         servico.setIdSegmento(servicoCreateDTO.getIdSegmento());
         servico.setValorContratacao(servicoCreateDTO.getValorContratacao());
+        servico.setFormaPagtoEnum(servicoCreateDTO.getFormaPagtoEnum());
+        servico.setNvlUrgenciaEnum(servicoCreateDTO.getNvlUrgenciaEnum());
+        servico.setTipoCategoriaEnum(servicoCreateDTO.getTipoCategoriaEnum());
 
         Servico servicoCriado = servicoRepository.save(servico);
         return new ServicoDTO(servicoCriado);
@@ -100,12 +105,15 @@ public class ServicoService {
         Servico servicoExistente = servicoRepository.findById(idServico)
                 .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado!!"));
 
+        if (servicoUpdateDTO.getDescServico() != null){
+            servicoExistente.setDescServico(servicoUpdateDTO.getDescServico());
+        }
         if(servicoUpdateDTO.getSituacaoServicoEnum() != null){
             servicoExistente.setSituacaoServico(servicoUpdateDTO.getSituacaoServicoEnum());
         }
-        if(servicoUpdateDTO.getDataInclusao() != null){
-            servicoExistente.setDataInclusao(servicoUpdateDTO.getDataInclusao());
-        }
+        //if(servicoUpdateDTO.getDataInclusao() != null){
+        //    servicoExistente.setDataInclusao(servicoUpdateDTO.getDataInclusao());
+        //}
         if(servicoUpdateDTO.getDataAprovacao() != null){
             servicoExistente.setDataAprovacao(servicoUpdateDTO.getDataAprovacao());
         }

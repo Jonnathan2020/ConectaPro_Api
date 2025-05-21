@@ -11,12 +11,15 @@ import com.perseus.conectapro.Repository.EmpresaClienteRepository;
 import com.perseus.conectapro.Repository.OrcamentoRepository;
 import com.perseus.conectapro.Repository.PrestadorRepository;
 import com.perseus.conectapro.Repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +35,7 @@ public class OrcamentoService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Transactional
     public OrcamentoDTO cadastrarOrcamento(OrcamentoCreateDTO orcamentoCreateDTO)
     {
         Orcamento orcamento = new Orcamento();
@@ -55,7 +59,8 @@ public class OrcamentoService {
         }
 
         orcamento.setIdUsuario(usuario); //<- satifaz o a busca por usuario
-        orcamento.setDataInclusao(orcamentoCreateDTO.getDataInclusao());
+        orcamento.setDescOrcamento(orcamentoCreateDTO.getDescOrcamento());
+        orcamento.setDataInclusao(LocalDateTime.now());
         orcamento.setPrevisaoInicio(orcamentoCreateDTO.getPrevisaoInicio());
         orcamento.setDuracaoServico(orcamentoCreateDTO.getDuracaoServico());
         orcamento.setValorOrcamento(orcamentoCreateDTO.getValorOrcamento());
@@ -65,6 +70,10 @@ public class OrcamentoService {
         orcamento.setStatusOrcamentoEnum(orcamentoCreateDTO.getStatusOrcamentoEnum());
 
         Orcamento orcamentoCriado = orcamentoRepository.save(orcamento);
+        Prestador prestador = orcamentoCriado.getIdPrestador();
+        if (prestador != null) {
+            Hibernate.initialize(prestador.getEspecialidades());
+        }
         return new OrcamentoDTO(orcamentoCriado);
     }
 
@@ -84,6 +93,9 @@ public class OrcamentoService {
         Orcamento orcamentoExistente = orcamentoRepository.findById(idOrcamento)
                 .orElseThrow(() -> new IllegalArgumentException("Orçamento não encontrado!!"));
 
+        if (orcamentoUpdateDTO.getValorOrcamento() != null){
+            orcamentoExistente.setDescOrcamento(orcamentoUpdateDTO.getDescOrcamento());
+        }
         if(orcamentoUpdateDTO.getValorOrcamento() !=null){
             orcamentoExistente.setValorOrcamento(orcamentoUpdateDTO.getValorOrcamento());
         }

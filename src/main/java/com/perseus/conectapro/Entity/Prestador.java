@@ -17,7 +17,7 @@ public class Prestador extends Usuario {
     @Column(name = "CPF")
     private String cpf;
 
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "ESPECIALIDADES", joinColumns = @JoinColumn(name = "ID_USUARIO"))
     @Column(name = "ESPECIALIDADE")
     private List<String> especialidades;

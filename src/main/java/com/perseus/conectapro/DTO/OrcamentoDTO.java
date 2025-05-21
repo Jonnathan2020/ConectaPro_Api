@@ -17,10 +17,12 @@ import java.time.LocalDateTime;
 @Setter
 public class OrcamentoDTO {
     private int idOrcamento;
+    private String descOrcamento;
     private PrestadorResumoDTO prestadorResumoDTO;
     private EmpresaClienteResumoDTO empresaClienteResumoDTO;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "0.000,00")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "#.##0,00")
     private BigDecimal valorOrcamento;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy - HH:mm", timezone = "America/Sao_Paulo")
     private LocalDateTime dataInclusao;
     private LocalDate previsaoInicio;
     private int duracaoServico;
@@ -36,6 +38,7 @@ public class OrcamentoDTO {
         } else if (orcamento.getIdEmpresaCliente() != null) {
             this.empresaClienteResumoDTO = new EmpresaClienteResumoDTO(orcamento.getIdEmpresaCliente());
         }
+        this.descOrcamento = orcamento.getDescOrcamento();
         this.valorOrcamento = orcamento.getValorOrcamento();
         this.dataInclusao = orcamento.getDataInclusao();
         this.previsaoInicio = orcamento.getPrevisaoInicio();
@@ -46,8 +49,9 @@ public class OrcamentoDTO {
         this.statusOrcamentoEnum = orcamento.getStatusOrcamentoEnum();
     }
 
-    public OrcamentoDTO(int idOrcamento, BigDecimal valorOrcamento, LocalDateTime dataInclusao,  LocalDate previsaoInicio,int duracaoServico, FormaPagtoEnum formaPagtoEnum,NvlUrgenciaEnum nvlUrgenciaEnum,TipoCategoriaEnum tipoCategoriaEnum, StatusOrcamentoEnum statusOrcamentoEnum){
+    public OrcamentoDTO(int idOrcamento,String descOrcamento, BigDecimal valorOrcamento, LocalDateTime dataInclusao,  LocalDate previsaoInicio,int duracaoServico, FormaPagtoEnum formaPagtoEnum,NvlUrgenciaEnum nvlUrgenciaEnum,TipoCategoriaEnum tipoCategoriaEnum, StatusOrcamentoEnum statusOrcamentoEnum){
         this.idOrcamento = idOrcamento;
+        this.descOrcamento = descOrcamento;
         this.valorOrcamento = valorOrcamento;
         this.dataInclusao = dataInclusao;
         this.previsaoInicio = previsaoInicio;
