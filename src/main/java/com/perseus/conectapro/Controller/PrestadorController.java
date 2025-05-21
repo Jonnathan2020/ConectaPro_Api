@@ -58,11 +58,15 @@ public class PrestadorController {
             List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
+                            orcamento.getDescOrcamento(),
                             orcamento.getValorOrcamento(),
+                            orcamento.getDataInclusao(),
+                            orcamento.getPrevisaoInicio(),
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
-                            orcamento.getPrevisaoInicio(),
-                            orcamento.getNvlUrgenciaEnum(), orcamento.getTipoCategoriaEnum()))
+                            orcamento.getNvlUrgenciaEnum(),
+                            orcamento.getTipoCategoriaEnum(),
+                            orcamento.getStatusOrcamentoEnum()))
                     .collect(Collectors.toList());
 
             return new PrestadorDTO(prestador, orcamentoDTOS);

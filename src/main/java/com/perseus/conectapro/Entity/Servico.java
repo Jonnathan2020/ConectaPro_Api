@@ -55,7 +55,7 @@ public class Servico {
     private LocalDateTime dataPagamento;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "FORMA_PAGTT")
+    @Column(name = "FORMA_PAGTO")
     private FormaPagtoEnum formaPagtoEnum;
 
     @Enumerated(EnumType.STRING)

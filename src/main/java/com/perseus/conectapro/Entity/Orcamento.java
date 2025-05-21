@@ -2,6 +2,7 @@ package com.perseus.conectapro.Entity;
 
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
 import com.perseus.conectapro.Entity.Enuns.NvlUrgenciaEnum;
+import com.perseus.conectapro.Entity.Enuns.StatusOrcamentoEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,15 +27,18 @@ public class Orcamento {
     @Column(name = "DESC_ORCAMENTO")
     private String descOrcamento;
 
-    @OneToOne
-    @JoinColumn(name = "ID_SERVICO")
-    private Servico idServico;
+    @OneToMany(mappedBy = "orcamento")
+    private List<Servico> servicos;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "ID_USUARIO")
+    private Usuario idUsuario;
+
+    @ManyToOne
     @JoinColumn(name = "ID_EMPRESACLIENTE")
     private EmpresaCliente idEmpresaCliente;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "ID_PRESTADOR")
     private Prestador idPrestador;
 
@@ -58,9 +63,11 @@ public class Orcamento {
     private TipoCategoriaEnum tipoCategoriaEnum;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "FORMA_PAGTT")
+    @Column(name = "FORMA_PAGTO")
     private FormaPagtoEnum formaPagtoEnum;
 
-
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS_ORCAMENTO")
+    private StatusOrcamentoEnum statusOrcamentoEnum;
 
 }
