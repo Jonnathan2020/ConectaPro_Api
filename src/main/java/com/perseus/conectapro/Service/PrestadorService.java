@@ -95,6 +95,7 @@ public class PrestadorService {
             List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
+                            orcamento.getTituloOrcamento(),
                             orcamento.getDescOrcamento(),
                             orcamento.getValorOrcamento(),
                             orcamento.getDataInclusao(),
@@ -123,6 +124,7 @@ public class PrestadorService {
         List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                 .map(orcamento -> new OrcamentoDTO(
                         orcamento.getIdOrcamento(),
+                        orcamento.getTituloOrcamento(),
                         orcamento.getDescOrcamento(),
                         orcamento.getValorOrcamento(),
                         orcamento.getDataInclusao(),
@@ -152,6 +154,7 @@ public class PrestadorService {
             List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
+                            orcamento.getTituloOrcamento(),
                             orcamento.getDescOrcamento(),
                             orcamento.getValorOrcamento(),
                             orcamento.getDataInclusao(),
@@ -182,6 +185,7 @@ public class PrestadorService {
             List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
+                            orcamento.getTituloOrcamento(),
                             orcamento.getDescOrcamento(),
                             orcamento.getValorOrcamento(),
                             orcamento.getDataInclusao(),
@@ -192,7 +196,6 @@ public class PrestadorService {
                             orcamento.getTipoCategoriaEnum(),
                             orcamento.getStatusOrcamentoEnum()
                     )).collect(Collectors.toList());
-
 
             return new PrestadorDTO(prestador, orcamentoDTOS);
         }).collect(Collectors.toList());
@@ -211,6 +214,7 @@ public class PrestadorService {
             List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
+                            orcamento.getTituloOrcamento(),
                             orcamento.getDescOrcamento(),
                             orcamento.getValorOrcamento(),
                             orcamento.getDataInclusao(),
@@ -274,6 +278,7 @@ public class PrestadorService {
         List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                 .map(orcamento -> new OrcamentoDTO(
                         orcamento.getIdOrcamento(),
+                        orcamento.getTituloOrcamento(),
                         orcamento.getDescOrcamento(),
                         orcamento.getValorOrcamento(),
                         orcamento.getDataInclusao(),

@@ -20,11 +20,11 @@ public class ServicoCreateDTO {
 
     private int idOrcamento;
     private Segmento idSegmento;
+    private String tituloServico;
     private String descServico;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "#.##0,00")
     private Float valorContratacao;
     private FormaPagtoEnum formaPagtoEnum;
-
     //Atribuido automaticamente, está aqui para retornar na exibição
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy - HH:mm", timezone = "America/Sao_Paulo")
     private LocalDateTime dataInclusao;

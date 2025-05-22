@@ -18,6 +18,7 @@ public class ServicoDTO {
     private PrestadorResumoDTO prestadorResumoDTO;
     private EmpresaClienteResumoDTO empresaClienteResumoDTO;
     private Segmento idSegmento;
+    private String tituloServico;
     private String descServico;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "#.##0,00")
     private Float valorContratacao;
@@ -39,6 +40,7 @@ public class ServicoDTO {
         this.prestadorResumoDTO = new PrestadorResumoDTO(servico.getIdPrestador());
         this.empresaClienteResumoDTO = new EmpresaClienteResumoDTO(servico.getIdEmpresaCliente());
         this.idSegmento = servico.getIdSegmento();
+        this.tituloServico = servico.getTituloServico();
         this.descServico = servico.getDescServico();
         this.valorContratacao = servico.getValorContratacao();
         this.formaPagtoEnum = servico.getFormaPagtoEnum();

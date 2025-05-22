@@ -1,5 +1,6 @@
 package com.perseus.conectapro.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
@@ -14,13 +15,11 @@ public class PrestadorCreateDTO extends UsuarioCreateDTO{
 
     @Pattern(regexp = "\\d{11}", message = "CPF deve conter exatamente 11 dígitos numéricos")
     private String cpf;
-
-    //ID do segmento
-    private List<Integer> segmentos;
     private String descPrestador;
     private List<String> especialidades;
     private StatusDisponibilidadeEnum statusDisponibilidade;
-    private Long plano;
+    private int plano;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "America/Sao_Paulo")
     private LocalDate dataNascimento;
 
 }

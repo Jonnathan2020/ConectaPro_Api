@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class OrcamentoUpdateDTO {
+    private String tituloOrcamento;
     private String descOrcamento;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "#.##0,00")
     private BigDecimal valorOrcamento;

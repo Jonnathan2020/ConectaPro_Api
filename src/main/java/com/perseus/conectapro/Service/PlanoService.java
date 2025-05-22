@@ -22,7 +22,7 @@ public class PlanoService {
     }
 
     //Buscar plano por id
-    public Plano buscarPlanoPorId(Long id) {
+    public Plano buscarPlanoPorId(Integer id) {
         Plano planoExistente = planoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Plano não encontrado!!"));
 
@@ -30,7 +30,7 @@ public class PlanoService {
     }
 
     //Alterar plano
-    public Plano alterarPlano(Long id, Plano plano) {
+    public Plano alterarPlano(Integer id, Plano plano) {
         Plano planoExistente = planoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Plano não encontrado!!"));
 
@@ -49,7 +49,7 @@ public class PlanoService {
     }
 
     //Deletar plano
-    public void deletarPlano(Long id) {
+    public void deletarPlano(Integer id) {
          planoRepository.deleteById(id);
     }
 

@@ -24,6 +24,9 @@ public class Orcamento {
     @Column(name = "ID_ORCAMENTO")
     private int idOrcamento;
 
+    @Column(name = "TITULO_ORCAMENTO")
+    private String tituloOrcamento;
+
     @Column(name = "DESC_ORCAMENTO")
     private String descOrcamento;
 

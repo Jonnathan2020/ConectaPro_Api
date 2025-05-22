@@ -59,6 +59,7 @@ public class OrcamentoService {
         }
 
         orcamento.setIdUsuario(usuario); //<- satifaz o a busca por usuario
+        orcamento.setTituloOrcamento(orcamentoCreateDTO.getTituloOrcamento());
         orcamento.setDescOrcamento(orcamentoCreateDTO.getDescOrcamento());
         orcamento.setDataInclusao(LocalDateTime.now());
         orcamento.setPrevisaoInicio(orcamentoCreateDTO.getPrevisaoInicio());
@@ -93,7 +94,10 @@ public class OrcamentoService {
         Orcamento orcamentoExistente = orcamentoRepository.findById(idOrcamento)
                 .orElseThrow(() -> new IllegalArgumentException("Orçamento não encontrado!!"));
 
-        if (orcamentoUpdateDTO.getValorOrcamento() != null){
+        if(orcamentoUpdateDTO.getTituloOrcamento() != null){
+            orcamentoExistente.setTituloOrcamento(orcamentoUpdateDTO.getTituloOrcamento());
+        }
+        if (orcamentoUpdateDTO.getDescOrcamento() != null){
             orcamentoExistente.setDescOrcamento(orcamentoUpdateDTO.getDescOrcamento());
         }
         if(orcamentoUpdateDTO.getValorOrcamento() !=null){

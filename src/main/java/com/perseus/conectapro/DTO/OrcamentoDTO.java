@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Setter
 public class OrcamentoDTO {
     private int idOrcamento;
+    private String tituloOrcamento;
     private String descOrcamento;
     private PrestadorResumoDTO prestadorResumoDTO;
     private EmpresaClienteResumoDTO empresaClienteResumoDTO;
@@ -38,6 +39,7 @@ public class OrcamentoDTO {
         } else if (orcamento.getIdEmpresaCliente() != null) {
             this.empresaClienteResumoDTO = new EmpresaClienteResumoDTO(orcamento.getIdEmpresaCliente());
         }
+        this.tituloOrcamento = orcamento.getTituloOrcamento();
         this.descOrcamento = orcamento.getDescOrcamento();
         this.valorOrcamento = orcamento.getValorOrcamento();
         this.dataInclusao = orcamento.getDataInclusao();
@@ -49,8 +51,9 @@ public class OrcamentoDTO {
         this.statusOrcamentoEnum = orcamento.getStatusOrcamentoEnum();
     }
 
-    public OrcamentoDTO(int idOrcamento,String descOrcamento, BigDecimal valorOrcamento, LocalDateTime dataInclusao,  LocalDate previsaoInicio,int duracaoServico, FormaPagtoEnum formaPagtoEnum,NvlUrgenciaEnum nvlUrgenciaEnum,TipoCategoriaEnum tipoCategoriaEnum, StatusOrcamentoEnum statusOrcamentoEnum){
+    public OrcamentoDTO(int idOrcamento,String tituloOrcamento, String descOrcamento, BigDecimal valorOrcamento, LocalDateTime dataInclusao,  LocalDate previsaoInicio,int duracaoServico, FormaPagtoEnum formaPagtoEnum,NvlUrgenciaEnum nvlUrgenciaEnum,TipoCategoriaEnum tipoCategoriaEnum, StatusOrcamentoEnum statusOrcamentoEnum){
         this.idOrcamento = idOrcamento;
+        this.tituloOrcamento = tituloOrcamento;
         this.descOrcamento = descOrcamento;
         this.valorOrcamento = valorOrcamento;
         this.dataInclusao = dataInclusao;

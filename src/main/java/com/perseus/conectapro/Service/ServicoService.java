@@ -68,6 +68,7 @@ public class ServicoService {
 
         servico.setOrcamento(orcamento);
         servico.setSituacaoServico(SituacaoServicoEnum.ORCAMENTO);
+        servico.setTituloServico(servicoCreateDTO.getTituloServico());
         servico.setDescServico(servicoCreateDTO.getDescServico());
         servico.setDataInclusao(LocalDateTime.now());
         servico.setDataAprovacao(servicoCreateDTO.getDataAprovacao());
@@ -104,6 +105,10 @@ public class ServicoService {
     public Servico alterarServico(int idServico, ServicoUpdateDTO servicoUpdateDTO){
         Servico servicoExistente = servicoRepository.findById(idServico)
                 .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado!!"));
+
+        if (servicoUpdateDTO.getTituloServico() != null){
+            servicoExistente.setTituloServico(servicoUpdateDTO.getTituloServico());
+        }
 
         if (servicoUpdateDTO.getDescServico() != null){
             servicoExistente.setDescServico(servicoUpdateDTO.getDescServico());

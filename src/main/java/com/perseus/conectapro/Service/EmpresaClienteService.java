@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class EmpresaClienteService {
-
-    private Usuario usuario;
     @Autowired
     private EmpresaClienteRepository empresaClienteRepository;
     @Autowired
@@ -31,8 +29,6 @@ public class EmpresaClienteService {
     private ViaCepService viaCepService;
     @Autowired
     private OrcamentoRepository orcamentoRepository;
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
     //cadastrar as informaçoes alem do usuario, faltantes para uma empresa cliente
     public EmpresaCliente cadastrarEmpresaCliente(EmpresaClienteCreateDTO empresaClienteCreateDTO) {
@@ -79,6 +75,7 @@ public class EmpresaClienteService {
     public List<EmpresaClienteDTO> consultarEmpresas(Specification<EmpresaCliente> spec){
 
         List<EmpresaCliente> clientes = empresaClienteRepository.findAll(spec);
+
         if (clientes.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhuma empresa encontrada com os filtros fornecidos.");
         }
@@ -89,6 +86,7 @@ public class EmpresaClienteService {
             List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
+                            orcamento.getTituloOrcamento(),
                             orcamento.getDescOrcamento(),
                             orcamento.getValorOrcamento(),
                             orcamento.getDataInclusao(),
@@ -118,6 +116,7 @@ public class EmpresaClienteService {
         List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                 .map(orcamento -> new OrcamentoDTO(
                         orcamento.getIdOrcamento(),
+                        orcamento.getTituloOrcamento(),
                         orcamento.getDescOrcamento(),
                         orcamento.getValorOrcamento(),
                         orcamento.getDataInclusao(),
@@ -146,6 +145,7 @@ public class EmpresaClienteService {
             List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                     .map(orcamento -> new OrcamentoDTO(
                             orcamento.getIdOrcamento(),
+                            orcamento.getTituloOrcamento(),
                             orcamento.getDescOrcamento(),
                             orcamento.getValorOrcamento(),
                             orcamento.getDataInclusao(),
@@ -201,6 +201,7 @@ public class EmpresaClienteService {
         List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
                 .map(orcamento -> new OrcamentoDTO(
                         orcamento.getIdOrcamento(),
+                        orcamento.getTituloOrcamento(),
                         orcamento.getDescOrcamento(),
                         orcamento.getValorOrcamento(),
                         orcamento.getDataInclusao(),

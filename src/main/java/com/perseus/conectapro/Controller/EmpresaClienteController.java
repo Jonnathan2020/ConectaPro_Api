@@ -3,9 +3,7 @@ package com.perseus.conectapro.Controller;
 import com.perseus.conectapro.DTO.EmpresaClienteCreateDTO;
 import com.perseus.conectapro.DTO.EmpresaClienteDTO;
 import com.perseus.conectapro.DTO.EmpresaClienteUpdateDTO;
-import com.perseus.conectapro.DTO.OrcamentoDTO;
 import com.perseus.conectapro.Entity.EmpresaCliente;
-import com.perseus.conectapro.Entity.Orcamento;
 import com.perseus.conectapro.Repository.EmpresaClienteRepository;
 import com.perseus.conectapro.Repository.OrcamentoRepository;
 import com.perseus.conectapro.Service.EmpresaClienteService;
@@ -20,10 +18,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -56,31 +52,7 @@ public class EmpresaClienteController {
                     @Spec(path = "endereco.cep", spec = Like.class)
             })Specification<EmpresaCliente> spec
             ){
-
-            List<EmpresaCliente> clientes = empresaClienteRepository.findAll(spec);
-            if (clientes.isEmpty()) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhuma empresa encontrada com os filtros fornecidos.");
-            }
-
-        return clientes.stream().map(empresaCliente -> {
-            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(empresaCliente);
-
-            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
-                    .map(orcamento -> new OrcamentoDTO(
-                            orcamento.getIdOrcamento(),
-                            orcamento.getDescOrcamento(),
-                            orcamento.getValorOrcamento(),
-                            orcamento.getDataInclusao(),
-                            orcamento.getPrevisaoInicio(),
-                            orcamento.getDuracaoServico(),
-                            orcamento.getFormaPagtoEnum(),
-                            orcamento.getNvlUrgenciaEnum(),
-                            orcamento.getTipoCategoriaEnum(),
-                            orcamento.getStatusOrcamentoEnum()))
-                    .collect(Collectors.toList());
-
-            return new EmpresaClienteDTO(empresaCliente, orcamentoDTOS);
-        }).collect(Collectors.toList());
+        return empresaClienteService.consultarEmpresas(spec);
     }
 
     //Buscar empresa por id

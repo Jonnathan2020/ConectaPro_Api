@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ServicoUpdateDTO {
-
+    private String tituloServico;
     private String descServico;
     private SituacaoServicoEnum situacaoServicoEnum;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "#.##0,00")

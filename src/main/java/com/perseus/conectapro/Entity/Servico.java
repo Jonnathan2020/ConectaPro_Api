@@ -32,12 +32,15 @@ public class Servico {
     @JoinColumn(name = "ID_SEGMENTO")
     private Segmento idSegmento;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_ORCAMENTO")
-    private Orcamento orcamento;
+    @Column(name = "TITULO_SERVICO")
+    private String tituloServico;
 
     @Column(name = "DESC_SERVICO")
     private String descServico;
+
+    @ManyToOne
+    @JoinColumn(name = "ID_ORCAMENTO")
+    private Orcamento orcamento;
 
     @Column(name = "VALOR_CONTRATACAO")
     private Float valorContratacao;

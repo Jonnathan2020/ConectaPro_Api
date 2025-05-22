@@ -25,7 +25,7 @@ public class PlanoController {
 
     //Buscar plano por id
     @GetMapping("/{id}")
-    public Plano buscarPlanoPorId(@PathVariable Long id) { return planoService.buscarPlanoPorId(id); }
+    public Plano buscarPlanoPorId(@PathVariable Integer id) { return planoService.buscarPlanoPorId(id); }
 
     //Cadastrar plano
     @PostMapping("/registro")
@@ -36,13 +36,13 @@ public class PlanoController {
 
     //Alterar plano
     @PutMapping("/{id}")
-    public ResponseEntity<Plano> alterarPlano(@PathVariable Long id, @RequestBody Plano plano) {
+    public ResponseEntity<Plano> alterarPlano(@PathVariable Integer id, @RequestBody Plano plano) {
         Plano planoCriado = planoService.cadastrarPlano(plano);
         return ResponseEntity.status(HttpStatus.CREATED).body(planoCriado);
     }
 
     //Deletar plano
     @DeleteMapping("/{id}")
-    public void deletarPlano(@PathVariable Long id) { planoService.deletarPlano(id); }
+    public void deletarPlano(@PathVariable Integer id) { planoService.deletarPlano(id); }
 
 }
