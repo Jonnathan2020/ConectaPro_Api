@@ -75,6 +75,7 @@ public class PrestadorService {
         prestador.setDescPrestador(prestadorDTO.getDescPrestador());
         prestador.setEspecialidades(prestadorDTO.getEspecialidades());
         prestador.setStatusDisponibilidade(prestadorDTO.getStatusDisponibilidade());
+        prestador.setTipoCategoria(prestadorDTO.getTipoCategoria());
         prestador.setEndereco(endereco);
 
 

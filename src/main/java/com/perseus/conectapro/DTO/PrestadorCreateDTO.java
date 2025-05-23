@@ -2,6 +2,7 @@ package com.perseus.conectapro.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
+import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,5 +22,5 @@ public class PrestadorCreateDTO extends UsuarioCreateDTO{
     private int plano;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "America/Sao_Paulo")
     private LocalDate dataNascimento;
-
+    private List<TipoCategoriaEnum> tipoCategoria;
 }

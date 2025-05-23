@@ -36,5 +36,12 @@ public class PrestadorDTO {
         this.idPlano = prestador.getIdPlano();
     }
 
+    public PrestadorDTO(Prestador prestador) {
+        this.idPrestador = prestador.getIdUsuario();
+        this.nome = prestador.getNome();
+        // adicione os campos necessários
+    }
+
+
 
 }

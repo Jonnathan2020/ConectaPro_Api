@@ -2,6 +2,7 @@ package com.perseus.conectapro.Entity;
 
 import com.perseus.conectapro.DTO.OrcamentoDTO;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
+import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,10 @@ public class Prestador extends Usuario {
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS_DISPONIBILIDADE")
     private StatusDisponibilidadeEnum statusDisponibilidade;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "TIPO_CATEGOIA")
+    private List<TipoCategoriaEnum> tipoCategoria;
 
     @JoinColumn(name = "ID_PLANO")
     @ManyToOne
