@@ -24,7 +24,7 @@ public class EmpresaCliente extends Usuario {
     private List<Servico> servicos;
 
     @OneToMany(mappedBy = "idPrestador")
-    private List<Orcamento> orcamentos;
+    private List<SolicitacaoServico> solicitacaoServicos;
 
     @PrePersist
     @PreUpdate

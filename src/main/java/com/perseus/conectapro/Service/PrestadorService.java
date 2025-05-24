@@ -33,7 +33,7 @@ public class PrestadorService {
     @Autowired
     private ViaCepService viaCepService;
     @Autowired
-    private OrcamentoRepository orcamentoRepository;
+    private SolicitacaoServicoRepository solicitacaoServicoRepository;
     @Autowired
     private UsuarioRepository usuarioRepository;
 
@@ -90,25 +90,25 @@ public class PrestadorService {
         }
 
         return prestadores.stream().map(prestador -> {
-            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(prestador);
+            List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findByIdUsuario(prestador);
 
-            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
-                    .map(orcamento -> new OrcamentoDTO(
-                            orcamento.getIdOrcamento(),
-                            orcamento.getTituloOrcamento(),
-                            orcamento.getDescOrcamento(),
-                            orcamento.getValorOrcamento(),
+            List<SolicitacaoServicoDTO> solicitacaoServicoDTOS = solicitacaoServicos.stream()
+                    .map(orcamento -> new SolicitacaoServicoDTO(
+                            orcamento.getIdSolicitacao(),
+                            orcamento.getTituloSolicitacao(),
+                            orcamento.getDescSolicitacao(),
+                            orcamento.getValorProposto(),
                             orcamento.getDataInclusao(),
                             orcamento.getPrevisaoInicio(),
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
                             orcamento.getNvlUrgenciaEnum(),
                             orcamento.getTipoCategoriaEnum(),
-                            orcamento.getStatusOrcamentoEnum()
+                            orcamento.getStatusSolicitacaoEnum()
                     )).collect(Collectors.toList());
 
 
-            return new PrestadorDTO(prestador, orcamentoDTOS);
+            return new PrestadorDTO(prestador, solicitacaoServicoDTOS);
         }).collect(Collectors.toList());
     }
 
@@ -119,25 +119,25 @@ public class PrestadorService {
             throw new IllegalArgumentException("Prestador não encontrado!");
         }
 
-        List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(prestadorEspecifico);
+        List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findByIdUsuario(prestadorEspecifico);
 
-        List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
-                .map(orcamento -> new OrcamentoDTO(
-                        orcamento.getIdOrcamento(),
-                        orcamento.getTituloOrcamento(),
-                        orcamento.getDescOrcamento(),
-                        orcamento.getValorOrcamento(),
+        List<SolicitacaoServicoDTO> solicitacaoServicoDTOS = solicitacaoServicos.stream()
+                .map(orcamento -> new SolicitacaoServicoDTO(
+                        orcamento.getIdSolicitacao(),
+                        orcamento.getTituloSolicitacao(),
+                        orcamento.getDescSolicitacao(),
+                        orcamento.getValorProposto(),
                         orcamento.getDataInclusao(),
                         orcamento.getPrevisaoInicio(),
                         orcamento.getDuracaoServico(),
                         orcamento.getFormaPagtoEnum(),
                         orcamento.getNvlUrgenciaEnum(),
                         orcamento.getTipoCategoriaEnum(),
-                        orcamento.getStatusOrcamentoEnum()
+                        orcamento.getStatusSolicitacaoEnum()
                 )).collect(Collectors.toList());
 
 
-        return new PrestadorDTO(prestadorEspecifico, orcamentoDTOS);
+        return new PrestadorDTO(prestadorEspecifico, solicitacaoServicoDTOS);
     }
 
     //consultar pelo nome
@@ -149,25 +149,25 @@ public class PrestadorService {
         }
 
         return prestadores.stream().map(prestador -> {
-            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(prestador);
+            List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findByIdUsuario(prestador);
 
-            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
-                    .map(orcamento -> new OrcamentoDTO(
-                            orcamento.getIdOrcamento(),
-                            orcamento.getTituloOrcamento(),
-                            orcamento.getDescOrcamento(),
-                            orcamento.getValorOrcamento(),
+            List<SolicitacaoServicoDTO> solicitacaoServicoDTOS = solicitacaoServicos.stream()
+                    .map(orcamento -> new SolicitacaoServicoDTO(
+                            orcamento.getIdSolicitacao(),
+                            orcamento.getTituloSolicitacao(),
+                            orcamento.getDescSolicitacao(),
+                            orcamento.getValorProposto(),
                             orcamento.getDataInclusao(),
                             orcamento.getPrevisaoInicio(),
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
                             orcamento.getNvlUrgenciaEnum(),
                             orcamento.getTipoCategoriaEnum(),
-                            orcamento.getStatusOrcamentoEnum()
+                            orcamento.getStatusSolicitacaoEnum()
                     )).collect(Collectors.toList());
 
 
-            return new PrestadorDTO(prestador, orcamentoDTOS);
+            return new PrestadorDTO(prestador, solicitacaoServicoDTOS);
         }).collect(Collectors.toList());
     }
 
@@ -180,24 +180,24 @@ public class PrestadorService {
         }
 
         return prestadores.stream().map(prestador -> {
-            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(prestador); // ou .findByPrestadorId(prestador.getId())
+            List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findByIdUsuario(prestador); // ou .findByPrestadorId(prestador.getId())
 
-            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
-                    .map(orcamento -> new OrcamentoDTO(
-                            orcamento.getIdOrcamento(),
-                            orcamento.getTituloOrcamento(),
-                            orcamento.getDescOrcamento(),
-                            orcamento.getValorOrcamento(),
+            List<SolicitacaoServicoDTO> solicitacaoServicoDTOS = solicitacaoServicos.stream()
+                    .map(orcamento -> new SolicitacaoServicoDTO(
+                            orcamento.getIdSolicitacao(),
+                            orcamento.getTituloSolicitacao(),
+                            orcamento.getDescSolicitacao(),
+                            orcamento.getValorProposto(),
                             orcamento.getDataInclusao(),
                             orcamento.getPrevisaoInicio(),
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
                             orcamento.getNvlUrgenciaEnum(),
                             orcamento.getTipoCategoriaEnum(),
-                            orcamento.getStatusOrcamentoEnum()
+                            orcamento.getStatusSolicitacaoEnum()
                     )).collect(Collectors.toList());
 
-            return new PrestadorDTO(prestador, orcamentoDTOS);
+            return new PrestadorDTO(prestador, solicitacaoServicoDTOS);
         }).collect(Collectors.toList());
     }
 
@@ -209,25 +209,25 @@ public class PrestadorService {
         }
 
         return prestadores.stream().map(prestador -> {
-            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(prestador); // ou .findByPrestadorId(prestador.getId())
+            List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findByIdUsuario(prestador); // ou .findByPrestadorId(prestador.getId())
 
-            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
-                    .map(orcamento -> new OrcamentoDTO(
-                            orcamento.getIdOrcamento(),
-                            orcamento.getTituloOrcamento(),
-                            orcamento.getDescOrcamento(),
-                            orcamento.getValorOrcamento(),
+            List<SolicitacaoServicoDTO> solicitacaoServicoDTOS = solicitacaoServicos.stream()
+                    .map(orcamento -> new SolicitacaoServicoDTO(
+                            orcamento.getIdSolicitacao(),
+                            orcamento.getTituloSolicitacao(),
+                            orcamento.getDescSolicitacao(),
+                            orcamento.getValorProposto(),
                             orcamento.getDataInclusao(),
                             orcamento.getPrevisaoInicio(),
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
                             orcamento.getNvlUrgenciaEnum(),
                             orcamento.getTipoCategoriaEnum(),
-                            orcamento.getStatusOrcamentoEnum()
+                            orcamento.getStatusSolicitacaoEnum()
                     )).collect(Collectors.toList());
 
 
-            return new PrestadorDTO(prestador, orcamentoDTOS);
+            return new PrestadorDTO(prestador, solicitacaoServicoDTOS);
         }).collect(Collectors.toList());
     }
 
@@ -273,27 +273,27 @@ public class PrestadorService {
         if (prestadorUpdateDTO.getStatusDisponibilidade() != null){
             prestadorExistente.setStatusDisponibilidade(prestadorUpdateDTO.getStatusDisponibilidade());
         }
-        List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(prestadorExistente);
+        List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findByIdUsuario(prestadorExistente);
 
-        List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
-                .map(orcamento -> new OrcamentoDTO(
-                        orcamento.getIdOrcamento(),
-                        orcamento.getTituloOrcamento(),
-                        orcamento.getDescOrcamento(),
-                        orcamento.getValorOrcamento(),
+        List<SolicitacaoServicoDTO> solicitacaoServicoDTOS = solicitacaoServicos.stream()
+                .map(orcamento -> new SolicitacaoServicoDTO(
+                        orcamento.getIdSolicitacao(),
+                        orcamento.getTituloSolicitacao(),
+                        orcamento.getDescSolicitacao(),
+                        orcamento.getValorProposto(),
                         orcamento.getDataInclusao(),
                         orcamento.getPrevisaoInicio(),
                         orcamento.getDuracaoServico(),
                         orcamento.getFormaPagtoEnum(),
                         orcamento.getNvlUrgenciaEnum(),
                         orcamento.getTipoCategoriaEnum(),
-                        orcamento.getStatusOrcamentoEnum()
+                        orcamento.getStatusSolicitacaoEnum()
                 )).collect(Collectors.toList());
 
 
         //metodo que salva as informaçoes do prestador
         Prestador prestadorAtualizado = prestadorRepository.save(prestadorExistente);
-        return new PrestadorDTO(prestadorAtualizado, orcamentoDTOS);
+        return new PrestadorDTO(prestadorAtualizado, solicitacaoServicoDTOS);
     }
 
     //deletar usuario pelo id

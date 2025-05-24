@@ -1,10 +1,8 @@
 package com.perseus.conectapro.DTO;
 
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
-import com.perseus.conectapro.Entity.Orcamento;
 import com.perseus.conectapro.Entity.Plano;
 import com.perseus.conectapro.Entity.Prestador;
-import com.perseus.conectapro.Entity.Servico;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,10 +19,10 @@ public class PrestadorDTO {
     private StatusDisponibilidadeEnum statusDisponibilidadeEnum;
     private List<ServicoDTO> servicos;
     private String caminhoFoto;
-    private List<OrcamentoDTO> orcamentos;
+    private List<SolicitacaoServicoDTO> orcamentos;
     private Plano idPlano;
 
-    public PrestadorDTO(Prestador prestador, List<OrcamentoDTO> orcamentos){
+    public PrestadorDTO(Prestador prestador, List<SolicitacaoServicoDTO> orcamentos){
         this.idPrestador = prestador.getIdUsuario();
         this.nome = prestador.getNome();
         this.descPrestador = prestador.getDescPrestador();

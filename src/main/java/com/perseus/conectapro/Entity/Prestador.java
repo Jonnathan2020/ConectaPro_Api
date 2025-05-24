@@ -1,6 +1,5 @@
 package com.perseus.conectapro.Entity;
 
-import com.perseus.conectapro.DTO.OrcamentoDTO;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -34,7 +33,7 @@ public class Prestador extends Usuario {
     private List<Avaliacao> avaliacoes;
 
     @OneToMany(mappedBy = "idPrestador")
-    private List<Orcamento> orcamentos;
+    private List<SolicitacaoServico> solicitacaoServicos;
 
     @OneToMany(mappedBy = "idPrestador")
     private List<Servico> servicos;

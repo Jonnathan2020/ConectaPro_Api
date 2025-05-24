@@ -1,0 +1,140 @@
+package com.perseus.conectapro.Service;
+
+import com.perseus.conectapro.DTO.SolicitacaoServicoCreateDTO;
+import com.perseus.conectapro.DTO.SolicitacaoServicoDTO;
+import com.perseus.conectapro.DTO.SolicitacaoServicoUpdateDTO;
+import com.perseus.conectapro.Entity.EmpresaCliente;
+import com.perseus.conectapro.Entity.SolicitacaoServico;
+import com.perseus.conectapro.Entity.Prestador;
+import com.perseus.conectapro.Entity.Usuario;
+import com.perseus.conectapro.Repository.EmpresaClienteRepository;
+import com.perseus.conectapro.Repository.SolicitacaoServicoRepository;
+import com.perseus.conectapro.Repository.PrestadorRepository;
+import com.perseus.conectapro.Repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
+import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class SolicitacaoServicoService {
+
+    @Autowired
+    private SolicitacaoServicoRepository solicitacaoServicoRepository;
+    @Autowired
+    private PrestadorRepository prestadorRepository;
+    @Autowired
+    private EmpresaClienteRepository empresaClienteRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Transactional
+    public SolicitacaoServicoDTO cadastrarSolicitacao(SolicitacaoServicoCreateDTO solicitacaoServicoCreateDTO)
+    {
+        SolicitacaoServico solicitacaoServico = new SolicitacaoServico();
+        Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (usuario == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário não encontrado");
+        }
+
+
+        if (usuario instanceof EmpresaCliente) {
+            EmpresaCliente empresaCliente = (EmpresaCliente) usuario;
+            solicitacaoServico.setIdEmpresaCliente(empresaCliente);
+        }
+        else if (usuario instanceof Prestador) {
+            Prestador prestador = (Prestador) usuario;
+            solicitacaoServico.setIdPrestador(prestador);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de usuário inválido.");
+        }
+
+        solicitacaoServico.setIdUsuario(usuario); //<- satifaz o a busca por usuario
+        solicitacaoServico.setTituloSolicitacao(solicitacaoServicoCreateDTO.getTituloSolicitacao());
+        solicitacaoServico.setDescSolicitacao(solicitacaoServicoCreateDTO.getDescSolicitacao());
+        solicitacaoServico.setDataInclusao(LocalDateTime.now());
+        solicitacaoServico.setPrevisaoInicio(solicitacaoServicoCreateDTO.getPrevisaoInicio());
+        solicitacaoServico.setDuracaoServico(solicitacaoServicoCreateDTO.getDuracaoServico());
+        solicitacaoServico.setValorProposto(solicitacaoServicoCreateDTO.getValorProposto());
+        solicitacaoServico.setFormaPagtoEnum(solicitacaoServicoCreateDTO.getFormaPagtoEnum());
+        solicitacaoServico.setNvlUrgenciaEnum(solicitacaoServicoCreateDTO.getNvlUrgenciaEnum());
+        solicitacaoServico.setTipoCategoriaEnum(solicitacaoServicoCreateDTO.getTipoCategoriaEnum());
+        solicitacaoServico.setStatusSolicitacaoEnum(solicitacaoServicoCreateDTO.getStatusSolicitacaoEnum());
+
+        SolicitacaoServico solicitacaoServicoCriado = solicitacaoServicoRepository.save(solicitacaoServico);
+        Prestador prestador = solicitacaoServicoCriado.getIdPrestador();
+        if (prestador != null) {
+            Hibernate.initialize(prestador.getEspecialidades());
+        }
+        return new SolicitacaoServicoDTO(solicitacaoServicoCriado);
+    }
+
+    public List<SolicitacaoServicoDTO> consultarSolicitacoes(){
+        List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findAll();
+        if (solicitacaoServicos.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        return solicitacaoServicos.stream()
+                .map(SolicitacaoServicoDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public SolicitacaoServico alterarSolicitacao(int idSolicitacao, SolicitacaoServicoUpdateDTO solicitacaoServicoUpdateDTO){
+
+        SolicitacaoServico solicitacaoServicoExistente = solicitacaoServicoRepository.findById(idSolicitacao)
+                .orElseThrow(() -> new IllegalArgumentException("Solicitação não encontrada!!"));
+
+        if(solicitacaoServicoUpdateDTO.getTituloOrcamento() != null){
+            solicitacaoServicoExistente.setTituloSolicitacao(solicitacaoServicoUpdateDTO.getTituloOrcamento());
+        }
+        if (solicitacaoServicoUpdateDTO.getDescOrcamento() != null){
+            solicitacaoServicoExistente.setDescSolicitacao(solicitacaoServicoUpdateDTO.getDescOrcamento());
+        }
+        if(solicitacaoServicoUpdateDTO.getValorOrcamento() !=null){
+            solicitacaoServicoExistente.setValorProposto(solicitacaoServicoUpdateDTO.getValorOrcamento());
+        }
+        if(solicitacaoServicoUpdateDTO.getPrevisaoInicio() !=null){
+            solicitacaoServicoExistente.setPrevisaoInicio(solicitacaoServicoUpdateDTO.getPrevisaoInicio());
+        }
+        if(solicitacaoServicoUpdateDTO.getDuracaoServico() != 0){
+            solicitacaoServicoExistente.setDuracaoServico(solicitacaoServicoUpdateDTO.getDuracaoServico());
+        }
+        if(solicitacaoServicoUpdateDTO.getFormaPagtoEnum() !=null){
+            solicitacaoServicoExistente.setFormaPagtoEnum(solicitacaoServicoUpdateDTO.getFormaPagtoEnum());
+        }
+        if(solicitacaoServicoUpdateDTO.getNvlUrgenciaEnum() !=null){
+            solicitacaoServicoExistente.setNvlUrgenciaEnum(solicitacaoServicoUpdateDTO.getNvlUrgenciaEnum());
+        }
+        if(solicitacaoServicoUpdateDTO.getTipoCategoriaEnum() !=null){
+            solicitacaoServicoExistente.setTipoCategoriaEnum(solicitacaoServicoUpdateDTO.getTipoCategoriaEnum());
+        }
+        return solicitacaoServicoRepository.save(solicitacaoServicoExistente);
+    }
+
+    public SolicitacaoServicoDTO consultarSolicitacaoUnica(int id){
+        SolicitacaoServico solicitacaoServicoEspecifico = solicitacaoServicoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException(("Nenhuma solicitação encontrada com essas informações,!")));
+        return new SolicitacaoServicoDTO(solicitacaoServicoEspecifico);
+    }
+
+    public List<SolicitacaoServicoDTO> consultarSolicitacaoPorUsuario(Usuario usuario) {
+        return solicitacaoServicoRepository.findByIdUsuario(usuario)
+                .stream()
+                .map(SolicitacaoServicoDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public void delete(int idOrcamento) {
+        solicitacaoServicoRepository.deleteById(idOrcamento);
+    }
+}

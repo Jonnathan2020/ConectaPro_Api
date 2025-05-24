@@ -1,13 +1,11 @@
 package com.perseus.conectapro.Controller;
 
-import com.perseus.conectapro.DTO.OrcamentoDTO;
 import com.perseus.conectapro.DTO.PrestadorCreateDTO;
 import com.perseus.conectapro.DTO.PrestadorDTO;
 import com.perseus.conectapro.DTO.PrestadorUpdateDTO;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
-import com.perseus.conectapro.Entity.Orcamento;
 import com.perseus.conectapro.Entity.Prestador;
-import com.perseus.conectapro.Repository.OrcamentoRepository;
+import com.perseus.conectapro.Repository.SolicitacaoServicoRepository;
 import com.perseus.conectapro.Repository.PrestadorRepository;
 import com.perseus.conectapro.Service.PrestadorService;
 import jakarta.validation.Valid;
@@ -20,10 +18,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -35,7 +31,7 @@ public class PrestadorController {
     @Autowired
     private PrestadorRepository prestadorRepository;
     @Autowired
-    private OrcamentoRepository orcamentoRepository;
+    private SolicitacaoServicoRepository solicitacaoServicoRepository;
 
     //listar prestadores
     @GetMapping
