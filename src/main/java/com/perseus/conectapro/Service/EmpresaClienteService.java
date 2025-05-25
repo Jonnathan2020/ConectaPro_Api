@@ -5,8 +5,7 @@ import com.perseus.conectapro.Entity.*;
 import com.perseus.conectapro.Entity.Enuns.TipoUsuarioEnum;
 import com.perseus.conectapro.Repository.EmpresaClienteRepository;
 import com.perseus.conectapro.Repository.EnderecoRepository;
-import com.perseus.conectapro.Repository.OrcamentoRepository;
-import com.perseus.conectapro.Repository.UsuarioRepository;
+import com.perseus.conectapro.Repository.SolicitacaoServicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
@@ -28,7 +27,7 @@ public class EmpresaClienteService {
     @Autowired
     private ViaCepService viaCepService;
     @Autowired
-    private OrcamentoRepository orcamentoRepository;
+    private SolicitacaoServicoRepository solicitacaoServicoRepository;
 
     //cadastrar as informaçoes alem do usuario, faltantes para uma empresa cliente
     public EmpresaCliente cadastrarEmpresaCliente(EmpresaClienteCreateDTO empresaClienteCreateDTO) {
@@ -81,24 +80,24 @@ public class EmpresaClienteService {
         }
 
         return clientes.stream().map(empresaCliente -> {
-            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(empresaCliente);
+            List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findByIdUsuario(empresaCliente);
 
-            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
-                    .map(orcamento -> new OrcamentoDTO(
-                            orcamento.getIdOrcamento(),
-                            orcamento.getTituloOrcamento(),
-                            orcamento.getDescOrcamento(),
-                            orcamento.getValorOrcamento(),
+            List<SolicitacaoServicoDTO> solicitacaoServicoDTOS = solicitacaoServicos.stream()
+                    .map(orcamento -> new SolicitacaoServicoDTO(
+                            orcamento.getIdSolicitacao(),
+                            orcamento.getTituloSolicitacao(),
+                            orcamento.getDescSolicitacao(),
+                            orcamento.getValorProposto(),
                             orcamento.getDataInclusao(),
                             orcamento.getPrevisaoInicio(),
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
                             orcamento.getNvlUrgenciaEnum(),
                             orcamento.getTipoCategoriaEnum(),
-                            orcamento.getStatusOrcamentoEnum()
+                            orcamento.getStatusSolicitacaoEnum()
                     )).collect(Collectors.toList());
 
-            return new EmpresaClienteDTO(empresaCliente, orcamentoDTOS);
+            return new EmpresaClienteDTO(empresaCliente, solicitacaoServicoDTOS);
         }).collect(Collectors.toList());
     }
 
@@ -111,25 +110,25 @@ public class EmpresaClienteService {
             throw new IllegalArgumentException("Cliente não encontrado!");
         }
 
-        List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(empresaClienteEspecifico);
+        List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findByIdUsuario(empresaClienteEspecifico);
 
-        List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
-                .map(orcamento -> new OrcamentoDTO(
-                        orcamento.getIdOrcamento(),
-                        orcamento.getTituloOrcamento(),
-                        orcamento.getDescOrcamento(),
-                        orcamento.getValorOrcamento(),
+        List<SolicitacaoServicoDTO> solicitacaoServicoDTOS = solicitacaoServicos.stream()
+                .map(orcamento -> new SolicitacaoServicoDTO(
+                        orcamento.getIdSolicitacao(),
+                        orcamento.getTituloSolicitacao(),
+                        orcamento.getDescSolicitacao(),
+                        orcamento.getValorProposto(),
                         orcamento.getDataInclusao(),
                         orcamento.getPrevisaoInicio(),
                         orcamento.getDuracaoServico(),
                         orcamento.getFormaPagtoEnum(),
                         orcamento.getNvlUrgenciaEnum(),
                         orcamento.getTipoCategoriaEnum(),
-                        orcamento.getStatusOrcamentoEnum()
+                        orcamento.getStatusSolicitacaoEnum()
                 )).collect(Collectors.toList());
 
 
-        return new EmpresaClienteDTO(empresaClienteEspecifico, orcamentoDTOS);
+        return new EmpresaClienteDTO(empresaClienteEspecifico, solicitacaoServicoDTOS);
     }
 
     public List<EmpresaClienteDTO> consultarEmpresaPorNome(String nome) {
@@ -140,25 +139,25 @@ public class EmpresaClienteService {
         }
 
         return clientes.stream().map(empresaCliente -> {
-            List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(empresaCliente);
+            List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findByIdUsuario(empresaCliente);
 
-            List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
-                    .map(orcamento -> new OrcamentoDTO(
-                            orcamento.getIdOrcamento(),
-                            orcamento.getTituloOrcamento(),
-                            orcamento.getDescOrcamento(),
-                            orcamento.getValorOrcamento(),
+            List<SolicitacaoServicoDTO> solicitacaoServicoDTOS = solicitacaoServicos.stream()
+                    .map(orcamento -> new SolicitacaoServicoDTO(
+                            orcamento.getIdSolicitacao(),
+                            orcamento.getTituloSolicitacao(),
+                            orcamento.getDescSolicitacao(),
+                            orcamento.getValorProposto(),
                             orcamento.getDataInclusao(),
                             orcamento.getPrevisaoInicio(),
                             orcamento.getDuracaoServico(),
                             orcamento.getFormaPagtoEnum(),
                             orcamento.getNvlUrgenciaEnum(),
                             orcamento.getTipoCategoriaEnum(),
-                            orcamento.getStatusOrcamentoEnum()
+                            orcamento.getStatusSolicitacaoEnum()
                     )).collect(Collectors.toList());
 
 
-            return new EmpresaClienteDTO(empresaCliente, orcamentoDTOS);
+            return new EmpresaClienteDTO(empresaCliente, solicitacaoServicoDTOS);
         }).collect(Collectors.toList());
     }
 
@@ -196,27 +195,27 @@ public class EmpresaClienteService {
         if(empresaClienteUpdateDTO.getNomeFantasia() != null){
             clienteExistente.setNomeFantasia(empresaClienteUpdateDTO.getNomeFantasia());
         }
-        List<Orcamento> orcamentos = orcamentoRepository.findByIdUsuario(clienteExistente);
+        List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findByIdUsuario(clienteExistente);
 
-        List<OrcamentoDTO> orcamentoDTOS = orcamentos.stream()
-                .map(orcamento -> new OrcamentoDTO(
-                        orcamento.getIdOrcamento(),
-                        orcamento.getTituloOrcamento(),
-                        orcamento.getDescOrcamento(),
-                        orcamento.getValorOrcamento(),
+        List<SolicitacaoServicoDTO> solicitacaoServicoDTOS = solicitacaoServicos.stream()
+                .map(orcamento -> new SolicitacaoServicoDTO(
+                        orcamento.getIdSolicitacao(),
+                        orcamento.getTituloSolicitacao(),
+                        orcamento.getDescSolicitacao(),
+                        orcamento.getValorProposto(),
                         orcamento.getDataInclusao(),
                         orcamento.getPrevisaoInicio(),
                         orcamento.getDuracaoServico(),
                         orcamento.getFormaPagtoEnum(),
                         orcamento.getNvlUrgenciaEnum(),
                         orcamento.getTipoCategoriaEnum(),
-                        orcamento.getStatusOrcamentoEnum()
+                        orcamento.getStatusSolicitacaoEnum()
                 )).collect(Collectors.toList());
 
 
         //metodo que salva as informaçoes do prestador
         EmpresaCliente clienteAtualizado = empresaClienteRepository.save(clienteExistente);
-        return new EmpresaClienteDTO(clienteAtualizado, orcamentoDTOS);
+        return new EmpresaClienteDTO(clienteAtualizado, solicitacaoServicoDTOS);
 
     }
 

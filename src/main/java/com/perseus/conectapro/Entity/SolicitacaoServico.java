@@ -2,7 +2,7 @@ package com.perseus.conectapro.Entity;
 
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
 import com.perseus.conectapro.Entity.Enuns.NvlUrgenciaEnum;
-import com.perseus.conectapro.Entity.Enuns.StatusOrcamentoEnum;
+import com.perseus.conectapro.Entity.Enuns.StatusSolicitacaoEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -16,21 +16,21 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name= "TBL_ORCAMENTO")
-public class Orcamento {
+@Table(name= "TBL_SOLICITACAO_SERVICO")
+public class SolicitacaoServico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_ORCAMENTO")
-    private int idOrcamento;
+    @Column(name = "ID_SOLICITACAO")
+    private int idSolicitacao;
 
     @Column(name = "TITULO_ORCAMENTO")
-    private String tituloOrcamento;
+    private String tituloSolicitacao;
 
     @Column(name = "DESC_ORCAMENTO")
-    private String descOrcamento;
+    private String descSolicitacao;
 
-    @OneToMany(mappedBy = "orcamento")
+    @OneToMany(mappedBy = "solicitacaoServico")
     private List<Servico> servicos;
 
     @ManyToOne
@@ -48,8 +48,8 @@ public class Orcamento {
     @Column(name = "DATA_INCLUSAO")
     private LocalDateTime dataInclusao;
 
-    @Column(name = "VALOR_ORCAMENTO")
-    private BigDecimal valorOrcamento;
+    @Column(name = "VALOR_PROPOSTO")
+    private BigDecimal valorProposto;
 
     @Column(name = "PREVISAO_INICIO")
     private LocalDate previsaoInicio;
@@ -70,7 +70,11 @@ public class Orcamento {
     private FormaPagtoEnum formaPagtoEnum;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "STATUS_ORCAMENTO")
-    private StatusOrcamentoEnum statusOrcamentoEnum;
+    @Column(name = "STATUS_SOLICITACAO")
+    private StatusSolicitacaoEnum statusSolicitacaoEnum;
+
+//    @ManyToOne
+//    @JoinColumn(name = "HOMEPAGE")
+//    private HomePage homePage;
 
 }

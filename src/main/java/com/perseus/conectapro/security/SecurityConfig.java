@@ -33,7 +33,7 @@ public class SecurityConfig {
                                 ).permitAll()
                         .requestMatchers(HttpMethod.GET, "/usuarios/admin").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/usuarios/user").hasRole("USER")
-                        //.requestMatchers(HttpMethod.GET, "/usuarios").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/usuarios").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuarios/registro").permitAll()
                         .requestMatchers(HttpMethod.POST, "/prestador/registro").permitAll()
                         .requestMatchers(HttpMethod.POST, "/empresaCliente/registro").permitAll()

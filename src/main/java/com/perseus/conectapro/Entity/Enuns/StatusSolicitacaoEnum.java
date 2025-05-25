@@ -1,14 +1,15 @@
 package com.perseus.conectapro.Entity.Enuns;
 
-public enum StatusOrcamentoEnum {
-    ACEITO(1, "ACEITO"),
+public enum StatusSolicitacaoEnum {
+    ACEITA(1, "ACEITA"),
     PENDENTE(2, "PENDENTE"),
-    RECUSADO(3, "RECUSADO");
+    RECUSADA(3, "RECUSADA"),
+    DESATIVADA(4,"DESATIVADA");
 
     private int id;
     private String descricao;
 
-    StatusOrcamentoEnum(int id, String descricao){
+    StatusSolicitacaoEnum(int id, String descricao){
         this.id = id;
         this.descricao = descricao;
     }

@@ -39,8 +39,8 @@ public class Servico {
     private String descServico;
 
     @ManyToOne
-    @JoinColumn(name = "ID_ORCAMENTO")
-    private Orcamento orcamento;
+    @JoinColumn(name = "ID_SOLICITACAO_SERVICO")
+    private SolicitacaoServico solicitacaoServico;
 
     @Column(name = "VALOR_CONTRATACAO")
     private Float valorContratacao;

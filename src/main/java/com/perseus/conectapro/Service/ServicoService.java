@@ -1,12 +1,10 @@
 package com.perseus.conectapro.Service;
 
-import ch.qos.logback.classic.Logger;
 import com.perseus.conectapro.DTO.*;
 import com.perseus.conectapro.Entity.*;
 import com.perseus.conectapro.Entity.Enuns.SituacaoServicoEnum;
-import com.perseus.conectapro.Entity.Enuns.TipoUsuarioEnum;
 import com.perseus.conectapro.Repository.EmpresaClienteRepository;
-import com.perseus.conectapro.Repository.OrcamentoRepository;
+import com.perseus.conectapro.Repository.SolicitacaoServicoRepository;
 import com.perseus.conectapro.Repository.PrestadorRepository;
 import com.perseus.conectapro.Repository.ServicoRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +18,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 @Slf4j
 @Service
 public class ServicoService {
@@ -32,13 +28,13 @@ public class ServicoService {
     @Autowired
     private ServicoRepository servicoRepository;
     @Autowired
-    private OrcamentoRepository orcamentoRepository;
+    private SolicitacaoServicoRepository solicitacaoServicoRepository;
 
     //cadastrar servico utilizando jpa repository
     public ServicoDTO cadastrarServico(ServicoCreateDTO servicoCreateDTO){
 
 
-        Orcamento orcamento = orcamentoRepository.findById(servicoCreateDTO.getIdOrcamento())
+        SolicitacaoServico solicitacaoServico = solicitacaoServicoRepository.findById(servicoCreateDTO.getIdOrcamento())
                 .orElseThrow(() -> new IllegalArgumentException("Orçamento não encontrado"));
 
 
@@ -53,20 +49,20 @@ public class ServicoService {
         if (usuario instanceof Prestador) {
             Prestador prestador = (Prestador) usuario;
             servico.setIdPrestador(prestador);
-            EmpresaCliente cliente = orcamento.getIdEmpresaCliente();
+            EmpresaCliente cliente = solicitacaoServico.getIdEmpresaCliente();
             servico.setIdEmpresaCliente(cliente);
         }
         else if (usuario instanceof EmpresaCliente) {
             EmpresaCliente cliente = (EmpresaCliente) usuario;
             servico.setIdEmpresaCliente(cliente);
-            servico.setIdPrestador(orcamento.getIdPrestador());
+            servico.setIdPrestador(solicitacaoServico.getIdPrestador());
 
         }
         else {
             throw new IllegalArgumentException("Tipo de usuário não suportado para criar serviço.");
         }
 
-        servico.setOrcamento(orcamento);
+        servico.setSolicitacaoServico(solicitacaoServico);
         servico.setSituacaoServico(SituacaoServicoEnum.ORCAMENTO);
         servico.setTituloServico(servicoCreateDTO.getTituloServico());
         servico.setDescServico(servicoCreateDTO.getDescServico());
