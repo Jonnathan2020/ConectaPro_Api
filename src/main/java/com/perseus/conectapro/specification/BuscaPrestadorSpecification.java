@@ -14,23 +14,6 @@ import java.util.List;
 
 public class BuscaPrestadorSpecification {
 
-    public static Specification<Prestador> nomeOuSegmentoContem(String termo) {
-        return (root, query, builder) -> {
-            // evitar duplicados por join ManyToMany
-            query.distinct(true);
-
-            String likePattern = termo.toLowerCase() + "%";
-
-            // join com segmentos
-            Join<Prestador, Segmento> segmentos = root.join("segmentos", JoinType.LEFT);
-
-            Predicate nomePredicate = builder.like(builder.lower(root.get("nome")), likePattern);
-            Predicate segmentoPredicate = builder.like(builder.lower(segmentos.get("descSegmento")), likePattern);
-
-            return builder.or(nomePredicate, segmentoPredicate);
-        };
-    }
-
     public static Specification<Prestador> comFiltro(BuscaPrestadorFiltro filtro) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
@@ -48,6 +31,11 @@ public class BuscaPrestadorSpecification {
                 query.distinct(true);
 
                 predicates.add(cb.or(nomePredicate, categoriaPredicate));
+            }
+
+            if (filtro.getUf() != null) {
+                Join<Object, Object> enderecoJoin = root.join("endereco", JoinType.LEFT);
+                predicates.add(cb.equal(enderecoJoin.get("uf"), filtro.getUf()));
             }
 
             return cb.and(predicates.toArray(new Predicate[0]));

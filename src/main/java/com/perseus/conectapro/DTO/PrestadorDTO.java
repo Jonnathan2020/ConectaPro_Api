@@ -2,7 +2,7 @@ package com.perseus.conectapro.DTO;
 
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
-import com.perseus.conectapro.Entity.Orcamento;
+import com.perseus.conectapro.Entity.Enuns.UfEnum;
 import com.perseus.conectapro.Entity.Plano;
 import com.perseus.conectapro.Entity.Prestador;
 import lombok.Getter;
@@ -24,6 +24,7 @@ public class PrestadorDTO {
     private List<SolicitacaoServicoDTO> orcamentos;
     private Plano idPlano;
     private List<TipoCategoriaEnum> tipoCategoria;
+    private UfEnum uf;
 
     public PrestadorDTO(Prestador prestador, List<SolicitacaoServicoDTO> orcamentos){
         this.idPrestador = prestador.getIdUsuario();
@@ -49,6 +50,7 @@ public class PrestadorDTO {
         this.caminhoFoto = prestador.getCaminhoFoto();
         this.tipoCategoria = prestador.getTipoCategoria();
         this.idPlano = prestador.getIdPlano();
+        this.uf = prestador.getEndereco().getUf();
     }
 
 

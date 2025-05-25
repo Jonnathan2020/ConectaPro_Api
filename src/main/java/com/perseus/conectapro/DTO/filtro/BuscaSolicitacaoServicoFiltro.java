@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BuscaPrestadorFiltro {
+public class BuscaSolicitacaoServicoFiltro {
     private String termo;
-    private String uf;
+    private String status;
 }

@@ -26,7 +26,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/busca")
+@RequestMapping("/busca-prestadores")
 public class BuscaPrestadorController {
 
     @Autowired
@@ -35,37 +35,7 @@ public class BuscaPrestadorController {
     private BuscaPrestadorService buscaPrestadorService;
 
     @SecurityRequirement(name = "bearerAuth")
-    @GetMapping("/buscar")
-    public List<Prestador> buscarComFiltroAvancado(
-            @And({
-                    @Spec(path = "statusDisponibilidade", spec = Equal.class),
-                    @Spec(path = "idPlano.idPlano", spec = Equal.class),
-                    @Spec(path = "email", spec = Equal.class),
-                    @Spec(path = "telefone", spec = Like.class),
-                    @Spec(path = "tipoUsuario", spec = Equal.class),
-                    @Spec(path = "role", spec = Equal.class),
-                    @Spec(path = "endereco.cidade", spec = Like.class),
-                    @Spec(path = "endereco.uf", spec = Equal.class),
-                    @Spec(path = "endereco.cep", spec = Like.class)
-            }) Specification<Prestador> specPadrao,
-            @RequestParam(required = false) String termo
-    ) {
-        Specification<Prestador> specFinal = Specification.where(specPadrao);
-
-        if (termo != null && !termo.isBlank()) {
-            specFinal = specFinal.and(BuscaPrestadorSpecification.nomeOuSegmentoContem(termo));
-        }
-
-        List<Prestador> prestadores = prestadorRepository.findAll(specFinal);
-
-        if (prestadores.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum prestador encontrado.");
-        }
-
-        return prestadores;
-    }
-
-    @GetMapping("/perfil-prestadores")
+    @GetMapping
     public ResponseEntity<List<PrestadorDTO>> buscar(@ParameterObject BuscaPrestadorFiltro filtro) {
         List<PrestadorDTO> prestadores = buscaPrestadorService.buscar(filtro);
         return ResponseEntity.ok(prestadores);

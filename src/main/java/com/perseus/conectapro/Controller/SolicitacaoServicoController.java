@@ -18,7 +18,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/solicitacao")
-public class SolocitacaoServicoController {
+public class SolicitacaoServicoController {
 
     @Autowired
     private SolicitacaoServicoService solicitacaoServicoService;
