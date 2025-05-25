@@ -19,7 +19,7 @@ public class PrestadorCreateDTO extends UsuarioCreateDTO{
     private String descPrestador;
     private List<String> especialidades;
     private StatusDisponibilidadeEnum statusDisponibilidade;
-    private int plano;
+    private int idPlano;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "America/Sao_Paulo")
     private LocalDate dataNascimento;
     private List<TipoCategoriaEnum> tipoCategoria;

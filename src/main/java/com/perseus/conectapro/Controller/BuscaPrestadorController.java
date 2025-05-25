@@ -18,6 +18,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,6 +26,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
+@RequestMapping("/busca")
 public class BuscaPrestadorController {
 
     @Autowired
@@ -63,7 +65,7 @@ public class BuscaPrestadorController {
         return prestadores;
     }
 
-    @GetMapping("/empresa/busca-prestadores")
+    @GetMapping("/perfil-prestadores")
     public ResponseEntity<List<PrestadorDTO>> buscar(@ParameterObject BuscaPrestadorFiltro filtro) {
         List<PrestadorDTO> prestadores = buscaPrestadorService.buscar(filtro);
         return ResponseEntity.ok(prestadores);

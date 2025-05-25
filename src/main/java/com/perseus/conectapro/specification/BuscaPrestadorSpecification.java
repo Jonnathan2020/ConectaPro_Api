@@ -38,13 +38,13 @@ public class BuscaPrestadorSpecification {
             if (filtro.getTermo() != null && !filtro.getTermo().isBlank()) {
                 String termo = filtro.getTermo().toLowerCase();
 
-                // join com a lista tipoCategoria (ElementCollection)
-                Join<Prestador, TipoCategoriaEnum> categorias = root.join("tipoCategoria");
+                // join na coleção tipoCategoria (enum)
+                Join<Object, Object> categorias = root.join("tipoCategoria", JoinType.LEFT);
 
-                Predicate nomePredicate = cb.like(cb.lower(root.get("nome")), "%" + termo + "%");
-                Predicate categoriaPredicate = cb.like(cb.lower(categorias.as(String.class)), "%" + termo + "%");
+                Predicate nomePredicate = cb.like(cb.lower(root.get("nome")), termo + "%");
+                Predicate categoriaPredicate = cb.like(cb.lower(categorias.as(String.class)),termo + "%");
 
-                // evitar duplicados por causa do join
+                // evitar duplicados causados pelo join
                 query.distinct(true);
 
                 predicates.add(cb.or(nomePredicate, categoriaPredicate));
@@ -53,6 +53,7 @@ public class BuscaPrestadorSpecification {
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }
+
 
 
 }

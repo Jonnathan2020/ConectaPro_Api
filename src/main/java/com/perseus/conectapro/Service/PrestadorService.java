@@ -40,7 +40,7 @@ public class PrestadorService {
     //cadastrar as informaçoes alem do usuario, faltantes para um prestador
     public Prestador cadastrarPrestador(PrestadorCreateDTO prestadorDTO) {
 
-        Plano plano = planoRepository.findById(prestadorDTO.getPlano())
+        Plano plano = planoRepository.findById(prestadorDTO.getIdPlano())
                 .orElseThrow(() -> new RuntimeException("Plano não encontrado"));
 
         ViaCepDTO viaCep = viaCepService.buscarEnderecoPorCep(prestadorDTO.getCep());

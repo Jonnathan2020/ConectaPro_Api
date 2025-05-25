@@ -27,9 +27,12 @@ public class Prestador extends Usuario {
     @Column(name = "STATUS_DISPONIBILIDADE")
     private StatusDisponibilidadeEnum statusDisponibilidade;
 
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    @Column(name = "TIPO_CATEGOIA")
+    @CollectionTable(name = "TIPO_CATEGORIA", joinColumns = @JoinColumn(name = "ID_USUARIO"))
+    @Column(name = "TIPO_CATEGORIA")
     private List<TipoCategoriaEnum> tipoCategoria;
+
 
     @JoinColumn(name = "ID_PLANO")
     @ManyToOne
