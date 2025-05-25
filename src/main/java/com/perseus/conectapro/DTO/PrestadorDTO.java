@@ -49,8 +49,6 @@ public class PrestadorDTO {
         this.orcamentos = orcamentos;
         this.caminhoFoto = prestador.getCaminhoFoto();
         this.tipoCategoria = prestador.getTipoCategoria();
-        this.idPlano = prestador.getIdPlano();
-        this.uf = prestador.getEndereco().getUf();
     }
 
 

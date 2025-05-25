@@ -1,5 +1,6 @@
 package com.perseus.conectapro.Controller;
 
+import com.perseus.conectapro.DTO.PrestadorBuscaDTO;
 import com.perseus.conectapro.DTO.PrestadorDTO;
 import com.perseus.conectapro.DTO.filtro.BuscaPrestadorFiltro;
 import com.perseus.conectapro.Entity.Prestador;
@@ -36,8 +37,8 @@ public class BuscaPrestadorController {
 
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping
-    public ResponseEntity<List<PrestadorDTO>> buscar(@ParameterObject BuscaPrestadorFiltro filtro) {
-        List<PrestadorDTO> prestadores = buscaPrestadorService.buscar(filtro);
+    public ResponseEntity<List<PrestadorBuscaDTO>> buscar(@ParameterObject BuscaPrestadorFiltro filtro) {
+        List<PrestadorBuscaDTO> prestadores = buscaPrestadorService.buscar(filtro);
         return ResponseEntity.ok(prestadores);
     }
 

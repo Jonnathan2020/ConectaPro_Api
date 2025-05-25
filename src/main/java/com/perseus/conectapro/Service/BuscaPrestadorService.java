@@ -1,5 +1,6 @@
 package com.perseus.conectapro.Service;
 
+import com.perseus.conectapro.DTO.PrestadorBuscaDTO;
 import com.perseus.conectapro.DTO.PrestadorDTO;
 import com.perseus.conectapro.DTO.filtro.BuscaPrestadorFiltro;
 import com.perseus.conectapro.Repository.PrestadorRepository;
@@ -17,10 +18,10 @@ public class BuscaPrestadorService {
         this.repository = repository;
     }
 
-    public List<PrestadorDTO> buscar(BuscaPrestadorFiltro filtro) {
+    public List<PrestadorBuscaDTO> buscar(BuscaPrestadorFiltro filtro) {
         return repository.findAll(BuscaPrestadorSpecification.comFiltro(filtro))
                 .stream()
-                .map(PrestadorDTO::new)
+                .map(PrestadorBuscaDTO::new)
                 .toList();
     }
 }
