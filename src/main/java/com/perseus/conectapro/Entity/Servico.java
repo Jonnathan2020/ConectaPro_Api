@@ -82,6 +82,6 @@ public class Servico {
     private LocalDate previsaoInicio;
 
     @Column(name = "DURACAO_SERVICO")
-    private int duracaoServico;
+    private Integer duracaoServico;
 
 }

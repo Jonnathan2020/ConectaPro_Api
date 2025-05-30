@@ -1,6 +1,7 @@
 package com.perseus.conectapro.specification;
 
 import com.perseus.conectapro.DTO.filtro.BuscaSolicitacaoServicoFiltro;
+import com.perseus.conectapro.Entity.Enuns.StatusSolicitacaoEnum;
 import com.perseus.conectapro.Entity.SolicitacaoServico;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
@@ -24,9 +25,12 @@ public class BuscaSolicitacaoServicoSpecification {
                 );
             }
 
-            if (filtro.getStatus() != null && !filtro.getStatus().isBlank()) {
-                predicates.add(cb.equal(root.get("statusSolicitacao"), filtro.getStatus()));
-            }
+
+            //retorna apenas se o status for pendente ou ativa
+            predicates.add(root.get("statusSolicitacao").in(
+                    StatusSolicitacaoEnum.PENDENTE,
+                    StatusSolicitacaoEnum.ATIVA
+            ));
 
             return cb.and(predicates.toArray(new Predicate[0]));
         };

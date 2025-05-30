@@ -7,5 +7,4 @@ import lombok.Setter;
 @Setter
 public class BuscaSolicitacaoServicoFiltro {
     private String termo;
-    private String status;
 }

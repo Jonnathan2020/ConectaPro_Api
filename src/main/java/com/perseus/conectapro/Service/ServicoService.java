@@ -361,4 +361,22 @@ public class ServicoService {
 
         return  new ServicoDTO(servico);
     }
+
+    public List<Servico> buscarServicosPrestados(Long idPrestador) {
+        return servicoRepository.findByIdPrestadorIdUsuarioAndSituacaoServicoIn(
+                idPrestador,
+                List.of(SituacaoServicoEnum.EM_EXECUCAO, SituacaoServicoEnum.FINALIZADO)
+        );
+    }
+
+    public List<Servico> buscarCandidaturasDoPrestador(Long idPrestador) {
+        return servicoRepository.findByIdPrestadorIdUsuarioAndSituacaoServico(idPrestador, SituacaoServicoEnum.ORCAMENTO);
+    }
+
+    public List<Servico> buscarPropostasRecebidas(Long idPrestador) {
+        return servicoRepository.findByIdPrestadorIdUsuarioAndSituacaoServicoAndIdEmpresaClienteIsNotNull(
+                idPrestador, SituacaoServicoEnum.ORCAMENTO
+        );
+    }
+
 }
