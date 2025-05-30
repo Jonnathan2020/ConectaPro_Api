@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 
 public enum SituacaoServicoEnum {
     ORCAMENTO(1, "ORÇAMENTO"),
-    APROVADO(2, "APROVADO"),
+    RECUSADO(2, "RECUSADO"),
     PENDENTE_PAGTO(3, "PENDENTE PAGAMENTO"),
-    AGENDADO(3, "AGENDADO"),
-    CANCELADO(4, "CANCELADO"),
-    FINALIZADO(5, "FINALIZADO");
-
+    PENDENTE_INICIO(4, "PENDENTE INICIO"),
+    EM_EXECUCAO(5, "EM EXECUÇÃO"),
+    PENDENTE_CONFIRMAR_FINALIZACAO(6, "PENDENTE CONFIRMAR FINALIZACAO"),
+    FINALIZADO(7, "FINALIZADO"),
+    AGENDADO(8, "AGENDADO"),
+    CANCELADO(9, "CANCELADO");
     private final int id;
     private final String descricao;
 

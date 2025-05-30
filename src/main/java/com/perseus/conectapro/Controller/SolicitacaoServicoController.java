@@ -1,8 +1,6 @@
 package com.perseus.conectapro.Controller;
 
-import com.perseus.conectapro.DTO.SolicitacaoServicoCreateDTO;
-import com.perseus.conectapro.DTO.SolicitacaoServicoDTO;
-import com.perseus.conectapro.DTO.SolicitacaoServicoUpdateDTO;
+import com.perseus.conectapro.DTO.*;
 import com.perseus.conectapro.Entity.SolicitacaoServico;
 import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.SolicitacaoServicoRepository;
@@ -56,5 +54,17 @@ public class SolicitacaoServicoController {
         return solicitacaoServicoService.consultarSolicitacaoPorUsuario(id);
     }
 
+    @PostMapping("/solicitacoes/{id}/candidatar")
+    public ResponseEntity<ServicoDTO> candidatura(
+            @PathVariable int id,
+            @RequestBody ServicoCreateDTO propostaDTO) {
 
+        ServicoDTO criado = solicitacaoServicoService.candidaturaSolicitacao(id, propostaDTO);
+        return ResponseEntity.ok(criado);
+    }
+
+    @PutMapping("/{id}/desativar")
+    public SolicitacaoServicoDTO desativarSolicitacao(@PathVariable int id){
+        return solicitacaoServicoService.desativarSolicitacao(id);
+    }
 }

@@ -28,4 +28,5 @@ public class SolicitacaoServicoCreateDTO {
     private TipoCategoriaEnum tipoCategoriaEnum;
     private StatusSolicitacaoEnum statusSolicitacaoEnum;
 
+
 }

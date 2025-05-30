@@ -1,9 +1,8 @@
 package com.perseus.conectapro.Service;
 
-import com.perseus.conectapro.DTO.SolicitacaoServicoCreateDTO;
-import com.perseus.conectapro.DTO.SolicitacaoServicoDTO;
-import com.perseus.conectapro.DTO.SolicitacaoServicoUpdateDTO;
+import com.perseus.conectapro.DTO.*;
 import com.perseus.conectapro.Entity.EmpresaCliente;
+import com.perseus.conectapro.Entity.Enuns.StatusSolicitacaoEnum;
 import com.perseus.conectapro.Entity.SolicitacaoServico;
 import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Entity.Usuario;
@@ -26,6 +25,8 @@ import java.util.stream.Collectors;
 @Service
 public class SolicitacaoServicoService {
 
+    @Autowired
+    private ServicoService servicoService;
     @Autowired
     private SolicitacaoServicoRepository solicitacaoServicoRepository;
     @Autowired
@@ -68,7 +69,7 @@ public class SolicitacaoServicoService {
         solicitacaoServico.setFormaPagtoEnum(solicitacaoServicoCreateDTO.getFormaPagtoEnum());
         solicitacaoServico.setNvlUrgenciaEnum(solicitacaoServicoCreateDTO.getNvlUrgenciaEnum());
         solicitacaoServico.setTipoCategoriaEnum(solicitacaoServicoCreateDTO.getTipoCategoriaEnum());
-        solicitacaoServico.setStatusSolicitacaoEnum(solicitacaoServicoCreateDTO.getStatusSolicitacaoEnum());
+        solicitacaoServico.setStatusSolicitacaoEnum(StatusSolicitacaoEnum.ATIVA);
 
         SolicitacaoServico solicitacaoServicoCriado = solicitacaoServicoRepository.save(solicitacaoServico);
         Prestador prestador = solicitacaoServicoCriado.getIdPrestador();
@@ -79,6 +80,7 @@ public class SolicitacaoServicoService {
     }
 
     public List<SolicitacaoServicoDTO> consultarSolicitacoes(){
+
         List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findAll();
         if (solicitacaoServicos.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -136,5 +138,33 @@ public class SolicitacaoServicoService {
 
     public void delete(int idOrcamento) {
         solicitacaoServicoRepository.deleteById(idOrcamento);
+    }
+
+    //Criação da
+    public ServicoDTO candidaturaSolicitacao(int idSolicitacao, ServicoCreateDTO servicoCreateDTO) {
+        SolicitacaoServico solicitacao = solicitacaoServicoRepository.findById(idSolicitacao)
+                .orElseThrow(() -> new RuntimeException("Solicitação não encontrada"));
+
+        servicoCreateDTO.setIdSolicitacao(solicitacao.getIdSolicitacao()); // Garante o vínculo
+
+        return servicoService.gerarServico(servicoCreateDTO);
+
+    }
+
+    public SolicitacaoServicoDTO desativarSolicitacao(int idSolicitacao){
+        SolicitacaoServico solicitacaoServicoExistente = solicitacaoServicoRepository.findById(idSolicitacao)
+                .orElseThrow(() -> new IllegalArgumentException("Solicitação não encontrada!!"));
+
+        if(solicitacaoServicoExistente.getStatusSolicitacaoEnum().equals(StatusSolicitacaoEnum.ATIVA)){
+            solicitacaoServicoExistente.setStatusSolicitacaoEnum(StatusSolicitacaoEnum.INATIVA);
+        } else if (solicitacaoServicoExistente.getStatusSolicitacaoEnum().equals(StatusSolicitacaoEnum.INATIVA)) {
+            throw new IllegalArgumentException("Solicitação já está desativada");
+        }
+        else {
+            throw new RuntimeException("Situação da solicitação diferente do esperado");
+        }
+
+        SolicitacaoServico solicitacaoSalva = solicitacaoServicoRepository.save(solicitacaoServicoExistente);
+        return new SolicitacaoServicoDTO(solicitacaoSalva);
     }
 }

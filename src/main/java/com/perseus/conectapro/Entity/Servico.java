@@ -7,6 +7,8 @@ import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,6 +22,10 @@ public class Servico {
     @Column(name = "ID_SERVICO")
     private int idServico;
 
+    @OneToOne
+    @JoinColumn(name = "ID_PAGAMENTO")
+    private Pagamento pagamento;
+
     @ManyToOne
     @JoinColumn(name = "ID_PRESTADOR")
     private Prestador idPrestador;
@@ -27,10 +33,6 @@ public class Servico {
     @ManyToOne
     @JoinColumn(name = "ID_EMPRESA_CLIENTE")
     private EmpresaCliente idEmpresaCliente;
-
-    @OneToOne
-    @JoinColumn(name = "ID_SEGMENTO")
-    private Segmento idSegmento;
 
     @Column(name = "TITULO_SERVICO")
     private String tituloServico;
@@ -54,6 +56,9 @@ public class Servico {
     @Column(name = "DATA_EXECUCAO")
     private LocalDateTime dataExecucao;
 
+    @Column(name = "DATA_FINALIZACAO")
+    private LocalDateTime dataFinalizacao;
+
     @Column(name = "DATA_PAGAMENTO")
     private LocalDateTime dataPagamento;
 
@@ -73,5 +78,10 @@ public class Servico {
     @Column(name = "TIPO_CATEGORIA")
     private TipoCategoriaEnum tipoCategoriaEnum;
 
+    @Column(name = "PREVISAO_INICIO")
+    private LocalDate previsaoInicio;
+
+    @Column(name = "DURACAO_SERVICO")
+    private int duracaoServico;
 
 }

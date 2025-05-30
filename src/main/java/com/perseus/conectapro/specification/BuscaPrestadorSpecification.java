@@ -1,9 +1,7 @@
 package com.perseus.conectapro.specification;
 
 import com.perseus.conectapro.DTO.filtro.BuscaPrestadorFiltro;
-import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
 import com.perseus.conectapro.Entity.Prestador;
-import com.perseus.conectapro.Entity.Segmento;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;

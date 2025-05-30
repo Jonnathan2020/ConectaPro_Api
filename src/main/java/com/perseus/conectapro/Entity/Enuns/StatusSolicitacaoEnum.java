@@ -4,7 +4,8 @@ public enum StatusSolicitacaoEnum {
     ACEITA(1, "ACEITA"),
     PENDENTE(2, "PENDENTE"),
     RECUSADA(3, "RECUSADA"),
-    DESATIVADA(4,"DESATIVADA");
+    ATIVA(4, "ATIVA"),
+    INATIVA(5,"INATIVA");
 
     private int id;
     private String descricao;

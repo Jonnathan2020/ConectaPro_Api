@@ -1,6 +1,7 @@
 package com.perseus.conectapro.Entity;
 
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
+import com.perseus.conectapro.Entity.Enuns.SituacaoRepasseEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,10 @@ public class Pagamento
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPagamento;
 
+    @JoinColumn(name = "ID_PRESTADOR")
+    @ManyToOne
+    private Prestador recebedor;
+
     @OneToOne
     @JoinColumn(name = "ID_SERVICO")
     private Servico idServico;
@@ -31,6 +36,7 @@ public class Pagamento
     @Column(name = "VALOR_PRESTADOR")
     private float valorPrestador;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "SITUACAO_REPASSE")
-    private String situacaoRepasse;
+    private SituacaoRepasseEnum situacaoRepasseEnum;
 }

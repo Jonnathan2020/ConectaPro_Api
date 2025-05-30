@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface ServicoRepository extends JpaRepository<Servico, Integer> {
+    List<Servico> findBySolicitacaoServicoAndIdServicoNot(SolicitacaoServico solicitacao, Integer idServico);
 }
 

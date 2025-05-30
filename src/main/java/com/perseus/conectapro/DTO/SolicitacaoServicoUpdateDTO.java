@@ -3,6 +3,7 @@ package com.perseus.conectapro.DTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
 import com.perseus.conectapro.Entity.Enuns.NvlUrgenciaEnum;
+import com.perseus.conectapro.Entity.Enuns.StatusSolicitacaoEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,4 +24,5 @@ public class SolicitacaoServicoUpdateDTO {
     private FormaPagtoEnum formaPagtoEnum;
     private NvlUrgenciaEnum nvlUrgenciaEnum;
     private TipoCategoriaEnum tipoCategoriaEnum;
+    private StatusSolicitacaoEnum statusSolicitacaoEnum;
 }
