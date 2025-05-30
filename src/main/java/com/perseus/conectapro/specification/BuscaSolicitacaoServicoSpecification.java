@@ -28,7 +28,6 @@ public class BuscaSolicitacaoServicoSpecification {
 
             //retorna apenas se o status for pendente ou ativa
             predicates.add(root.get("statusSolicitacao").in(
-                    StatusSolicitacaoEnum.PENDENTE,
                     StatusSolicitacaoEnum.ATIVA
             ));
 
