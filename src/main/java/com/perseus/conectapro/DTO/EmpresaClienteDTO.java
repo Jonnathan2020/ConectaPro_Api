@@ -16,6 +16,8 @@ public class EmpresaClienteDTO {
     private String nomeFantasia;
     private List<Servico> servicos;
     private String caminhoFoto;
+    private String caminhoHeader;
+    private String caminhoAvatar;
     private List<SolicitacaoServicoDTO> orcamentos;
 
     public EmpresaClienteDTO(EmpresaCliente empresaCliente, List<SolicitacaoServicoDTO> orcamentos){
@@ -26,7 +28,8 @@ public class EmpresaClienteDTO {
         this.servicos = empresaCliente.getServicos();
         this.orcamentos = orcamentos;
         this.caminhoFoto = empresaCliente.getCaminhoFoto();
-
+        this.caminhoHeader = empresaCliente.getCaminhoHeader();
+        this.caminhoAvatar = empresaCliente.getCaminhoAvatar();
     }
 
 }
