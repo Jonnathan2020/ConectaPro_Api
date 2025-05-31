@@ -19,17 +19,17 @@ public class PerfilPrestadorController {
     private ServicoService servicoService;
 
     @GetMapping("/{idPrestador}/servicos-prestados")
-    public ResponseEntity<List<Servico>> getServicosPrestados(@PathVariable Long idPrestador) {
+    public ResponseEntity<List<Servico>> getServicosPrestados(@PathVariable Integer idPrestador) {
         return ResponseEntity.ok(servicoService.buscarServicosPrestados(idPrestador));
     }
 
     @GetMapping("/{idPrestador}/candidaturas")
-    public ResponseEntity<List<Servico>> getCandidaturas(@PathVariable Long idPrestador) {
+    public ResponseEntity<List<Servico>> getCandidaturas(@PathVariable Integer idPrestador) {
         return ResponseEntity.ok(servicoService.buscarCandidaturasDoPrestador(idPrestador));
     }
 
     @GetMapping("/{idPrestador}/propostas-recebidas")
-    public ResponseEntity<List<Servico>> getPropostasRecebidas(@PathVariable Long idPrestador) {
+    public ResponseEntity<List<Servico>> getPropostasRecebidas(@PathVariable Integer idPrestador) {
         return ResponseEntity.ok(servicoService.buscarPropostasRecebidas(idPrestador));
     }
 }

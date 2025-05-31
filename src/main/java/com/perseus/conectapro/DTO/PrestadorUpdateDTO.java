@@ -1,5 +1,6 @@
 package com.perseus.conectapro.DTO;
 
+import com.perseus.conectapro.Entity.Enuns.PlanoEnum;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,5 +19,6 @@ public class PrestadorUpdateDTO extends UsuarioUpdateDTO {
     private List<String> especialidades;
     private StatusDisponibilidadeEnum statusDisponibilidade;
     private LocalDate dataNascimento;
+    private PlanoEnum plano;
 
 }

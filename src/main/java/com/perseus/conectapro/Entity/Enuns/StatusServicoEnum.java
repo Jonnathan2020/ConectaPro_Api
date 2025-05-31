@@ -1,8 +1,7 @@
 package com.perseus.conectapro.Entity.Enuns;
 
-import jakarta.persistence.*;
 
-public enum SituacaoServicoEnum {
+public enum StatusServicoEnum {
     ORCAMENTO(1, "ORÇAMENTO"),
     RECUSADO(2, "RECUSADO"),
     PENDENTE_PAGTO(3, "PENDENTE PAGAMENTO"),
@@ -16,7 +15,7 @@ public enum SituacaoServicoEnum {
     private final String descricao;
 
     // Construtor da enumeração
-    SituacaoServicoEnum(int id, String descricao) {
+    StatusServicoEnum(int id, String descricao) {
         this.id = id;
         this.descricao = descricao;
     }

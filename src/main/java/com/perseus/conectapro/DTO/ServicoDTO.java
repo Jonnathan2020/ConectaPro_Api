@@ -3,7 +3,7 @@ package com.perseus.conectapro.DTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
 import com.perseus.conectapro.Entity.Enuns.NvlUrgenciaEnum;
-import com.perseus.conectapro.Entity.Enuns.SituacaoServicoEnum;
+import com.perseus.conectapro.Entity.Enuns.StatusServicoEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
 import com.perseus.conectapro.Entity.Servico;
 import lombok.Getter;
@@ -33,7 +33,7 @@ public class ServicoDTO {
     private LocalDateTime dataFinalizacao;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy - HH:mm", timezone = "America/Sao_Paulo")
     private LocalDateTime dataPagamento;
-    private SituacaoServicoEnum situacaoServico;
+    private StatusServicoEnum situacaoServico;
     private NvlUrgenciaEnum nvlUrgenciaEnum;
     private TipoCategoriaEnum tipoCategoriaEnum;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "America/Sao_Paulo")
@@ -49,15 +49,15 @@ public class ServicoDTO {
         this.tituloServico = servico.getTituloServico();
         this.descServico = servico.getDescServico();
         this.valorContratacao = servico.getValorContratacao();
-        this.formaPagtoEnum = servico.getFormaPagtoEnum();
+        this.formaPagtoEnum = servico.getFormaPagto();
         this.dataInclusao = servico.getDataInclusao();
         this.dataAprovacao = servico.getDataAprovacao();
         this.dataExecucao = servico.getDataExecucao();
         this.dataFinalizacao = servico.getDataFinalizacao();
         this.dataPagamento = servico.getDataPagamento();
-        this.situacaoServico = servico.getSituacaoServico();
-        this.nvlUrgenciaEnum = servico.getNvlUrgenciaEnum();
-        this.tipoCategoriaEnum = servico.getTipoCategoriaEnum();
+        this.situacaoServico = servico.getStatusServico();
+        this.nvlUrgenciaEnum = servico.getNvlUrgencia();
+        this.tipoCategoriaEnum = servico.getTipoCategoria();
         this.previsaoInicio = servico.getPrevisaoInicio();
         this.duracaoServico = servico.getDuracaoServico();
     }

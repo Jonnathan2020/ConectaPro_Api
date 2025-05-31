@@ -2,6 +2,7 @@ package com.perseus.conectapro.Service;
 
 import com.perseus.conectapro.DTO.*;
 import com.perseus.conectapro.Entity.*;
+import com.perseus.conectapro.Entity.Enuns.RoleEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoUsuarioEnum;
 import com.perseus.conectapro.Repository.EmpresaClienteRepository;
 import com.perseus.conectapro.Repository.EnderecoRepository;
@@ -59,6 +60,9 @@ public class EmpresaClienteService {
         empresaCliente.setRazaoSocial(empresaClienteCreateDTO.getRazaoSocial());
         empresaCliente.setNome(empresaClienteCreateDTO.getNome());
         empresaCliente.setEmail(empresaClienteCreateDTO.getEmail());
+        if(empresaClienteCreateDTO.getRole() != RoleEnum.ADMIN || empresaClienteCreateDTO.getRole() == null) {
+            empresaCliente.setRole(RoleEnum.USER);
+        }
         //Criptografia da senha
         empresaCliente.setSenha(passwordEncoder.encode(empresaClienteCreateDTO.getSenha()));
         empresaCliente.setTelefone(empresaClienteCreateDTO.getTelefone());
@@ -66,6 +70,7 @@ public class EmpresaClienteService {
         empresaCliente.setNomeFantasia(empresaClienteCreateDTO.getNomeFantasia());
         empresaCliente.setEndereco(endereco);
         empresaCliente.setCaminhoFoto(empresaClienteCreateDTO.getCaminhoFoto());
+
 
         return empresaClienteRepository.save(empresaCliente);
     }
@@ -83,18 +88,18 @@ public class EmpresaClienteService {
             List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findByIdUsuario(empresaCliente);
 
             List<SolicitacaoServicoDTO> solicitacaoServicoDTOS = solicitacaoServicos.stream()
-                    .map(orcamento -> new SolicitacaoServicoDTO(
-                            orcamento.getIdSolicitacao(),
-                            orcamento.getTituloSolicitacao(),
-                            orcamento.getDescSolicitacao(),
-                            orcamento.getValorProposto(),
-                            orcamento.getDataInclusao(),
-                            orcamento.getPrevisaoInicio(),
-                            orcamento.getDuracaoServico(),
-                            orcamento.getFormaPagtoEnum(),
-                            orcamento.getNvlUrgenciaEnum(),
-                            orcamento.getTipoCategoriaEnum(),
-                            orcamento.getStatusSolicitacaoEnum()
+                    .map(solicitacao -> new SolicitacaoServicoDTO(
+                            solicitacao.getIdSolicitacao(),
+                            solicitacao.getTituloSolicitacao(),
+                            solicitacao.getDescSolicitacao(),
+                            solicitacao.getValorProposto(),
+                            solicitacao.getDataInclusao(),
+                            solicitacao.getPrevisaoInicio(),
+                            solicitacao.getDuracaoServico(),
+                            solicitacao.getFormaPagto(),
+                            solicitacao.getNvlUrgencia(),
+                            solicitacao.getTipoCategoria(),
+                            solicitacao.getStatusSolicitacao()
                     )).collect(Collectors.toList());
 
             return new EmpresaClienteDTO(empresaCliente, solicitacaoServicoDTOS);
@@ -113,18 +118,18 @@ public class EmpresaClienteService {
         List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findByIdUsuario(empresaClienteEspecifico);
 
         List<SolicitacaoServicoDTO> solicitacaoServicoDTOS = solicitacaoServicos.stream()
-                .map(orcamento -> new SolicitacaoServicoDTO(
-                        orcamento.getIdSolicitacao(),
-                        orcamento.getTituloSolicitacao(),
-                        orcamento.getDescSolicitacao(),
-                        orcamento.getValorProposto(),
-                        orcamento.getDataInclusao(),
-                        orcamento.getPrevisaoInicio(),
-                        orcamento.getDuracaoServico(),
-                        orcamento.getFormaPagtoEnum(),
-                        orcamento.getNvlUrgenciaEnum(),
-                        orcamento.getTipoCategoriaEnum(),
-                        orcamento.getStatusSolicitacaoEnum()
+                .map(solicitacao -> new SolicitacaoServicoDTO(
+                        solicitacao.getIdSolicitacao(),
+                        solicitacao.getTituloSolicitacao(),
+                        solicitacao.getDescSolicitacao(),
+                        solicitacao.getValorProposto(),
+                        solicitacao.getDataInclusao(),
+                        solicitacao.getPrevisaoInicio(),
+                        solicitacao.getDuracaoServico(),
+                        solicitacao.getFormaPagto(),
+                        solicitacao.getNvlUrgencia(),
+                        solicitacao.getTipoCategoria(),
+                        solicitacao.getStatusSolicitacao()
                 )).collect(Collectors.toList());
 
 
@@ -142,18 +147,18 @@ public class EmpresaClienteService {
             List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findByIdUsuario(empresaCliente);
 
             List<SolicitacaoServicoDTO> solicitacaoServicoDTOS = solicitacaoServicos.stream()
-                    .map(orcamento -> new SolicitacaoServicoDTO(
-                            orcamento.getIdSolicitacao(),
-                            orcamento.getTituloSolicitacao(),
-                            orcamento.getDescSolicitacao(),
-                            orcamento.getValorProposto(),
-                            orcamento.getDataInclusao(),
-                            orcamento.getPrevisaoInicio(),
-                            orcamento.getDuracaoServico(),
-                            orcamento.getFormaPagtoEnum(),
-                            orcamento.getNvlUrgenciaEnum(),
-                            orcamento.getTipoCategoriaEnum(),
-                            orcamento.getStatusSolicitacaoEnum()
+                    .map(solicitacao -> new SolicitacaoServicoDTO(
+                            solicitacao.getIdSolicitacao(),
+                            solicitacao.getTituloSolicitacao(),
+                            solicitacao.getDescSolicitacao(),
+                            solicitacao.getValorProposto(),
+                            solicitacao.getDataInclusao(),
+                            solicitacao.getPrevisaoInicio(),
+                            solicitacao.getDuracaoServico(),
+                            solicitacao.getFormaPagto(),
+                            solicitacao.getNvlUrgencia(),
+                            solicitacao.getTipoCategoria(),
+                            solicitacao.getStatusSolicitacao()
                     )).collect(Collectors.toList());
 
 
@@ -198,18 +203,18 @@ public class EmpresaClienteService {
         List<SolicitacaoServico> solicitacaoServicos = solicitacaoServicoRepository.findByIdUsuario(clienteExistente);
 
         List<SolicitacaoServicoDTO> solicitacaoServicoDTOS = solicitacaoServicos.stream()
-                .map(orcamento -> new SolicitacaoServicoDTO(
-                        orcamento.getIdSolicitacao(),
-                        orcamento.getTituloSolicitacao(),
-                        orcamento.getDescSolicitacao(),
-                        orcamento.getValorProposto(),
-                        orcamento.getDataInclusao(),
-                        orcamento.getPrevisaoInicio(),
-                        orcamento.getDuracaoServico(),
-                        orcamento.getFormaPagtoEnum(),
-                        orcamento.getNvlUrgenciaEnum(),
-                        orcamento.getTipoCategoriaEnum(),
-                        orcamento.getStatusSolicitacaoEnum()
+                .map(solicitacao -> new SolicitacaoServicoDTO(
+                        solicitacao.getIdSolicitacao(),
+                        solicitacao.getTituloSolicitacao(),
+                        solicitacao.getDescSolicitacao(),
+                        solicitacao.getValorProposto(),
+                        solicitacao.getDataInclusao(),
+                        solicitacao.getPrevisaoInicio(),
+                        solicitacao.getDuracaoServico(),
+                        solicitacao.getFormaPagto(),
+                        solicitacao.getNvlUrgencia(),
+                        solicitacao.getTipoCategoria(),
+                        solicitacao.getStatusSolicitacao()
                 )).collect(Collectors.toList());
 
 

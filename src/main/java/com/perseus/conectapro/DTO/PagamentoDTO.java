@@ -1,10 +1,7 @@
 package com.perseus.conectapro.DTO;
 
-import com.perseus.conectapro.Entity.Enuns.SituacaoRepasseEnum;
+import com.perseus.conectapro.Entity.Enuns.StatusRepasseEnum;
 import com.perseus.conectapro.Entity.Pagamento;
-import com.perseus.conectapro.Entity.Prestador;
-import com.perseus.conectapro.Entity.Servico;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +12,7 @@ public class PagamentoDTO {
     private float valorPagamento;
     private float valorPlataforma;
     private float valorPrestador;
-    private SituacaoRepasseEnum situacaoRepasseEnum;
+    private StatusRepasseEnum statusRepasse;
 
     public PagamentoDTO(Pagamento pagamento){
         this.idPagamento = pagamento.getIdPagamento();

@@ -27,10 +27,10 @@ public class SolicitacaoServicoDTO {
     private LocalDateTime dataInclusao;
     private LocalDate previsaoInicio;
     private int duracaoServico;
-    private FormaPagtoEnum formaPagtoEnum;
-    private NvlUrgenciaEnum nvlUrgenciaEnum;
-    private TipoCategoriaEnum tipoCategoriaEnum;
-    private StatusSolicitacaoEnum statusSolicitacaoEnum;
+    private FormaPagtoEnum formaPagto;
+    private NvlUrgenciaEnum nvlUrgencia;
+    private TipoCategoriaEnum tipoCategoria;
+    private StatusSolicitacaoEnum statusSolicitacao;
 
     public SolicitacaoServicoDTO(SolicitacaoServico solicitacaoServico) {
         this.idSolicitacao = solicitacaoServico.getIdSolicitacao();
@@ -45,13 +45,13 @@ public class SolicitacaoServicoDTO {
         this.dataInclusao = solicitacaoServico.getDataInclusao();
         this.previsaoInicio = solicitacaoServico.getPrevisaoInicio();
         this.duracaoServico = solicitacaoServico.getDuracaoServico();
-        this.formaPagtoEnum = solicitacaoServico.getFormaPagtoEnum();
-        this.nvlUrgenciaEnum = solicitacaoServico.getNvlUrgenciaEnum();
-        this.tipoCategoriaEnum = solicitacaoServico.getTipoCategoriaEnum();
-        this.statusSolicitacaoEnum = solicitacaoServico.getStatusSolicitacaoEnum();
+        this.formaPagto = solicitacaoServico.getFormaPagto();
+        this.nvlUrgencia = solicitacaoServico.getNvlUrgencia();
+        this.tipoCategoria = solicitacaoServico.getTipoCategoria();
+        this.statusSolicitacao = solicitacaoServico.getStatusSolicitacao();
     }
 
-    public SolicitacaoServicoDTO(int idSolicitacao, String tituloSolicitacao, String descSolicitacao, BigDecimal valorProposto, LocalDateTime dataInclusao, LocalDate previsaoInicio, int duracaoServico, FormaPagtoEnum formaPagtoEnum, NvlUrgenciaEnum nvlUrgenciaEnum, TipoCategoriaEnum tipoCategoriaEnum, StatusSolicitacaoEnum statusSolicitacaoEnum){
+    public SolicitacaoServicoDTO(int idSolicitacao, String tituloSolicitacao, String descSolicitacao, BigDecimal valorProposto, LocalDateTime dataInclusao, LocalDate previsaoInicio, int duracaoServico, FormaPagtoEnum formaPagto, NvlUrgenciaEnum nvlUrgencia, TipoCategoriaEnum tipoCategoria, StatusSolicitacaoEnum statusSolicitacao){
         this.idSolicitacao = idSolicitacao;
         this.tituloSolicitacao = tituloSolicitacao;
         this.descSolicitacao = descSolicitacao;
@@ -59,9 +59,9 @@ public class SolicitacaoServicoDTO {
         this.dataInclusao = dataInclusao;
         this.previsaoInicio = previsaoInicio;
         this.duracaoServico = duracaoServico;
-        this.formaPagtoEnum = formaPagtoEnum;
-        this.nvlUrgenciaEnum = nvlUrgenciaEnum;
-        this.tipoCategoriaEnum = tipoCategoriaEnum;
-        this.statusSolicitacaoEnum = statusSolicitacaoEnum;
+        this.formaPagto = formaPagto;
+        this.nvlUrgencia = nvlUrgencia;
+        this.tipoCategoria = tipoCategoria;
+        this.statusSolicitacao = statusSolicitacao;
     }
 }

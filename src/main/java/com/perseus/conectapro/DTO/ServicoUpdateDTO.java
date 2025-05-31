@@ -2,7 +2,7 @@ package com.perseus.conectapro.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
-import com.perseus.conectapro.Entity.Enuns.SituacaoServicoEnum;
+import com.perseus.conectapro.Entity.Enuns.StatusServicoEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 public class ServicoUpdateDTO {
     private String tituloServico;
     private String descServico;
-    private SituacaoServicoEnum situacaoServicoEnum;
+    private StatusServicoEnum statusServico;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "#.##0,00")
     private Float valorContratacao;
-    private FormaPagtoEnum formaPagtoEnum;
+    private FormaPagtoEnum formaPagto;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy - HH:mm", timezone = "America/Sao_Paulo")
     private LocalDateTime dataAprovacao;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy - HH:mm", timezone = "America/Sao_Paulo")

@@ -2,7 +2,7 @@ package com.perseus.conectapro.Entity;
 
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
 import com.perseus.conectapro.Entity.Enuns.NvlUrgenciaEnum;
-import com.perseus.conectapro.Entity.Enuns.SituacaoServicoEnum;
+import com.perseus.conectapro.Entity.Enuns.StatusServicoEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -64,19 +64,19 @@ public class Servico {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "FORMA_PAGTO")
-    private FormaPagtoEnum formaPagtoEnum;
+    private FormaPagtoEnum formaPagto;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "SITUACAO_SERVICO")
-    private SituacaoServicoEnum situacaoServico;
+    private StatusServicoEnum statusServico;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "NIVEL_URGENCIA")
-    private NvlUrgenciaEnum nvlUrgenciaEnum;
+    private NvlUrgenciaEnum nvlUrgencia;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TIPO_CATEGORIA")
-    private TipoCategoriaEnum tipoCategoriaEnum;
+    private TipoCategoriaEnum tipoCategoria;
 
     @Column(name = "PREVISAO_INICIO")
     private LocalDate previsaoInicio;

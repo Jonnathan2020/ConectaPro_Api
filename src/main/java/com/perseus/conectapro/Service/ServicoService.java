@@ -2,8 +2,8 @@ package com.perseus.conectapro.Service;
 
 import com.perseus.conectapro.DTO.*;
 import com.perseus.conectapro.Entity.*;
-import com.perseus.conectapro.Entity.Enuns.SituacaoRepasseEnum;
-import com.perseus.conectapro.Entity.Enuns.SituacaoServicoEnum;
+import com.perseus.conectapro.Entity.Enuns.StatusRepasseEnum;
+import com.perseus.conectapro.Entity.Enuns.StatusServicoEnum;
 import com.perseus.conectapro.Entity.Enuns.StatusSolicitacaoEnum;
 import com.perseus.conectapro.Repository.*;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +62,7 @@ public class ServicoService {
         }
 
         servico.setSolicitacaoServico(solicitacaoServico);
-        servico.setSituacaoServico(SituacaoServicoEnum.ORCAMENTO);
+        servico.setStatusServico(StatusServicoEnum.ORCAMENTO);
         servico.setTituloServico(servicoCreateDTO.getTituloServico());
         servico.setDescServico(servicoCreateDTO.getDescServico());
         servico.setDataInclusao(LocalDateTime.now());
@@ -71,9 +71,9 @@ public class ServicoService {
         servico.setDataFinalizacao(servicoCreateDTO.getDataFinalizacao());
         servico.setDataPagamento(servicoCreateDTO.getDataPagamento());
         servico.setValorContratacao(servicoCreateDTO.getValorContratacao());
-        servico.setFormaPagtoEnum(servicoCreateDTO.getFormaPagtoEnum());
-        servico.setNvlUrgenciaEnum(servicoCreateDTO.getNvlUrgenciaEnum());
-        servico.setTipoCategoriaEnum(servicoCreateDTO.getTipoCategoriaEnum());
+        servico.setFormaPagto(servicoCreateDTO.getFormaPagto());
+        servico.setNvlUrgencia(servicoCreateDTO.getNvlUrgencia());
+        servico.setTipoCategoria(servicoCreateDTO.getTipoCategoria());
         servico.setPrevisaoInicio(servicoCreateDTO.getPrevisaoInicio());
         servico.setDuracaoServico(servicoCreateDTO.getDuracaoServico());
         Servico servicoCriado = servicoRepository.save(servico);
@@ -109,8 +109,8 @@ public class ServicoService {
         if (servicoUpdateDTO.getDescServico() != null){
             servicoExistente.setDescServico(servicoUpdateDTO.getDescServico());
         }
-        if(servicoUpdateDTO.getSituacaoServicoEnum() != null){
-            servicoExistente.setSituacaoServico(servicoUpdateDTO.getSituacaoServicoEnum());
+        if(servicoUpdateDTO.getStatusServico() != null){
+            servicoExistente.setStatusServico(servicoUpdateDTO.getStatusServico());
         }
         //if(servicoUpdateDTO.getDataInclusao() != null){
         //    servicoExistente.setDataInclusao(servicoUpdateDTO.getDataInclusao());
@@ -177,10 +177,10 @@ public class ServicoService {
 
         //Dados da Solicitação
         servico.setSolicitacaoServico(solicitacaoServico);
-        servico.setSituacaoServico(SituacaoServicoEnum.ORCAMENTO);
+        servico.setStatusServico(StatusServicoEnum.ORCAMENTO);
         servico.setTituloServico(solicitacaoServico.getTituloSolicitacao());
-        servico.setNvlUrgenciaEnum(solicitacaoServico.getNvlUrgenciaEnum());
-        servico.setTipoCategoriaEnum(solicitacaoServico.getTipoCategoriaEnum());
+        servico.setNvlUrgencia(solicitacaoServico.getNvlUrgencia());
+        servico.setTipoCategoria(solicitacaoServico.getTipoCategoria());
 
 
         //Dados da DTO de criação, preenchida pelo prestador
@@ -189,7 +189,7 @@ public class ServicoService {
         servico.setDataInclusao(LocalDateTime.now());
         servico.setDescServico(servicoCreateDTO.getDescServico());
         servico.setValorContratacao(servicoCreateDTO.getValorContratacao());
-        servico.setFormaPagtoEnum(servicoCreateDTO.getFormaPagtoEnum());
+        servico.setFormaPagto(servicoCreateDTO.getFormaPagto());
 
         Servico servicoSalvo = servicoRepository.save(servico);
         return new ServicoDTO(servicoSalvo);
@@ -203,7 +203,7 @@ public class ServicoService {
 
         Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (!servico.getSituacaoServico().equals(SituacaoServicoEnum.ORCAMENTO)){
+        if (!servico.getStatusServico().equals(StatusServicoEnum.ORCAMENTO)){
             throw new IllegalArgumentException("Somente orçamentos podem ser aceitos");
         }
 
@@ -212,27 +212,27 @@ public class ServicoService {
             throw new IllegalArgumentException("Somente solicitante pode realizar aprovação do orçamento");
         }
 
-        if (solicitacao.getStatusSolicitacaoEnum() == StatusSolicitacaoEnum.INATIVA) {
+        if (solicitacao.getStatusSolicitacao() == StatusSolicitacaoEnum.INATIVA) {
             throw new IllegalStateException("Essa solicitação já teve um orçamento aprovado.");
         }
 
         //Atualização do serviço
-        servico.setSituacaoServico(SituacaoServicoEnum.PENDENTE_PAGTO);
+        servico.setStatusServico(StatusServicoEnum.PENDENTE_PAGTO);
         servico.setDataAprovacao(LocalDateTime.now());
         servico.setPrevisaoInicio(solicitacao.getPrevisaoInicio());
         servico.setDuracaoServico(solicitacao.getDuracaoServico());
 
         //Atualização da solicitação
 
-        solicitacao.setStatusSolicitacaoEnum(StatusSolicitacaoEnum.INATIVA);
+        solicitacao.setStatusSolicitacao(StatusSolicitacaoEnum.INATIVA);
         solicitacaoServicoRepository.save(solicitacao);
         servicoRepository.save(servico);
 
         // Rejeita outras propostas da mesma solicitação (opcional)
         List<Servico> outrosServicos = servicoRepository.findBySolicitacaoServicoAndIdServicoNot(solicitacao, idServico);
         for (Servico s : outrosServicos) {
-            if (s.getSituacaoServico() == SituacaoServicoEnum.ORCAMENTO || s.getSituacaoServico() == SituacaoServicoEnum.RECUSADO){
-                s.setSituacaoServico(SituacaoServicoEnum.RECUSADO);
+            if (s.getStatusServico() == StatusServicoEnum.ORCAMENTO || s.getStatusServico() == StatusServicoEnum.RECUSADO){
+                s.setStatusServico(StatusServicoEnum.RECUSADO);
                 servicoRepository.delete(s);
             }
         }
@@ -246,7 +246,7 @@ public class ServicoService {
 
         Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (!servico.getSituacaoServico().equals(SituacaoServicoEnum.ORCAMENTO)){
+        if (!servico.getStatusServico().equals(StatusServicoEnum.ORCAMENTO)){
             throw new IllegalArgumentException("Somente orçamentos podem ser recusados");
         }
 
@@ -283,12 +283,12 @@ public class ServicoService {
         pagamento.setValorPagamento(valorTotal);
         pagamento.setValorPlataforma(valorPlataforma);
         pagamento.setValorPrestador(valorPrestador);
-        pagamento.setSituacaoRepasseEnum(SituacaoRepasseEnum.AGUARDANDO_REPASSE);
+        pagamento.setStatusRepasseEnum(StatusRepasseEnum.AGUARDANDO_REPASSE);
         pagamentoRepository.save(pagamento);
 
         servico.setPagamento(pagamento);
         servico.setDataPagamento(LocalDateTime.now());
-        servico.setSituacaoServico(SituacaoServicoEnum.PENDENTE_INICIO);
+        servico.setStatusServico(StatusServicoEnum.PENDENTE_INICIO);
         servicoRepository.save(servico);
 
         // 6. Retornar DTO atualizado
@@ -306,8 +306,8 @@ public class ServicoService {
         }
         Pagamento pagamento = pagamentoRepository.findByIdPagamento(servico.getPagamento().getIdPagamento());
 
-        pagamento.setSituacaoRepasseEnum(SituacaoRepasseEnum.EM_ANALISE);
-        servico.setSituacaoServico(SituacaoServicoEnum.EM_EXECUCAO);
+        pagamento.setStatusRepasseEnum(StatusRepasseEnum.EM_ANALISE);
+        servico.setStatusServico(StatusServicoEnum.EM_EXECUCAO);
         servico.setDataExecucao(LocalDateTime.now());
         pagamentoRepository.save(pagamento);
         servicoRepository.save(servico);
@@ -327,8 +327,8 @@ public class ServicoService {
 
         Pagamento pagamento = pagamentoRepository.findByIdPagamento(servico.getPagamento().getIdPagamento());
 
-        pagamento.setSituacaoRepasseEnum(SituacaoRepasseEnum.EM_ANALISE);
-        servico.setSituacaoServico(SituacaoServicoEnum.PENDENTE_CONFIRMAR_FINALIZACAO);
+        pagamento.setStatusRepasseEnum(StatusRepasseEnum.EM_ANALISE);
+        servico.setStatusServico(StatusServicoEnum.PENDENTE_CONFIRMAR_FINALIZACAO);
         pagamentoRepository.save(pagamento);
         servicoRepository.save(servico);
 
@@ -353,8 +353,8 @@ public class ServicoService {
         //
 
         System.out.println("Prestador acaba de receber o seu pagamento referente o serviço prestado!");
-        pagamento.setSituacaoRepasseEnum(SituacaoRepasseEnum.REPASSADO);
-        servico.setSituacaoServico(SituacaoServicoEnum.FINALIZADO);
+        pagamento.setStatusRepasseEnum(StatusRepasseEnum.REPASSADO);
+        servico.setStatusServico(StatusServicoEnum.FINALIZADO);
         servico.setDataFinalizacao(LocalDateTime.now());
         pagamentoRepository.save(pagamento);
         servicoRepository.save(servico);
@@ -362,20 +362,20 @@ public class ServicoService {
         return  new ServicoDTO(servico);
     }
 
-    public List<Servico> buscarServicosPrestados(Long idPrestador) {
-        return servicoRepository.findByIdPrestadorIdUsuarioAndSituacaoServicoIn(
+    public List<Servico> buscarServicosPrestados(Integer idPrestador) {
+        return servicoRepository.findByIdPrestadorIdUsuarioAndStatusServicoIn(
                 idPrestador,
-                List.of(SituacaoServicoEnum.EM_EXECUCAO, SituacaoServicoEnum.FINALIZADO)
+                List.of(StatusServicoEnum.EM_EXECUCAO, StatusServicoEnum.FINALIZADO)
         );
     }
 
-    public List<Servico> buscarCandidaturasDoPrestador(Long idPrestador) {
-        return servicoRepository.findByIdPrestadorIdUsuarioAndSituacaoServico(idPrestador, SituacaoServicoEnum.ORCAMENTO);
+    public List<Servico> buscarCandidaturasDoPrestador(int idPrestador) {
+        return servicoRepository.findByIdPrestadorIdUsuarioAndStatusServico(idPrestador, StatusServicoEnum.ORCAMENTO);
     }
 
-    public List<Servico> buscarPropostasRecebidas(Long idPrestador) {
-        return servicoRepository.findByIdPrestadorIdUsuarioAndSituacaoServicoAndIdEmpresaClienteIsNotNull(
-                idPrestador, SituacaoServicoEnum.ORCAMENTO
+    public List<Servico> buscarPropostasRecebidas(int idPrestador) {
+        return servicoRepository.findByIdPrestadorIdUsuarioAndStatusServicoAndIdEmpresaClienteIsNotNull(
+                idPrestador, StatusServicoEnum.ORCAMENTO
         );
     }
 

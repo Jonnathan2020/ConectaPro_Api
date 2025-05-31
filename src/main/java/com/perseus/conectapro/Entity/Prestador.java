@@ -1,5 +1,6 @@
 package com.perseus.conectapro.Entity;
 
+import com.perseus.conectapro.Entity.Enuns.PlanoEnum;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
 import jakarta.persistence.*;
@@ -33,9 +34,9 @@ public class Prestador extends Usuario {
     private List<TipoCategoriaEnum> tipoCategoria;
 
 
-    @JoinColumn(name = "ID_PLANO")
-    @ManyToOne
-    private Plano idPlano;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "PLANO")
+    private PlanoEnum planoEnum;
 
     @OneToMany(mappedBy = "idPrestador")
     private List<Avaliacao> avaliacoes;

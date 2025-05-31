@@ -1,12 +1,9 @@
 package com.perseus.conectapro.Entity;
 
-import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
-import com.perseus.conectapro.Entity.Enuns.SituacaoRepasseEnum;
+import com.perseus.conectapro.Entity.Enuns.StatusRepasseEnum;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.text.DateFormat;
 
 @Entity
 @Getter
@@ -38,5 +35,5 @@ public class Pagamento
 
     @Enumerated(EnumType.STRING)
     @Column(name = "SITUACAO_REPASSE")
-    private SituacaoRepasseEnum situacaoRepasseEnum;
+    private StatusRepasseEnum statusRepasseEnum;
 }

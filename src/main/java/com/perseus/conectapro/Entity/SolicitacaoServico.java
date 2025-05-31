@@ -59,19 +59,19 @@ public class SolicitacaoServico {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "NIVEL_URGENCIA")
-    private NvlUrgenciaEnum nvlUrgenciaEnum;
+    private NvlUrgenciaEnum nvlUrgencia;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TIPO_CATEGORIA")
-    private TipoCategoriaEnum tipoCategoriaEnum;
+    private TipoCategoriaEnum tipoCategoria;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "FORMA_PAGTO")
-    private FormaPagtoEnum formaPagtoEnum;
+    private FormaPagtoEnum formaPagto;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS_SOLICITACAO")
-    private StatusSolicitacaoEnum statusSolicitacaoEnum;
+    private StatusSolicitacaoEnum statusSolicitacao;
 
 //    @ManyToOne
 //    @JoinColumn(name = "HOMEPAGE")

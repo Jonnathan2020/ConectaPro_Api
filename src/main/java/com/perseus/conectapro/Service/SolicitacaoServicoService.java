@@ -66,10 +66,10 @@ public class SolicitacaoServicoService {
         solicitacaoServico.setPrevisaoInicio(solicitacaoServicoCreateDTO.getPrevisaoInicio());
         solicitacaoServico.setDuracaoServico(solicitacaoServicoCreateDTO.getDuracaoServico());
         solicitacaoServico.setValorProposto(solicitacaoServicoCreateDTO.getValorProposto());
-        solicitacaoServico.setFormaPagtoEnum(solicitacaoServicoCreateDTO.getFormaPagtoEnum());
-        solicitacaoServico.setNvlUrgenciaEnum(solicitacaoServicoCreateDTO.getNvlUrgenciaEnum());
-        solicitacaoServico.setTipoCategoriaEnum(solicitacaoServicoCreateDTO.getTipoCategoriaEnum());
-        solicitacaoServico.setStatusSolicitacaoEnum(StatusSolicitacaoEnum.ATIVA);
+        solicitacaoServico.setFormaPagto(solicitacaoServicoCreateDTO.getFormaPagtoEnum());
+        solicitacaoServico.setNvlUrgencia(solicitacaoServicoCreateDTO.getNvlUrgenciaEnum());
+        solicitacaoServico.setTipoCategoria(solicitacaoServicoCreateDTO.getTipoCategoriaEnum());
+        solicitacaoServico.setStatusSolicitacao(StatusSolicitacaoEnum.ATIVA);
 
         SolicitacaoServico solicitacaoServicoCriado = solicitacaoServicoRepository.save(solicitacaoServico);
         Prestador prestador = solicitacaoServicoCriado.getIdPrestador();
@@ -112,13 +112,13 @@ public class SolicitacaoServicoService {
             solicitacaoServicoExistente.setDuracaoServico(solicitacaoServicoUpdateDTO.getDuracaoServico());
         }
         if(solicitacaoServicoUpdateDTO.getFormaPagtoEnum() !=null){
-            solicitacaoServicoExistente.setFormaPagtoEnum(solicitacaoServicoUpdateDTO.getFormaPagtoEnum());
+            solicitacaoServicoExistente.setFormaPagto(solicitacaoServicoUpdateDTO.getFormaPagtoEnum());
         }
         if(solicitacaoServicoUpdateDTO.getNvlUrgenciaEnum() !=null){
-            solicitacaoServicoExistente.setNvlUrgenciaEnum(solicitacaoServicoUpdateDTO.getNvlUrgenciaEnum());
+            solicitacaoServicoExistente.setNvlUrgencia(solicitacaoServicoUpdateDTO.getNvlUrgenciaEnum());
         }
         if(solicitacaoServicoUpdateDTO.getTipoCategoriaEnum() !=null){
-            solicitacaoServicoExistente.setTipoCategoriaEnum(solicitacaoServicoUpdateDTO.getTipoCategoriaEnum());
+            solicitacaoServicoExistente.setTipoCategoria(solicitacaoServicoUpdateDTO.getTipoCategoriaEnum());
         }
         return solicitacaoServicoRepository.save(solicitacaoServicoExistente);
     }
@@ -155,9 +155,9 @@ public class SolicitacaoServicoService {
         SolicitacaoServico solicitacaoServicoExistente = solicitacaoServicoRepository.findById(idSolicitacao)
                 .orElseThrow(() -> new IllegalArgumentException("Solicitação não encontrada!!"));
 
-        if(solicitacaoServicoExistente.getStatusSolicitacaoEnum().equals(StatusSolicitacaoEnum.ATIVA)){
-            solicitacaoServicoExistente.setStatusSolicitacaoEnum(StatusSolicitacaoEnum.INATIVA);
-        } else if (solicitacaoServicoExistente.getStatusSolicitacaoEnum().equals(StatusSolicitacaoEnum.INATIVA)) {
+        if(solicitacaoServicoExistente.getStatusSolicitacao().equals(StatusSolicitacaoEnum.ATIVA)){
+            solicitacaoServicoExistente.setStatusSolicitacao(StatusSolicitacaoEnum.INATIVA);
+        } else if (solicitacaoServicoExistente.getStatusSolicitacao().equals(StatusSolicitacaoEnum.INATIVA)) {
             throw new IllegalArgumentException("Solicitação já está desativada");
         }
         else {
