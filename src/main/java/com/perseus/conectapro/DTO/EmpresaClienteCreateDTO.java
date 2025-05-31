@@ -10,7 +10,6 @@ public class EmpresaClienteCreateDTO extends UsuarioCreateDTO {
 
     @Pattern(regexp = "\\d{14}", message = "CNPJ deve conter 14 dígitos numéricos")
     private String cnpj;
-
     private String razaoSocial;
     private String nomeFantasia;
 
