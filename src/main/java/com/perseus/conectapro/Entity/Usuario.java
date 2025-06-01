@@ -45,6 +45,8 @@ public class Usuario implements UserDetails {
     private TipoUsuarioEnum tipoUsuario;
 
     private String caminhoFoto;
+    private String caminhoHeader;
+    private String caminhoAvatar;
 
     //nivel de permissao do usuario
     @Column(name = "ROLES")
