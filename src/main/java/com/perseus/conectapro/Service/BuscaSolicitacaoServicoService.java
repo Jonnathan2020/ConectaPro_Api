@@ -7,7 +7,9 @@ import com.perseus.conectapro.Repository.PrestadorRepository;
 import com.perseus.conectapro.Repository.SolicitacaoServicoRepository;
 import com.perseus.conectapro.specification.BuscaSolicitacaoServicoSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +26,11 @@ public class BuscaSolicitacaoServicoService {
 
     public List<SolicitacaoServicoDTO> buscar(BuscaSolicitacaoServicoFiltro filtro) {
         List<SolicitacaoServico> solicitacoes = solicitacaoServicoRepository.findAll(BuscaSolicitacaoServicoSpecification.comFiltro(filtro));
+        
+        if (solicitacoes.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum serviço encontrado");
+        }
+        
         return solicitacoes.stream()
                 .map(SolicitacaoServicoDTO::new)
                 .collect(Collectors.toList());
