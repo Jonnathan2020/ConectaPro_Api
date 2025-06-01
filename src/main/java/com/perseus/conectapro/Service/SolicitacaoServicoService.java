@@ -53,7 +53,7 @@ public class SolicitacaoServicoService {
         }
         else if (usuario instanceof Prestador) {
             Prestador prestador = (Prestador) usuario;
-            solicitacaoServico.setIdPrestador(prestador);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de usuário não é permitido para essa ação");
         }
         else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de usuário inválido.");
