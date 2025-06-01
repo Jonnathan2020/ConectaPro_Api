@@ -25,6 +25,7 @@ public class SolicitacaoServicoDTO {
     private BigDecimal valorProposto;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy - HH:mm", timezone = "America/Sao_Paulo")
     private LocalDateTime dataInclusao;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate previsaoInicio;
     private int duracaoServico;
     private FormaPagtoEnum formaPagto;

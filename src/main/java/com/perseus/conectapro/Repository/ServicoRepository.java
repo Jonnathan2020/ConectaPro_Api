@@ -3,6 +3,8 @@ package com.perseus.conectapro.Repository;
 
 import com.perseus.conectapro.Entity.*;
 import com.perseus.conectapro.Entity.Enuns.StatusServicoEnum;
+import com.perseus.conectapro.Entity.Enuns.StatusSolicitacaoEnum;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -20,5 +22,11 @@ public interface ServicoRepository extends JpaRepository<Servico, Integer> {
     // Propostas feitas pela empresa para este prestador
     List<Servico> findByIdPrestadorIdUsuarioAndStatusServicoAndIdEmpresaClienteIsNotNull(int idPrestador, StatusServicoEnum statusServico);
 
+    // Propostas recebidas
+    List<Servico> findByIdEmpresaClienteIdUsuarioAndIdPrestadorIsNotNullAndStatusServico(int idEmpresaCliente, StatusServicoEnum statusServico);
+    
+    // Servicos concluidos empresa
+    List<Servico> findByIdEmpresaClienteIdUsuarioAndStatusServico(int idEmpresaCliente, StatusServicoEnum statusServico);
+    
 }
 

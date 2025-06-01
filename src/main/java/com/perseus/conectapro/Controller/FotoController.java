@@ -1,6 +1,6 @@
-package com.perseus.conectapro.controller;
+package com.perseus.conectapro.Controller;
 
-import com.perseus.conectapro.service.AzureBlobStorageService;
+import com.perseus.conectapro.Service.AzureBlobStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

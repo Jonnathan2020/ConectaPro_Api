@@ -5,7 +5,10 @@ import com.perseus.conectapro.DTO.PrestadorDTO;
 import com.perseus.conectapro.DTO.filtro.BuscaPrestadorFiltro;
 import com.perseus.conectapro.Repository.PrestadorRepository;
 import com.perseus.conectapro.specification.BuscaPrestadorSpecification;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -19,9 +22,17 @@ public class BuscaPrestadorService {
     }
 
     public List<PrestadorBuscaDTO> buscar(BuscaPrestadorFiltro filtro) {
-        return repository.findAll(BuscaPrestadorSpecification.comFiltro(filtro))
+
+        var resultados = repository.findAll(BuscaPrestadorSpecification.comFiltro(filtro))
                 .stream()
                 .map(PrestadorBuscaDTO::new)
                 .toList();
+
+        if (resultados.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum prestador encontrado.");
+        }
+
+        return resultados;
+        
     }
 }

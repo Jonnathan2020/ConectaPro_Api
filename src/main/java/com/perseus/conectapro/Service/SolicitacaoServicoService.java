@@ -81,6 +81,7 @@ public class SolicitacaoServicoService {
         if (prestador != null) {
             Hibernate.initialize(prestador.getEspecialidades());
         }
+        
         return new SolicitacaoServicoDTO(solicitacaoServicoCriado);
     }
 

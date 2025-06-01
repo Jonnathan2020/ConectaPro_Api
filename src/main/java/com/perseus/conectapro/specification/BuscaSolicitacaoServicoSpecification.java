@@ -24,9 +24,20 @@ public class BuscaSolicitacaoServicoSpecification {
                         )
                 );
             }
+            
 
+            if (filtro.getUf() != null && !filtro.getUf().isBlank()) {
+                predicates.add(
+                        cb.equal(
+                                root.get("idEmpresaCliente")
+                                    .get("endereco")
+                                    .get("uf"),
+                                filtro.getUf()
+                        )
+                );
+            }
 
-            //retorna apenas se o status for pendente ou ativa
+            //retorna apenas se o status for ativa
             predicates.add(root.get("statusSolicitacao").in(
                     StatusSolicitacaoEnum.ATIVA
             ));
