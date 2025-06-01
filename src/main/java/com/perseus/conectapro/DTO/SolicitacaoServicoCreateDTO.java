@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class SolicitacaoServicoCreateDTO {
+    private int idPrestador;
     private String tituloSolicitacao;
     private String descSolicitacao;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "#.##0,00")
@@ -23,10 +24,10 @@ public class SolicitacaoServicoCreateDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate previsaoInicio;
     private int duracaoServico;
-    private FormaPagtoEnum formaPagtoEnum;
-    private NvlUrgenciaEnum nvlUrgenciaEnum;
-    private TipoCategoriaEnum tipoCategoriaEnum;
-    private StatusSolicitacaoEnum statusSolicitacaoEnum;
+    private FormaPagtoEnum formaPagto;
+    private NvlUrgenciaEnum nvlUrgencia;
+    private TipoCategoriaEnum tipoCategoria;
+    private StatusSolicitacaoEnum statusSolicitacao;
 
 
 }

@@ -48,6 +48,10 @@ public class SolicitacaoServico {
     @Column(name = "DATA_INCLUSAO")
     private LocalDateTime dataInclusao;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "FORMA_PAGTO")
+    private FormaPagtoEnum formaPagto;
+
     @Column(name = "VALOR_PROPOSTO")
     private BigDecimal valorProposto;
 
@@ -64,10 +68,6 @@ public class SolicitacaoServico {
     @Enumerated(EnumType.STRING)
     @Column(name = "TIPO_CATEGORIA")
     private TipoCategoriaEnum tipoCategoria;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "FORMA_PAGTO")
-    private FormaPagtoEnum formaPagto;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS_SOLICITACAO")

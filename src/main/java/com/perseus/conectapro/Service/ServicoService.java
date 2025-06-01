@@ -176,6 +176,9 @@ public class ServicoService {
         }
 
         //Dados da Solicitação
+        if (solicitacaoServico.getIdPrestador() != null) {
+            servico.setIdPrestador(solicitacaoServico.getIdPrestador());
+        }
         servico.setSolicitacaoServico(solicitacaoServico);
         servico.setStatusServico(StatusServicoEnum.ORCAMENTO);
         servico.setTituloServico(solicitacaoServico.getTituloSolicitacao());
@@ -184,12 +187,12 @@ public class ServicoService {
 
 
         //Dados da DTO de criação, preenchida pelo prestador
-        servico.setDuracaoServico(servicoCreateDTO.getDuracaoServico());
-        servico.setPrevisaoInicio(servicoCreateDTO.getPrevisaoInicio());
-        servico.setDataInclusao(LocalDateTime.now());
         servico.setDescServico(servicoCreateDTO.getDescServico());
         servico.setValorContratacao(servicoCreateDTO.getValorContratacao());
         servico.setFormaPagto(servicoCreateDTO.getFormaPagto());
+        servico.setPrevisaoInicio(servicoCreateDTO.getPrevisaoInicio());
+        servico.setDuracaoServico(servicoCreateDTO.getDuracaoServico());
+        servico.setDataInclusao(LocalDateTime.now());
 
         Servico servicoSalvo = servicoRepository.save(servico);
         return new ServicoDTO(servicoSalvo);
@@ -285,6 +288,7 @@ public class ServicoService {
         pagamento.setValorPrestador(valorPrestador);
         pagamento.setStatusRepasseEnum(StatusRepasseEnum.AGUARDANDO_REPASSE);
         pagamentoRepository.save(pagamento);
+        PagamentoDTO pagamentoDTO = new PagamentoDTO(pagamento);
 
         servico.setPagamento(pagamento);
         servico.setDataPagamento(LocalDateTime.now());
@@ -310,6 +314,7 @@ public class ServicoService {
         servico.setStatusServico(StatusServicoEnum.EM_EXECUCAO);
         servico.setDataExecucao(LocalDateTime.now());
         pagamentoRepository.save(pagamento);
+        PagamentoDTO pagamentoDTO = new PagamentoDTO(pagamento);
         servicoRepository.save(servico);
 
         return  new ServicoDTO(servico);
@@ -362,21 +367,35 @@ public class ServicoService {
         return  new ServicoDTO(servico);
     }
 
-    public List<Servico> buscarServicosPrestados(Integer idPrestador) {
-        return servicoRepository.findByIdPrestadorIdUsuarioAndStatusServicoIn(
+    public List<ServicoDTO> buscarServicosPrestados(int idPrestador) {
+        List<Servico> servicos =  servicoRepository.findByIdPrestadorIdUsuarioAndStatusServicoIn(
                 idPrestador,
                 List.of(StatusServicoEnum.EM_EXECUCAO, StatusServicoEnum.FINALIZADO)
         );
+
+        return servicos.stream()
+                .map(ServicoDTO::new)
+                .collect(Collectors.toList());
     }
 
-    public List<Servico> buscarCandidaturasDoPrestador(int idPrestador) {
-        return servicoRepository.findByIdPrestadorIdUsuarioAndStatusServico(idPrestador, StatusServicoEnum.ORCAMENTO);
+    public List<ServicoDTO> buscarCandidaturasDoPrestador(int idPrestador) {
+        List<Servico> servicos = servicoRepository.findByIdPrestadorIdUsuarioAndStatusServico(idPrestador, StatusServicoEnum.ORCAMENTO);
+
+        return servicos.stream()
+                .map(ServicoDTO::new)
+                .collect(Collectors.toList());
     }
 
-    public List<Servico> buscarPropostasRecebidas(int idPrestador) {
-        return servicoRepository.findByIdPrestadorIdUsuarioAndStatusServicoAndIdEmpresaClienteIsNotNull(
+    public List<ServicoDTO> buscarPropostasRecebidas(int idPrestador) {
+
+        List<Servico> servicos =  servicoRepository.findByIdPrestadorIdUsuarioAndStatusServicoAndIdEmpresaClienteIsNotNull(
                 idPrestador, StatusServicoEnum.ORCAMENTO
         );
+
+        return servicos.stream()
+                .map(ServicoDTO::new)
+                .collect(Collectors.toList());
+
     }
 
 }

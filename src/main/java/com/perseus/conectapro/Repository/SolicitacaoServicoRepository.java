@@ -11,6 +11,7 @@ import java.util.List;
 
 @Repository
 public interface SolicitacaoServicoRepository extends JpaRepository<SolicitacaoServico, Integer>, JpaSpecificationExecutor<SolicitacaoServico> {
+
     List<SolicitacaoServico> findByIdUsuario(Usuario idUsuario);
 
 }

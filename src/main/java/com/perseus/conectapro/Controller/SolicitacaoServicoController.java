@@ -24,8 +24,8 @@ public class SolicitacaoServicoController {
     private SolicitacaoServicoRepository solicitacaoServicoRepository;
 
     @PostMapping("/registro")
-    public ResponseEntity<SolicitacaoServicoDTO> cadastrarSolicitacao(@RequestBody @Valid SolicitacaoServicoCreateDTO orcamento){
-        SolicitacaoServicoDTO solicitacaoCriada = solicitacaoServicoService.cadastrarSolicitacao(orcamento);
+    public ResponseEntity<SolicitacaoServicoDTO> cadastrarSolicitacao(@RequestBody @Valid SolicitacaoServicoCreateDTO solicitacao){
+        SolicitacaoServicoDTO solicitacaoCriada = solicitacaoServicoService.cadastrarSolicitacao(solicitacao);
         return ResponseEntity.status(HttpStatus.CREATED).body(solicitacaoCriada);
     }
 

@@ -12,13 +12,13 @@ public interface ServicoRepository extends JpaRepository<Servico, Integer> {
     List<Servico> findBySolicitacaoServicoAndIdServicoNot(SolicitacaoServico solicitacaoServico, Integer idServico);
 
     // Serviços já prestados pelo prestador
-    List<Servico> findByIdPrestadorIdUsuarioAndStatusServicoIn(Integer idPrestador, List<StatusServicoEnum> statusServico);
+    List<Servico> findByIdPrestadorIdUsuarioAndStatusServicoIn(int idPrestador, List<StatusServicoEnum> statusServico);
 
     // Candidaturas feitas pelo prestador (ORCAMENTO criados por ele)
-    List<Servico> findByIdPrestadorIdUsuarioAndStatusServico(Integer idPrestador, StatusServicoEnum statusServico);
+    List<Servico> findByIdPrestadorIdUsuarioAndStatusServico(int idPrestador, StatusServicoEnum statusServico);
 
     // Propostas feitas pela empresa para este prestador
-    List<Servico> findByIdPrestadorIdUsuarioAndStatusServicoAndIdEmpresaClienteIsNotNull(Integer idPrestador, StatusServicoEnum statusServico);
+    List<Servico> findByIdPrestadorIdUsuarioAndStatusServicoAndIdEmpresaClienteIsNotNull(int idPrestador, StatusServicoEnum statusServico);
 
 }
 

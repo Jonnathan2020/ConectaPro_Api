@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class PagamentoController {
     @Autowired
     private PagamentoService pagamentoService;
+
     @GetMapping
-    public PagamentoDTO consultarPagamentosUsuario(){
+    public PagamentoDTO consultarPagamentosUsuario()
+    {
         return pagamentoService.consultarPagamentosUsuario();
+
     }
 }

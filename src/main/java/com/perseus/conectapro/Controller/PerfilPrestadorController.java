@@ -1,5 +1,6 @@
 package com.perseus.conectapro.Controller;
 
+import com.perseus.conectapro.DTO.ServicoDTO;
 import com.perseus.conectapro.Entity.Servico;
 import com.perseus.conectapro.Service.ServicoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +20,17 @@ public class PerfilPrestadorController {
     private ServicoService servicoService;
 
     @GetMapping("/{idPrestador}/servicos-prestados")
-    public ResponseEntity<List<Servico>> getServicosPrestados(@PathVariable Integer idPrestador) {
+    public ResponseEntity<List<ServicoDTO>> getServicosPrestados(@PathVariable Integer idPrestador) {
         return ResponseEntity.ok(servicoService.buscarServicosPrestados(idPrestador));
     }
 
     @GetMapping("/{idPrestador}/candidaturas")
-    public ResponseEntity<List<Servico>> getCandidaturas(@PathVariable Integer idPrestador) {
+    public ResponseEntity<List<ServicoDTO>> getCandidaturas(@PathVariable Integer idPrestador) {
         return ResponseEntity.ok(servicoService.buscarCandidaturasDoPrestador(idPrestador));
     }
 
     @GetMapping("/{idPrestador}/propostas-recebidas")
-    public ResponseEntity<List<Servico>> getPropostasRecebidas(@PathVariable Integer idPrestador) {
+    public ResponseEntity<List<ServicoDTO>> getPropostasRecebidas(@PathVariable Integer idPrestador) {
         return ResponseEntity.ok(servicoService.buscarPropostasRecebidas(idPrestador));
     }
 }

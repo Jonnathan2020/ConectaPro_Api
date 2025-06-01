@@ -13,11 +13,13 @@ public class PrestadorBuscaDTO {
 
     private String nome;
     private String caminhoFoto;
+    private List<String> especialidades;
     private List<TipoCategoriaEnum> tipoCategoria;
 
     public PrestadorBuscaDTO(Prestador prestador) {
         this.nome = prestador.getNome();
         this.caminhoFoto = prestador.getCaminhoFoto();
+        this.especialidades = prestador.getEspecialidades();
         this.tipoCategoria = prestador.getTipoCategoria();
     }
 }

@@ -2,6 +2,8 @@ package com.perseus.conectapro.Service;
 
 import com.perseus.conectapro.DTO.SolicitacaoServicoDTO;
 import com.perseus.conectapro.DTO.filtro.BuscaSolicitacaoServicoFiltro;
+import com.perseus.conectapro.Entity.SolicitacaoServico;
+import com.perseus.conectapro.Repository.PrestadorRepository;
 import com.perseus.conectapro.Repository.SolicitacaoServicoRepository;
 import com.perseus.conectapro.specification.BuscaSolicitacaoServicoSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,15 @@ import java.util.stream.Collectors;
 public class BuscaSolicitacaoServicoService {
 
     @Autowired
-    private SolicitacaoServicoRepository solicitacaoServicoRepository;
+    private final SolicitacaoServicoRepository solicitacaoServicoRepository;
+
+    public BuscaSolicitacaoServicoService(SolicitacaoServicoRepository repository) {
+        this.solicitacaoServicoRepository = repository;
+    }
 
     public List<SolicitacaoServicoDTO> buscar(BuscaSolicitacaoServicoFiltro filtro) {
-        return solicitacaoServicoRepository.findAll(BuscaSolicitacaoServicoSpecification.comFiltro(filtro))
-                .stream()
+        List<SolicitacaoServico> solicitacoes = solicitacaoServicoRepository.findAll(BuscaSolicitacaoServicoSpecification.comFiltro(filtro));
+        return solicitacoes.stream()
                 .map(SolicitacaoServicoDTO::new)
                 .collect(Collectors.toList());
     }

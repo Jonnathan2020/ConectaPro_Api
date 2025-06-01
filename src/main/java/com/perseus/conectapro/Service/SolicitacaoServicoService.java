@@ -59,6 +59,11 @@ public class SolicitacaoServicoService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tipo de usuário inválido.");
         }
 
+        Prestador prestadorOpcional = prestadorRepository.findByIdUsuario(solicitacaoServicoCreateDTO.getIdPrestador());
+        if (prestadorOpcional != null){
+            solicitacaoServico.setIdPrestador(prestadorOpcional);
+        }
+
         solicitacaoServico.setIdUsuario(usuario); //<- satifaz o a busca por usuario
         solicitacaoServico.setTituloSolicitacao(solicitacaoServicoCreateDTO.getTituloSolicitacao());
         solicitacaoServico.setDescSolicitacao(solicitacaoServicoCreateDTO.getDescSolicitacao());
@@ -66,9 +71,9 @@ public class SolicitacaoServicoService {
         solicitacaoServico.setPrevisaoInicio(solicitacaoServicoCreateDTO.getPrevisaoInicio());
         solicitacaoServico.setDuracaoServico(solicitacaoServicoCreateDTO.getDuracaoServico());
         solicitacaoServico.setValorProposto(solicitacaoServicoCreateDTO.getValorProposto());
-        solicitacaoServico.setFormaPagto(solicitacaoServicoCreateDTO.getFormaPagtoEnum());
-        solicitacaoServico.setNvlUrgencia(solicitacaoServicoCreateDTO.getNvlUrgenciaEnum());
-        solicitacaoServico.setTipoCategoria(solicitacaoServicoCreateDTO.getTipoCategoriaEnum());
+        solicitacaoServico.setFormaPagto(solicitacaoServicoCreateDTO.getFormaPagto());
+        solicitacaoServico.setNvlUrgencia(solicitacaoServicoCreateDTO.getNvlUrgencia());
+        solicitacaoServico.setTipoCategoria(solicitacaoServicoCreateDTO.getTipoCategoria());
         solicitacaoServico.setStatusSolicitacao(StatusSolicitacaoEnum.ATIVA);
 
         SolicitacaoServico solicitacaoServicoCriado = solicitacaoServicoRepository.save(solicitacaoServico);
