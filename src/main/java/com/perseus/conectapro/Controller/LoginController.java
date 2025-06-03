@@ -43,11 +43,12 @@ public class LoginController {
                 : null;
 
         String tipoUsuario = usuario.getTipoUsuario().name();
+        String nome = usuario.getNome();
 
         int id = usuario.getIdUsuario();
 
         // Criar o DTO de resposta
-        return new LoginResponseDTO(id, uf, tipoUsuario, token);
+        return new LoginResponseDTO(id, uf, tipoUsuario, nome, token);
     }
 }
 
