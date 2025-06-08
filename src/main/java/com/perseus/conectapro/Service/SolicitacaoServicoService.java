@@ -102,14 +102,14 @@ public class SolicitacaoServicoService {
         SolicitacaoServico solicitacaoServicoExistente = solicitacaoServicoRepository.findById(idSolicitacao)
                 .orElseThrow(() -> new IllegalArgumentException("Solicitação não encontrada!!"));
 
-        if(solicitacaoServicoUpdateDTO.getTituloOrcamento() != null){
-            solicitacaoServicoExistente.setTituloSolicitacao(solicitacaoServicoUpdateDTO.getTituloOrcamento());
+        if(solicitacaoServicoUpdateDTO.getTituloSolicitacao() != null){
+            solicitacaoServicoExistente.setTituloSolicitacao(solicitacaoServicoUpdateDTO.getTituloSolicitacao());
         }
-        if (solicitacaoServicoUpdateDTO.getDescOrcamento() != null){
-            solicitacaoServicoExistente.setDescSolicitacao(solicitacaoServicoUpdateDTO.getDescOrcamento());
+        if (solicitacaoServicoUpdateDTO.getDescSolicitacao() != null){
+            solicitacaoServicoExistente.setDescSolicitacao(solicitacaoServicoUpdateDTO.getDescSolicitacao());
         }
-        if(solicitacaoServicoUpdateDTO.getValorOrcamento() !=null){
-            solicitacaoServicoExistente.setValorProposto(solicitacaoServicoUpdateDTO.getValorOrcamento());
+        if(solicitacaoServicoUpdateDTO.getValorProposto() !=null){
+            solicitacaoServicoExistente.setValorProposto(solicitacaoServicoUpdateDTO.getValorProposto());
         }
         if(solicitacaoServicoUpdateDTO.getPrevisaoInicio() !=null){
             solicitacaoServicoExistente.setPrevisaoInicio(solicitacaoServicoUpdateDTO.getPrevisaoInicio());
@@ -117,14 +117,14 @@ public class SolicitacaoServicoService {
         if(solicitacaoServicoUpdateDTO.getDuracaoServico() != 0){
             solicitacaoServicoExistente.setDuracaoServico(solicitacaoServicoUpdateDTO.getDuracaoServico());
         }
-        if(solicitacaoServicoUpdateDTO.getFormaPagtoEnum() !=null){
-            solicitacaoServicoExistente.setFormaPagto(solicitacaoServicoUpdateDTO.getFormaPagtoEnum());
+        if(solicitacaoServicoUpdateDTO.getFormaPagto() !=null){
+            solicitacaoServicoExistente.setFormaPagto(solicitacaoServicoUpdateDTO.getFormaPagto());
         }
-        if(solicitacaoServicoUpdateDTO.getNvlUrgenciaEnum() !=null){
-            solicitacaoServicoExistente.setNvlUrgencia(solicitacaoServicoUpdateDTO.getNvlUrgenciaEnum());
+        if(solicitacaoServicoUpdateDTO.getNvlUrgencia() !=null){
+            solicitacaoServicoExistente.setNvlUrgencia(solicitacaoServicoUpdateDTO.getNvlUrgencia());
         }
-        if(solicitacaoServicoUpdateDTO.getTipoCategoriaEnum() !=null){
-            solicitacaoServicoExistente.setTipoCategoria(solicitacaoServicoUpdateDTO.getTipoCategoriaEnum());
+        if(solicitacaoServicoUpdateDTO.getTipoCategoria() !=null){
+            solicitacaoServicoExistente.setTipoCategoria(solicitacaoServicoUpdateDTO.getTipoCategoria());
         }
         return solicitacaoServicoRepository.save(solicitacaoServicoExistente);
     }
