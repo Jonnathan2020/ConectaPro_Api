@@ -4,6 +4,7 @@ import com.azure.core.annotation.Post;
 import com.azure.core.annotation.Put;
 import com.perseus.conectapro.DTO.ServicoCreateDTO;
 import com.perseus.conectapro.DTO.ServicoDTO;
+import com.perseus.conectapro.DTO.ServicoPropostaDiretaDTO;
 import com.perseus.conectapro.DTO.ServicoUpdateDTO;
 import com.perseus.conectapro.Entity.Servico;
 import com.perseus.conectapro.Repository.ServicoRepository;
@@ -66,6 +67,12 @@ public class ServicoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicoCriado);
     }
 
+    @PostMapping("/proposta-direta")
+    public ResponseEntity<ServicoDTO> criarPropostaDireta(@RequestBody ServicoPropostaDiretaDTO dto) {
+        ServicoDTO criado = servicoService.criarServicoPorPropostaDireta(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(criado);
+    }
+
     @PutMapping("/{id}/aprovar")
     public ResponseEntity<ServicoDTO> aprovarOrcamentoServico(@PathVariable int id) {
         ServicoDTO servicoDTO = servicoService.aprovarServico(id);
@@ -101,5 +108,17 @@ public class ServicoController {
         ServicoDTO servicoDTO = servicoService.confirmarFinalizacao(id);
         return ResponseEntity.ok(servicoDTO);
     }
+
+    @PutMapping("/{id}/aceitar")
+    public ResponseEntity<ServicoDTO> aceitarProposta(@PathVariable int id) {
+        return ResponseEntity.ok(servicoService.aceitarProposta(id));
+    }
+
+    @PutMapping("/{id}/rejeitar")
+    public ResponseEntity<ServicoDTO> recusarProposta(@PathVariable int id) {
+        return ResponseEntity.ok(servicoService.recusarProposta(id));
+    }
+
+
 }
 

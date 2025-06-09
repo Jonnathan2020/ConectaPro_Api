@@ -1,6 +1,7 @@
 package com.perseus.conectapro.Controller;
 
 import com.perseus.conectapro.DTO.UsuarioCreateDTO;
+import com.perseus.conectapro.DTO.UsuarioDTO;
 import com.perseus.conectapro.DTO.UsuarioUpdateDTO;
 import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.UsuarioRepository;
@@ -49,28 +50,27 @@ public class UsuarioController {
     }
 
 
-    //Listar usuario
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping
-    public List<Usuario> listarUsuario(
+    public List<UsuarioDTO> listarUsuario(
             @And({
                     @Spec(path = "idUsuario", spec = Equal.class),
                     @Spec(path = "nome", spec = Like.class),
                     @Spec(path = "email", spec = Equal.class),
-                    @Spec(path = "telefone", spec = Like.class), // Adicionando filtro para telefone
-                    @Spec(path = "tipoUsuario", spec = Equal.class), // Filtro para tipo de usuário
+                    @Spec(path = "telefone", spec = Like.class),
+                    @Spec(path = "tipoUsuario", spec = Equal.class),
                     @Spec(path = "role", spec = Equal.class),
-                    @Spec(path = "endereco.cidade", spec = Like.class), // Filtro para o relacionamento com Endereco, caso queira filtrar por algum atributo do endereço
+                    @Spec(path = "endereco.cidade", spec = Like.class),
                     @Spec(path = "endereco.uf", spec = Equal.class),
                     @Spec(path = "endereco.cep", spec = Like.class)
-
             }) Specification<Usuario> spec
-    ){
+    ) {
         List<Usuario> usuarios = usuarioRepository.findAll(spec);
         if (usuarios.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum usuário encontrado com os filtros fornecidos.");
         }
-        return usuarios;
+
+        return usuarios.stream().map(UsuarioDTO::new).toList();
     }
 
     //Buscar usuário por id
