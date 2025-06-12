@@ -198,6 +198,38 @@ public class ServicoService {
         return new ServicoDTO(servicoSalvo);
     }
 
+    public ServicoDTO criarServicoPorPropostaDireta(ServicoPropostaDiretaDTO dto) {
+        // Pega o usuário autenticado (empresa)
+        Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!(usuario instanceof EmpresaCliente empresa)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Somente empresas podem criar propostas diretas");
+        }
+
+        // Busca o prestador informado
+        Prestador prestador = prestadorRepository.findById(dto.getIdPrestador())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Prestador não encontrado"));
+
+        // Cria o serviço
+        Servico servico = new Servico();
+        servico.setIdEmpresaCliente(empresa);
+        servico.setIdPrestador(prestador);
+        servico.setTituloServico(dto.getTituloServico());
+        servico.setDescServico(dto.getDescServico());
+        servico.setValorContratacao(dto.getValorContratacao());
+        servico.setFormaPagto(dto.getFormaPagto());
+        servico.setPrevisaoInicio(dto.getPrevisaoInicio());
+        servico.setDuracaoServico(dto.getDuracaoServico());
+        servico.setNvlUrgencia(dto.getNvlUrgencia());
+        servico.setTipoCategoria(dto.getTipoCategoria());
+        servico.setStatusServico(StatusServicoEnum.ORCAMENTO);
+        servico.setDataInclusao(LocalDateTime.now());
+
+        Servico salvo = servicoRepository.save(servico);
+        return new ServicoDTO(salvo);
+    }
+
+
+
     public ServicoDTO aprovarServico(int idServico){
         Servico servico = servicoRepository.findById(idServico)
                 .orElseThrow(() -> new RuntimeException("Serviço não encontrado!"));
@@ -409,8 +441,53 @@ public class ServicoService {
                 .collect(Collectors.toList());
 
     }
-    
-    
-    
+
+    public ServicoDTO aceitarProposta(int idServico) {
+        Servico servico = servicoRepository.findById(idServico)
+                .orElseThrow(() -> new RuntimeException("Serviço não encontrado!"));
+
+        Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Prestador prestador = prestadorRepository.findByIdUsuario(usuario.getIdUsuario());
+
+        if (servico.getIdPrestador().getIdUsuario() != prestador.getIdUsuario()) {
+            throw new IllegalArgumentException("Somente o prestador destinatário pode aceitar a proposta");
+        }
+
+        if (!servico.getStatusServico().equals(StatusServicoEnum.ORCAMENTO)) {
+            throw new IllegalStateException("Esta proposta não está disponível para aceitação");
+        }
+
+        servico.setStatusServico(StatusServicoEnum.PENDENTE_PAGTO);
+        servico.setDataAprovacao(LocalDateTime.now());
+
+        servicoRepository.save(servico);
+        return new ServicoDTO(servico);
+    }
+
+
+    public ServicoDTO recusarProposta(int idServico) {
+        Servico servico = servicoRepository.findById(idServico)
+                .orElseThrow(() -> new RuntimeException("Serviço não encontrado!"));
+
+        Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Prestador prestador = prestadorRepository.findByIdUsuario(usuario.getIdUsuario());
+
+        if (servico.getIdPrestador().getIdUsuario() != prestador.getIdUsuario()) {
+            throw new IllegalArgumentException("Somente o prestador destinatário pode recusar a proposta");
+        }
+
+        if (!servico.getStatusServico().equals(StatusServicoEnum.ORCAMENTO)) {
+            throw new IllegalStateException("Esta proposta não pode mais ser recusada");
+        }
+
+        servico.setStatusServico(StatusServicoEnum.RECUSADO);
+        servicoRepository.save(servico);
+
+        return new ServicoDTO(servico);
+    }
+
+
+
+
 
 }
