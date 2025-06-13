@@ -405,48 +405,6 @@ public class ServicoService {
         return  new ServicoDTO(servico);
     }
 
-    public List<ServicoDTO> buscarServicosPrestados(int idPrestador) {
-        List<Servico> servicos =  servicoRepository.findByIdPrestadorIdUsuarioAndStatusServicoIn(
-                idPrestador,
-                List.of(StatusServicoEnum.EM_EXECUCAO, StatusServicoEnum.FINALIZADO)
-        );
-
-        if(servicos == null) {
-        	throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum servico prestado");
-        }
-        
-        return servicos.stream()
-                .map(ServicoDTO::new)
-                .collect(Collectors.toList());
-    }
-
-    public List<ServicoDTO> buscarCandidaturasDoPrestador(int idPrestador) {
-        List<Servico> servicos = servicoRepository.findByIdPrestadorIdUsuarioAndStatusServico(idPrestador, StatusServicoEnum.ORCAMENTO);
-
-        if(servicos == null) {
-        	throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhuma candidatura realizada");
-        }
-        
-        return servicos.stream()
-                .map(ServicoDTO::new)
-                .collect(Collectors.toList());
-    }
-
-    public List<ServicoDTO> buscarPropostasRecebidas(int idPrestador) {
-
-        List<Servico> servicos =  servicoRepository.findByIdPrestadorIdUsuarioAndStatusServicoAndIdEmpresaClienteIsNotNull(
-                idPrestador, StatusServicoEnum.ORCAMENTO
-        );
-        
-        if(servicos == null) {
-        	throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhuma proposta recebida");
-        }
-
-        return servicos.stream()
-                .map(ServicoDTO::new)
-                .collect(Collectors.toList());
-
-    }
 
     public ServicoDTO aceitarProposta(int idServico) {
         Servico servico = servicoRepository.findById(idServico)
