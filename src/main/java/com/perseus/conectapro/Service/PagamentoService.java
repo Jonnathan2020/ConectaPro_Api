@@ -1,9 +1,7 @@
 package com.perseus.conectapro.Service;
 
 import com.perseus.conectapro.DTO.PagamentoDTO;
-import com.perseus.conectapro.DTO.ServicoDTO;
 import com.perseus.conectapro.Entity.Pagamento;
-import com.perseus.conectapro.Entity.Servico;
 import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.PagamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

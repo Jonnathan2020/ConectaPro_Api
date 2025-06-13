@@ -5,8 +5,6 @@ import com.perseus.conectapro.DTO.PrestadorDTO;
 import com.perseus.conectapro.DTO.PrestadorUpdateDTO;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Prestador;
-import com.perseus.conectapro.Repository.SolicitacaoServicoRepository;
-import com.perseus.conectapro.Repository.PrestadorRepository;
 import com.perseus.conectapro.Service.PrestadorService;
 import jakarta.validation.Valid;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
@@ -28,10 +26,6 @@ public class PrestadorController {
 
     @Autowired
     private PrestadorService prestadorService;
-    @Autowired
-    private PrestadorRepository prestadorRepository;
-    @Autowired
-    private SolicitacaoServicoRepository solicitacaoServicoRepository;
 
     //listar prestadores
     @GetMapping

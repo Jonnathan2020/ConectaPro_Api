@@ -3,7 +3,6 @@ package com.perseus.conectapro.Repository;
 
 import com.perseus.conectapro.Entity.*;
 import com.perseus.conectapro.Entity.Enuns.StatusServicoEnum;
-import com.perseus.conectapro.Entity.Enuns.StatusSolicitacaoEnum;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

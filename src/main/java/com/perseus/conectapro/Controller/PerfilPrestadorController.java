@@ -1,9 +1,7 @@
 package com.perseus.conectapro.Controller;
 
 import com.perseus.conectapro.DTO.ServicoDTO;
-import com.perseus.conectapro.Entity.Servico;
 import com.perseus.conectapro.Service.PerfilPrestadorService;
-import com.perseus.conectapro.Service.ServicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,12 +1,9 @@
 package com.perseus.conectapro.DTO;
 
 import com.perseus.conectapro.Entity.EmpresaCliente;
-import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
-import com.perseus.conectapro.Entity.Prestador;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
 
 @Getter
 @Setter

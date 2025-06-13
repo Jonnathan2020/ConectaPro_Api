@@ -1,6 +1,5 @@
 package com.perseus.conectapro.Entity;
 
-import com.perseus.conectapro.DTO.PrestadorResumoDTO;
 import com.perseus.conectapro.Entity.Enuns.StatusRepasseEnum;
 import jakarta.persistence.*;
 import lombok.Getter;

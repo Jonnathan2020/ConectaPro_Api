@@ -6,10 +6,8 @@ import com.perseus.conectapro.Entity.Enuns.StatusSolicitacaoEnum;
 import com.perseus.conectapro.Entity.SolicitacaoServico;
 import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Entity.Usuario;
-import com.perseus.conectapro.Repository.EmpresaClienteRepository;
 import com.perseus.conectapro.Repository.SolicitacaoServicoRepository;
 import com.perseus.conectapro.Repository.PrestadorRepository;
-import com.perseus.conectapro.Repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +29,6 @@ public class SolicitacaoServicoService {
     private SolicitacaoServicoRepository solicitacaoServicoRepository;
     @Autowired
     private PrestadorRepository prestadorRepository;
-    @Autowired
-    private EmpresaClienteRepository empresaClienteRepository;
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
     @Transactional
     public SolicitacaoServicoDTO cadastrarSolicitacao(SolicitacaoServicoCreateDTO solicitacaoServicoCreateDTO)

@@ -1,7 +1,6 @@
 package com.perseus.conectapro.Entity.Enuns;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public enum NvlUrgenciaEnum {

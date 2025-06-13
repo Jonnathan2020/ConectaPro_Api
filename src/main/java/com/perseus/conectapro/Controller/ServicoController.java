@@ -1,27 +1,18 @@
 package com.perseus.conectapro.Controller;
 
-import com.azure.core.annotation.Post;
-import com.azure.core.annotation.Put;
 import com.perseus.conectapro.DTO.AvaliacaoDTO;
 import com.perseus.conectapro.DTO.ServicoCreateDTO;
 import com.perseus.conectapro.DTO.ServicoDTO;
 import com.perseus.conectapro.DTO.ServicoPropostaDiretaDTO;
 import com.perseus.conectapro.DTO.ServicoUpdateDTO;
-import com.perseus.conectapro.Entity.Servico;
-import com.perseus.conectapro.Entity.Enuns.NvlSatisfacaoEnum;
-import com.perseus.conectapro.Repository.ServicoRepository;
 import com.perseus.conectapro.Service.ServicoService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -30,8 +21,6 @@ public class ServicoController {
 
     @Autowired
     private ServicoService servicoService;
-    @Autowired
-    private ServicoRepository servicoRepository;
 
     // Cadastar servico
     @PostMapping("/registro")
