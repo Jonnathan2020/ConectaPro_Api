@@ -2,6 +2,7 @@ package com.perseus.conectapro.Service;
 
 import com.perseus.conectapro.DTO.*;
 import com.perseus.conectapro.Entity.*;
+import com.perseus.conectapro.Entity.Enuns.NvlSatisfacaoEnum;
 import com.perseus.conectapro.Entity.Enuns.StatusRepasseEnum;
 import com.perseus.conectapro.Entity.Enuns.StatusServicoEnum;
 import com.perseus.conectapro.Entity.Enuns.StatusSolicitacaoEnum;
@@ -76,6 +77,7 @@ public class ServicoService {
         servico.setTipoCategoria(servicoCreateDTO.getTipoCategoria());
         servico.setPrevisaoInicio(servicoCreateDTO.getPrevisaoInicio());
         servico.setDuracaoServico(servicoCreateDTO.getDuracaoServico());
+        servico.setNvlSatisfacao(servicoCreateDTO.getNvlSatisfacao());
         Servico servicoCriado = servicoRepository.save(servico);
         return new ServicoDTO(servicoCriado);
     }
@@ -97,8 +99,8 @@ public class ServicoService {
         return new ServicoDTO(servicoEspecifico);
     }
 
-    //alterar informações do usuario
-    public Servico alterarServico(int idServico, ServicoUpdateDTO servicoUpdateDTO){
+    //alterar informações do serviço
+    public ServicoDTO alterarServico(int idServico, ServicoUpdateDTO servicoUpdateDTO){
         Servico servicoExistente = servicoRepository.findById(idServico)
                 .orElseThrow(() -> new IllegalArgumentException("Serviço não encontrado!!"));
 
@@ -136,9 +138,13 @@ public class ServicoService {
         if(servicoUpdateDTO.getDuracaoServico() != 0){
             servicoExistente.setDuracaoServico(servicoUpdateDTO.getDuracaoServico());
         }
+        if(servicoUpdateDTO.getNvlSatisfacao() != null){
+            servicoExistente.setNvlSatisfacao(servicoUpdateDTO.getNvlSatisfacao());
+        }
 
-        //salva as informações no banco `!´
-        return servicoRepository.save(servicoExistente);
+        // Salva as informações no banco e retorna um DTO
+        Servico servicoAtualizado = servicoRepository.save(servicoExistente);
+        return new ServicoDTO(servicoAtualizado);
     }
 
     //deletar servico
@@ -486,7 +492,26 @@ public class ServicoService {
         return new ServicoDTO(servico);
     }
 
+    public ServicoDTO avaliarServico(int idServico, NvlSatisfacaoEnum nvlSatisfacao) {
+    Servico servico = servicoRepository.findById(idServico)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Serviço não encontrado"));
 
+    if (!servico.getStatusServico().equals(StatusServicoEnum.FINALIZADO)) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Só é possível avaliar serviços finalizados.");
+    }
+    if (servico.getNvlSatisfacao() != null) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Serviço já foi avaliado.");
+    }
+
+    Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (!(usuario instanceof EmpresaCliente) || servico.getIdEmpresaCliente().getIdUsuario() != usuario.getIdUsuario()) {
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Somente o cliente pode avaliar o serviço.");
+    }
+
+    servico.setNvlSatisfacao(nvlSatisfacao);
+    servicoRepository.save(servico);
+    return new ServicoDTO(servico);
+}
 
 
 

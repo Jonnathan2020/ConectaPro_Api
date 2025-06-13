@@ -1,6 +1,7 @@
 package com.perseus.conectapro.Entity;
 
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
+import com.perseus.conectapro.Entity.Enuns.NvlSatisfacaoEnum;
 import com.perseus.conectapro.Entity.Enuns.NvlUrgenciaEnum;
 import com.perseus.conectapro.Entity.Enuns.StatusServicoEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
@@ -83,5 +84,9 @@ public class Servico {
 
     @Column(name = "DURACAO_SERVICO")
     private Integer duracaoServico;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "NIVEL_SATISFACAO")
+    private NvlSatisfacaoEnum nvlSatisfacao;
 
 }

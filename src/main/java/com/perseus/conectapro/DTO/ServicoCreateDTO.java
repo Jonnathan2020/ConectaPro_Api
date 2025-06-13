@@ -2,6 +2,7 @@ package com.perseus.conectapro.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
+import com.perseus.conectapro.Entity.Enuns.NvlSatisfacaoEnum;
 import com.perseus.conectapro.Entity.Enuns.NvlUrgenciaEnum;
 import com.perseus.conectapro.Entity.Enuns.StatusServicoEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoCategoriaEnum;
@@ -39,5 +40,6 @@ public class ServicoCreateDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "America/Sao_Paulo")
     private LocalDate previsaoInicio;
     private int duracaoServico;
+    private NvlSatisfacaoEnum nvlSatisfacao;
 
 }

@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @Service
 public class BuscaSolicitacaoServicoService {
 
-    @Autowired
     private final SolicitacaoServicoRepository solicitacaoServicoRepository;
 
     public BuscaSolicitacaoServicoService(SolicitacaoServicoRepository repository) {
