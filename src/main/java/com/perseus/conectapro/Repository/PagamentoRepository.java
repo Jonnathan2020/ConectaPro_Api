@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface PagamentoRepository extends JpaRepository<Pagamento, Long> {
+public interface PagamentoRepository extends JpaRepository<Pagamento, Integer> {
 
     boolean existsByIdServico(Servico servico);
     Pagamento findByIdPagamento(int idPagamento);
