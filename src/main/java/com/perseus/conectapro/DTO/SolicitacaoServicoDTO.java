@@ -22,7 +22,7 @@ public class SolicitacaoServicoDTO {
     private PrestadorResumoDTO prestadorResumoDTO;
     private EmpresaClienteResumoDTO empresaClienteResumoDTO;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "#.##0,00")
-    private BigDecimal valorProposto;
+    private Float valorProposto;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy - HH:mm", timezone = "America/Sao_Paulo")
     private LocalDateTime dataInclusao;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
@@ -52,7 +52,7 @@ public class SolicitacaoServicoDTO {
         this.statusSolicitacao = solicitacaoServico.getStatusSolicitacao();
     }
 
-    public SolicitacaoServicoDTO(int idSolicitacao, String tituloSolicitacao, String descSolicitacao, BigDecimal valorProposto, LocalDateTime dataInclusao, LocalDate previsaoInicio, int duracaoServico, FormaPagtoEnum formaPagto, NvlUrgenciaEnum nvlUrgencia, TipoCategoriaEnum tipoCategoria, StatusSolicitacaoEnum statusSolicitacao){
+    public SolicitacaoServicoDTO(int idSolicitacao, String tituloSolicitacao, String descSolicitacao, Float valorProposto, LocalDateTime dataInclusao, LocalDate previsaoInicio, int duracaoServico, FormaPagtoEnum formaPagto, NvlUrgenciaEnum nvlUrgencia, TipoCategoriaEnum tipoCategoria, StatusSolicitacaoEnum statusSolicitacao){
         this.idSolicitacao = idSolicitacao;
         this.tituloSolicitacao = tituloSolicitacao;
         this.descSolicitacao = descSolicitacao;

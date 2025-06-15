@@ -17,7 +17,7 @@ public class SolicitacaoServicoUpdateDTO {
     private String tituloSolicitacao;
     private String descSolicitacao;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "#.##0,00")
-    private BigDecimal valorProposto;
+    private Float valorProposto;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", timezone = "America/Sao_Paulo")
     private LocalDate previsaoInicio;
     private int duracaoServico;

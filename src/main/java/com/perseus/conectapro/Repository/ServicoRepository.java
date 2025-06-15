@@ -26,6 +26,10 @@ public interface ServicoRepository extends JpaRepository<Servico, Integer> {
     
     // Servicos concluidos empresa
     List<Servico> findByIdEmpresaClienteIdUsuarioAndStatusServicoNotIn(int idEmpresaCliente, List<StatusServicoEnum> statusExcluidos);
-    
+
+    boolean existsBySolicitacaoServicoIdSolicitacaoAndIdPrestadorIdUsuario(int idSolicitacao, int idPrestador);
+
+
+
 }
 

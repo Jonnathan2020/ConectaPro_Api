@@ -6,6 +6,7 @@ import com.perseus.conectapro.Entity.Enuns.StatusSolicitacaoEnum;
 import com.perseus.conectapro.Entity.SolicitacaoServico;
 import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Entity.Usuario;
+import com.perseus.conectapro.Repository.ServicoRepository;
 import com.perseus.conectapro.Repository.SolicitacaoServicoRepository;
 import com.perseus.conectapro.Repository.PrestadorRepository;
 import jakarta.transaction.Transactional;
@@ -29,6 +30,8 @@ public class SolicitacaoServicoService {
     private SolicitacaoServicoRepository solicitacaoServicoRepository;
     @Autowired
     private PrestadorRepository prestadorRepository;
+    @Autowired
+    private ServicoRepository servicoRepository;
 
     @Transactional
     public SolicitacaoServicoDTO cadastrarSolicitacao(SolicitacaoServicoCreateDTO solicitacaoServicoCreateDTO)
@@ -140,12 +143,44 @@ public class SolicitacaoServicoService {
         solicitacaoServicoRepository.deleteById(idOrcamento);
     }
 
-    //Criação da
+    //Criação da candidatura
     public ServicoDTO candidaturaSolicitacao(int idSolicitacao, ServicoCreateDTO servicoCreateDTO) {
         SolicitacaoServico solicitacao = solicitacaoServicoRepository.findById(idSolicitacao)
                 .orElseThrow(() -> new RuntimeException("Solicitação não encontrada"));
 
+        Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (usuario == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário não encontrado");
+        }
+
+        if (!(usuario instanceof Prestador prestador)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Somente prestadores podem se candidatar");
+        }
+
+        boolean jaCandidatou = servicoRepository.existsBySolicitacaoServicoIdSolicitacaoAndIdPrestadorIdUsuario(
+                solicitacao.getIdSolicitacao(), usuario.getIdUsuario());
+
+        if (jaCandidatou) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Você já se candidatou a esta solicitação.");
+        }
+
+        if (servicoCreateDTO.getValorContratacao() == null) {
+            servicoCreateDTO.setValorContratacao(solicitacao.getValorProposto());
+        }
+        if (servicoCreateDTO.getPrevisaoInicio() == null) {
+            servicoCreateDTO.setPrevisaoInicio(solicitacao.getPrevisaoInicio());
+        }
+        if (servicoCreateDTO.getFormaPagto() == null) {
+            servicoCreateDTO.setFormaPagto(solicitacao.getFormaPagto());
+        }
+        if (servicoCreateDTO.getDuracaoServico() == 0) {
+            servicoCreateDTO.setDuracaoServico(solicitacao.getDuracaoServico());
+        }
+
         servicoCreateDTO.setIdSolicitacao(solicitacao.getIdSolicitacao()); // Garante o vínculo
+        servicoCreateDTO.setDescServico(solicitacao.getDescSolicitacao());
+
 
         return servicoService.gerarServico(servicoCreateDTO);
 

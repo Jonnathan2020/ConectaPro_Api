@@ -242,6 +242,7 @@ public class ServicoService {
 
         SolicitacaoServico solicitacao = servico.getSolicitacaoServico();
 
+
         Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (!servico.getStatusServico().equals(StatusServicoEnum.ORCAMENTO)){
