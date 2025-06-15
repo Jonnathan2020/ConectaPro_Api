@@ -100,6 +100,11 @@ public class ServicoController {
         return ResponseEntity.ok(servicoDTO);
     }
 
+    @PutMapping("/{id}/avaliar")
+    public ResponseEntity<ServicoDTO> avaliarServico(@PathVariable int id, @RequestBody AvaliacaoDTO avaliacaoDTO) {
+        return ResponseEntity.ok(servicoService.avaliarServico(id, avaliacaoDTO.getNvlSatisfacao()));
+    }
+
     @PutMapping("/{id}/aceitar")
     public ResponseEntity<ServicoDTO> aceitarProposta(@PathVariable int id) {
         return ResponseEntity.ok(servicoService.aceitarProposta(id));
@@ -110,9 +115,6 @@ public class ServicoController {
         return ResponseEntity.ok(servicoService.recusarProposta(id));
     }
 
-    @PutMapping("/{id}/avaliar")
-    public ResponseEntity<ServicoDTO> avaliarServico(@PathVariable int id, @RequestBody AvaliacaoDTO avaliacaoDTO) {
-        return ResponseEntity.ok(servicoService.avaliarServico(id, avaliacaoDTO.getNvlSatisfacao()));
-    }
+
 
 }

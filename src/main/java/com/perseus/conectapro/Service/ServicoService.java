@@ -372,6 +372,7 @@ public class ServicoService {
         Pagamento pagamento = pagamentoRepository.findByIdPagamento(servico.getPagamento().getIdPagamento());
 
         pagamento.setStatusRepasseEnum(StatusRepasseEnum.EM_ANALISE);
+        servico.setDataFinalizacao(LocalDateTime.now());
         servico.setStatusServico(StatusServicoEnum.PENDENTE_CONFIRMAR_FINALIZACAO);
         pagamentoRepository.save(pagamento);
         servicoRepository.save(servico);
