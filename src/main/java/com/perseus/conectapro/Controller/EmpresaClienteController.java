@@ -2,6 +2,7 @@ package com.perseus.conectapro.Controller;
 
 import com.perseus.conectapro.DTO.EmpresaClienteCreateDTO;
 import com.perseus.conectapro.DTO.EmpresaClienteDTO;
+import com.perseus.conectapro.DTO.EmpresaClienteResumoDTO;
 import com.perseus.conectapro.DTO.EmpresaClienteUpdateDTO;
 import com.perseus.conectapro.Entity.EmpresaCliente;
 import com.perseus.conectapro.Service.EmpresaClienteService;
@@ -30,7 +31,7 @@ public class EmpresaClienteController {
     //listar empresas
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping
-    public List<EmpresaClienteDTO> consultarEmpresas(
+    public List<EmpresaClienteResumoDTO> consultarEmpresas(
             @And({
                     @Spec(path = "idUsuario", spec = Equal.class),
                     @Spec(path = "cnpj", spec = Like.class),

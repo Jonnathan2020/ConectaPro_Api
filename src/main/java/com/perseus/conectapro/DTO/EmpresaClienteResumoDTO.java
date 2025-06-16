@@ -4,6 +4,8 @@ import com.perseus.conectapro.Entity.EmpresaCliente;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -21,4 +23,13 @@ public class EmpresaClienteResumoDTO {
         this.nomeFantasia = cliente.getNomeFantasia();
         this.caminhoFoto = cliente.getCaminhoFoto();
     }
+
+    public EmpresaClienteResumoDTO(EmpresaCliente empresaCliente, List<SolicitacaoServicoDTO> orcamentos){
+        this.idEmpresaCliente = empresaCliente.getIdUsuario();
+        this.razaoSocial = empresaCliente.getRazaoSocial();
+        this.nomeFantasia = empresaCliente.getNomeFantasia();
+        this.cnpj = empresaCliente.getCnpj();
+        this.caminhoFoto = empresaCliente.getCaminhoFoto();
+    }
+
 }

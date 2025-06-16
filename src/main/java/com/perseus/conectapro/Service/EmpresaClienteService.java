@@ -76,7 +76,7 @@ public class EmpresaClienteService {
     }
 
     //consultar somente empresas clientes
-    public List<EmpresaClienteDTO> consultarEmpresas(Specification<EmpresaCliente> spec){
+    public List<EmpresaClienteResumoDTO> consultarEmpresas(Specification<EmpresaCliente> spec){
 
         List<EmpresaCliente> clientes = empresaClienteRepository.findAll(spec);
 
@@ -102,7 +102,7 @@ public class EmpresaClienteService {
                             solicitacao.getStatusSolicitacao()
                     )).collect(Collectors.toList());
 
-            return new EmpresaClienteDTO(empresaCliente, solicitacaoServicoDTOS);
+            return new EmpresaClienteResumoDTO(empresaCliente, solicitacaoServicoDTOS);
         }).collect(Collectors.toList());
     }
 
