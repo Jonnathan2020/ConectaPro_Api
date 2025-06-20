@@ -2,7 +2,6 @@ package com.perseus.conectapro.DTO;
 
 import com.perseus.conectapro.Entity.Enuns.StatusRepasseEnum;
 import com.perseus.conectapro.Entity.Pagamento;
-import com.perseus.conectapro.Entity.Prestador;
 import lombok.Getter;
 import lombok.Setter;
 

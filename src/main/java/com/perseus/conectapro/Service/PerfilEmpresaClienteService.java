@@ -57,9 +57,13 @@ public class PerfilEmpresaClienteService {
     }
     
     public List<ServicoDTO> buscarHistorico(Integer idEmpresa) {
-    	List<Servico> servicos = servicoRepository
-    			.findByIdEmpresaClienteIdUsuarioAndStatusServico(idEmpresa, StatusServicoEnum.FINALIZADO);
-    
+
+		List<StatusServicoEnum> statusExcluidos = List.of(StatusServicoEnum.ORCAMENTO, StatusServicoEnum.RECUSADO);
+
+		List<Servico> servicos = servicoRepository
+				.findByIdEmpresaClienteIdUsuarioAndStatusServicoNotIn(idEmpresa, statusExcluidos);
+
+
     	if(servicos.isEmpty()) {
     		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum serviço finalizado");
     	}

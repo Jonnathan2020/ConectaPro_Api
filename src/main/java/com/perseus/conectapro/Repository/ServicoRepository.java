@@ -3,7 +3,6 @@ package com.perseus.conectapro.Repository;
 
 import com.perseus.conectapro.Entity.*;
 import com.perseus.conectapro.Entity.Enuns.StatusServicoEnum;
-import com.perseus.conectapro.Entity.Enuns.StatusSolicitacaoEnum;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -26,7 +25,11 @@ public interface ServicoRepository extends JpaRepository<Servico, Integer> {
     List<Servico> findByIdEmpresaClienteIdUsuarioAndIdPrestadorIsNotNullAndStatusServico(int idEmpresaCliente, StatusServicoEnum statusServico);
     
     // Servicos concluidos empresa
-    List<Servico> findByIdEmpresaClienteIdUsuarioAndStatusServico(int idEmpresaCliente, StatusServicoEnum statusServico);
-    
+    List<Servico> findByIdEmpresaClienteIdUsuarioAndStatusServicoNotIn(int idEmpresaCliente, List<StatusServicoEnum> statusExcluidos);
+
+    boolean existsBySolicitacaoServicoIdSolicitacaoAndIdPrestadorIdUsuario(int idSolicitacao, int idPrestador);
+
+
+
 }
 

@@ -1,7 +1,6 @@
 package com.perseus.conectapro.Service;
 
 import com.perseus.conectapro.DTO.PrestadorBuscaDTO;
-import com.perseus.conectapro.DTO.PrestadorDTO;
 import com.perseus.conectapro.DTO.filtro.BuscaPrestadorFiltro;
 import com.perseus.conectapro.Repository.PrestadorRepository;
 import com.perseus.conectapro.specification.BuscaPrestadorSpecification;

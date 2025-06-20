@@ -2,10 +2,9 @@ package com.perseus.conectapro.Controller;
 
 import com.perseus.conectapro.DTO.EmpresaClienteCreateDTO;
 import com.perseus.conectapro.DTO.EmpresaClienteDTO;
+import com.perseus.conectapro.DTO.EmpresaClienteResumoDTO;
 import com.perseus.conectapro.DTO.EmpresaClienteUpdateDTO;
 import com.perseus.conectapro.Entity.EmpresaCliente;
-import com.perseus.conectapro.Repository.EmpresaClienteRepository;
-import com.perseus.conectapro.Repository.SolicitacaoServicoRepository;
 import com.perseus.conectapro.Service.EmpresaClienteService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -28,15 +27,11 @@ public class EmpresaClienteController {
 
     @Autowired
     private EmpresaClienteService empresaClienteService;
-    @Autowired
-    private EmpresaClienteRepository empresaClienteRepository;
-    @Autowired
-    private SolicitacaoServicoRepository solicitacaoServicoRepository;
 
     //listar empresas
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping
-    public List<EmpresaClienteDTO> consultarEmpresas(
+    public List<EmpresaClienteResumoDTO> consultarEmpresas(
             @And({
                     @Spec(path = "idUsuario", spec = Equal.class),
                     @Spec(path = "cnpj", spec = Like.class),

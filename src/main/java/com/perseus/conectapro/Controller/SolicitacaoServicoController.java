@@ -3,7 +3,6 @@ package com.perseus.conectapro.Controller;
 import com.perseus.conectapro.DTO.*;
 import com.perseus.conectapro.Entity.SolicitacaoServico;
 import com.perseus.conectapro.Entity.Usuario;
-import com.perseus.conectapro.Repository.SolicitacaoServicoRepository;
 import com.perseus.conectapro.Service.SolicitacaoServicoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,6 @@ public class SolicitacaoServicoController {
 
     @Autowired
     private SolicitacaoServicoService solicitacaoServicoService;
-    @Autowired
-    private SolicitacaoServicoRepository solicitacaoServicoRepository;
 
     @PostMapping("/registro")
     public ResponseEntity<SolicitacaoServicoDTO> cadastrarSolicitacao(@RequestBody @Valid SolicitacaoServicoCreateDTO solicitacao){

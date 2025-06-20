@@ -6,10 +6,9 @@ import com.perseus.conectapro.Entity.Enuns.StatusSolicitacaoEnum;
 import com.perseus.conectapro.Entity.SolicitacaoServico;
 import com.perseus.conectapro.Entity.Prestador;
 import com.perseus.conectapro.Entity.Usuario;
-import com.perseus.conectapro.Repository.EmpresaClienteRepository;
+import com.perseus.conectapro.Repository.ServicoRepository;
 import com.perseus.conectapro.Repository.SolicitacaoServicoRepository;
 import com.perseus.conectapro.Repository.PrestadorRepository;
-import com.perseus.conectapro.Repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +31,7 @@ public class SolicitacaoServicoService {
     @Autowired
     private PrestadorRepository prestadorRepository;
     @Autowired
-    private EmpresaClienteRepository empresaClienteRepository;
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private ServicoRepository servicoRepository;
 
     @Transactional
     public SolicitacaoServicoDTO cadastrarSolicitacao(SolicitacaoServicoCreateDTO solicitacaoServicoCreateDTO)
@@ -102,14 +99,14 @@ public class SolicitacaoServicoService {
         SolicitacaoServico solicitacaoServicoExistente = solicitacaoServicoRepository.findById(idSolicitacao)
                 .orElseThrow(() -> new IllegalArgumentException("Solicitação não encontrada!!"));
 
-        if(solicitacaoServicoUpdateDTO.getTituloOrcamento() != null){
-            solicitacaoServicoExistente.setTituloSolicitacao(solicitacaoServicoUpdateDTO.getTituloOrcamento());
+        if(solicitacaoServicoUpdateDTO.getTituloSolicitacao() != null){
+            solicitacaoServicoExistente.setTituloSolicitacao(solicitacaoServicoUpdateDTO.getTituloSolicitacao());
         }
-        if (solicitacaoServicoUpdateDTO.getDescOrcamento() != null){
-            solicitacaoServicoExistente.setDescSolicitacao(solicitacaoServicoUpdateDTO.getDescOrcamento());
+        if (solicitacaoServicoUpdateDTO.getDescSolicitacao() != null){
+            solicitacaoServicoExistente.setDescSolicitacao(solicitacaoServicoUpdateDTO.getDescSolicitacao());
         }
-        if(solicitacaoServicoUpdateDTO.getValorOrcamento() !=null){
-            solicitacaoServicoExistente.setValorProposto(solicitacaoServicoUpdateDTO.getValorOrcamento());
+        if(solicitacaoServicoUpdateDTO.getValorProposto() !=null){
+            solicitacaoServicoExistente.setValorProposto(solicitacaoServicoUpdateDTO.getValorProposto());
         }
         if(solicitacaoServicoUpdateDTO.getPrevisaoInicio() !=null){
             solicitacaoServicoExistente.setPrevisaoInicio(solicitacaoServicoUpdateDTO.getPrevisaoInicio());
@@ -117,14 +114,14 @@ public class SolicitacaoServicoService {
         if(solicitacaoServicoUpdateDTO.getDuracaoServico() != 0){
             solicitacaoServicoExistente.setDuracaoServico(solicitacaoServicoUpdateDTO.getDuracaoServico());
         }
-        if(solicitacaoServicoUpdateDTO.getFormaPagtoEnum() !=null){
-            solicitacaoServicoExistente.setFormaPagto(solicitacaoServicoUpdateDTO.getFormaPagtoEnum());
+        if(solicitacaoServicoUpdateDTO.getFormaPagto() !=null){
+            solicitacaoServicoExistente.setFormaPagto(solicitacaoServicoUpdateDTO.getFormaPagto());
         }
-        if(solicitacaoServicoUpdateDTO.getNvlUrgenciaEnum() !=null){
-            solicitacaoServicoExistente.setNvlUrgencia(solicitacaoServicoUpdateDTO.getNvlUrgenciaEnum());
+        if(solicitacaoServicoUpdateDTO.getNvlUrgencia() !=null){
+            solicitacaoServicoExistente.setNvlUrgencia(solicitacaoServicoUpdateDTO.getNvlUrgencia());
         }
-        if(solicitacaoServicoUpdateDTO.getTipoCategoriaEnum() !=null){
-            solicitacaoServicoExistente.setTipoCategoria(solicitacaoServicoUpdateDTO.getTipoCategoriaEnum());
+        if(solicitacaoServicoUpdateDTO.getTipoCategoria() !=null){
+            solicitacaoServicoExistente.setTipoCategoria(solicitacaoServicoUpdateDTO.getTipoCategoria());
         }
         return solicitacaoServicoRepository.save(solicitacaoServicoExistente);
     }
@@ -146,12 +143,44 @@ public class SolicitacaoServicoService {
         solicitacaoServicoRepository.deleteById(idOrcamento);
     }
 
-    //Criação da
+    //Criação da candidatura
     public ServicoDTO candidaturaSolicitacao(int idSolicitacao, ServicoCreateDTO servicoCreateDTO) {
         SolicitacaoServico solicitacao = solicitacaoServicoRepository.findById(idSolicitacao)
                 .orElseThrow(() -> new RuntimeException("Solicitação não encontrada"));
 
+        Usuario usuario = (Usuario) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (usuario == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuário não encontrado");
+        }
+
+        if (!(usuario instanceof Prestador prestador)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Somente prestadores podem se candidatar");
+        }
+
+        boolean jaCandidatou = servicoRepository.existsBySolicitacaoServicoIdSolicitacaoAndIdPrestadorIdUsuario(
+                solicitacao.getIdSolicitacao(), usuario.getIdUsuario());
+
+        if (jaCandidatou) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Você já se candidatou a esta solicitação.");
+        }
+
+        if (servicoCreateDTO.getValorContratacao() == null) {
+            servicoCreateDTO.setValorContratacao(solicitacao.getValorProposto());
+        }
+        if (servicoCreateDTO.getPrevisaoInicio() == null) {
+            servicoCreateDTO.setPrevisaoInicio(solicitacao.getPrevisaoInicio());
+        }
+        if (servicoCreateDTO.getFormaPagto() == null) {
+            servicoCreateDTO.setFormaPagto(solicitacao.getFormaPagto());
+        }
+        if (servicoCreateDTO.getDuracaoServico() == 0) {
+            servicoCreateDTO.setDuracaoServico(solicitacao.getDuracaoServico());
+        }
+
         servicoCreateDTO.setIdSolicitacao(solicitacao.getIdSolicitacao()); // Garante o vínculo
+        servicoCreateDTO.setDescServico(solicitacao.getDescSolicitacao());
+
 
         return servicoService.gerarServico(servicoCreateDTO);
 

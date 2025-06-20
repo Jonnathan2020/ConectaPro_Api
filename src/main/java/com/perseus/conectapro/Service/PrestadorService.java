@@ -2,7 +2,6 @@ package com.perseus.conectapro.Service;
 
 import com.perseus.conectapro.DTO.*;
 import com.perseus.conectapro.Entity.*;
-import com.perseus.conectapro.Entity.Enuns.PlanoEnum;
 import com.perseus.conectapro.Entity.Enuns.RoleEnum;
 import com.perseus.conectapro.Entity.Enuns.StatusDisponibilidadeEnum;
 import com.perseus.conectapro.Entity.Enuns.TipoUsuarioEnum;
@@ -14,19 +13,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.management.RuntimeErrorException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.Arrays.stream;
 
 @Service
 public class PrestadorService {
 
     @Autowired
     private PrestadorRepository prestadorRepository;
-    @Autowired
-    private AvaliacaoRepository avaliacaoRepository;
     @Autowired
     private EnderecoRepository enderecoRepository;
     @Autowired
@@ -35,8 +30,7 @@ public class PrestadorService {
     private ViaCepService viaCepService;
     @Autowired
     private SolicitacaoServicoRepository solicitacaoServicoRepository;
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+
 
     //cadastrar as informaçoes alem do usuario, faltantes para um prestador
     public Prestador cadastrarPrestador(PrestadorCreateDTO prestadorDTO) {

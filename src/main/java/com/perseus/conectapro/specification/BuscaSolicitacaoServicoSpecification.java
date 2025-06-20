@@ -37,6 +37,15 @@ public class BuscaSolicitacaoServicoSpecification {
                 );
             }
 
+            if (filtro.getTipoCategoria() != null) {
+                predicates.add(
+                        cb.equal(
+                                root.get("tipoCategoria"),
+                                filtro.getTipoCategoria()
+                        )
+                );
+            }
+
             //retorna apenas se o status for ativa
             predicates.add(root.get("statusSolicitacao").in(
                     StatusSolicitacaoEnum.ATIVA

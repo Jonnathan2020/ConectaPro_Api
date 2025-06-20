@@ -1,24 +1,18 @@
 package com.perseus.conectapro.Controller;
 
-import com.azure.core.annotation.Post;
-import com.azure.core.annotation.Put;
+import com.perseus.conectapro.DTO.AvaliacaoDTO;
 import com.perseus.conectapro.DTO.ServicoCreateDTO;
 import com.perseus.conectapro.DTO.ServicoDTO;
+import com.perseus.conectapro.DTO.ServicoPropostaDiretaDTO;
 import com.perseus.conectapro.DTO.ServicoUpdateDTO;
-import com.perseus.conectapro.Entity.Servico;
-import com.perseus.conectapro.Repository.ServicoRepository;
 import com.perseus.conectapro.Service.ServicoService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -27,36 +21,34 @@ public class ServicoController {
 
     @Autowired
     private ServicoService servicoService;
-    @Autowired
-    private ServicoRepository servicoRepository;
 
-    //Cadastar servico
+    // Cadastar servico
     @PostMapping("/registro")
     public ResponseEntity<ServicoDTO> cadastrarServico(@RequestBody @Valid ServicoCreateDTO servicoDTO) {
         ServicoDTO servicoCriado = servicoService.cadastrarServico(servicoDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(servicoCriado);
     }
 
-    //consultar servicos
+    // consultar servicos
     @GetMapping
-    public List<ServicoDTO> consultarServicos(){
+    public List<ServicoDTO> consultarServicos() {
         return servicoService.consultarServicos();
     }
 
     @GetMapping("/{id}")
-    public ServicoDTO consultarServicoPorId(@PathVariable int id){
+    public ServicoDTO consultarServicoPorId(@PathVariable int id) {
         return servicoService.consultarServicoPorId(id);
     }
 
-
     @PutMapping("/{id}")
-    public ResponseEntity<Servico> alterarServico(@PathVariable("id") int id,@RequestBody ServicoUpdateDTO servicoUpdateDTO){
-            Servico servicoAtualizado = servicoService.alterarServico(id, servicoUpdateDTO);
-            return ResponseEntity.ok(servicoAtualizado);
+    public ResponseEntity<ServicoDTO> alterarServico(@PathVariable("id") int id,
+            @RequestBody ServicoUpdateDTO servicoUpdateDTO) {
+        ServicoDTO servicoAtualizado = servicoService.alterarServico(id, servicoUpdateDTO);
+        return ResponseEntity.ok(servicoAtualizado);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id){
+    public void delete(@PathVariable int id) {
         servicoService.delete(id);
     }
 
@@ -66,6 +58,12 @@ public class ServicoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(servicoCriado);
     }
 
+    @PostMapping("/proposta-direta")
+    public ResponseEntity<ServicoDTO> criarPropostaDireta(@RequestBody ServicoPropostaDiretaDTO dto) {
+        ServicoDTO criado = servicoService.criarServicoPorPropostaDireta(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(criado);
+    }
+
     @PutMapping("/{id}/aprovar")
     public ResponseEntity<ServicoDTO> aprovarOrcamentoServico(@PathVariable int id) {
         ServicoDTO servicoDTO = servicoService.aprovarServico(id);
@@ -73,33 +71,50 @@ public class ServicoController {
     }
 
     @PutMapping("/{id}/recusar")
-    public ResponseEntity<ServicoDTO> recusarOrcamentoServico(@PathVariable int id){
+    public ResponseEntity<ServicoDTO> recusarOrcamentoServico(@PathVariable int id) {
         ServicoDTO servicoDTO = servicoService.recusarServico(id);
         return ResponseEntity.ok(servicoDTO);
     }
 
     @PutMapping("/{id}/pagar")
-    public ResponseEntity<ServicoDTO> pagamentoServico(@PathVariable int id){
+    public ResponseEntity<ServicoDTO> pagamentoServico(@PathVariable int id) {
         ServicoDTO servicoDTO = servicoService.pagarServico(id);
         return ResponseEntity.ok(servicoDTO);
     }
 
     @PutMapping("/{id}/iniciar")
-    public ResponseEntity<ServicoDTO> iniciarServico(@PathVariable int id){
+    public ResponseEntity<ServicoDTO> iniciarServico(@PathVariable int id) {
         ServicoDTO servicoDTO = servicoService.iniciarServico(id);
         return ResponseEntity.ok(servicoDTO);
     }
 
     @PutMapping("/{id}/finalizar")
-    public ResponseEntity<ServicoDTO> finalizarServico(@PathVariable int id){
+    public ResponseEntity<ServicoDTO> finalizarServico(@PathVariable int id) {
         ServicoDTO servicoDTO = servicoService.finalizarServico(id);
         return ResponseEntity.ok(servicoDTO);
     }
 
     @PutMapping("/{id}/confirmar")
-    public ResponseEntity<ServicoDTO> confirmarFinalizacao(@PathVariable int id){
+    public ResponseEntity<ServicoDTO> confirmarFinalizacao(@PathVariable int id) {
         ServicoDTO servicoDTO = servicoService.confirmarFinalizacao(id);
         return ResponseEntity.ok(servicoDTO);
     }
-}
 
+    @PutMapping("/{id}/avaliar")
+    public ResponseEntity<ServicoDTO> avaliarServico(@PathVariable int id, @RequestBody AvaliacaoDTO avaliacaoDTO) {
+        return ResponseEntity.ok(servicoService.avaliarServico(id, avaliacaoDTO.getNvlSatisfacao()));
+    }
+
+    @PutMapping("/{id}/aceitar")
+    public ResponseEntity<ServicoDTO> aceitarProposta(@PathVariable int id) {
+        return ResponseEntity.ok(servicoService.aceitarProposta(id));
+    }
+
+    @PutMapping("/{id}/rejeitar")
+    public ResponseEntity<ServicoDTO> recusarProposta(@PathVariable int id) {
+        return ResponseEntity.ok(servicoService.recusarProposta(id));
+    }
+
+
+
+}

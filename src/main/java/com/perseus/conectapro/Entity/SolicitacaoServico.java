@@ -53,7 +53,7 @@ public class SolicitacaoServico {
     private FormaPagtoEnum formaPagto;
 
     @Column(name = "VALOR_PROPOSTO")
-    private BigDecimal valorProposto;
+    private Float valorProposto;
 
     @Column(name = "PREVISAO_INICIO")
     private LocalDate previsaoInicio;

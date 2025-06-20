@@ -49,4 +49,6 @@ public class AvaliacaoController {
     @DeleteMapping("{id}")
     public void deletarAvaliacao(@PathVariable("id") Long id) { avaliacaoService.deletarAvaliacao(id); }
 
+    
+
 }

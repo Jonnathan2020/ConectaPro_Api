@@ -4,7 +4,6 @@ import com.perseus.conectapro.DTO.UsuarioCreateDTO;
 import com.perseus.conectapro.DTO.UsuarioUpdateDTO;
 import com.perseus.conectapro.DTO.ViaCepDTO;
 import com.perseus.conectapro.Entity.Endereco;
-import com.perseus.conectapro.Entity.Enuns.RoleEnum;
 import com.perseus.conectapro.Entity.Usuario;
 import com.perseus.conectapro.Repository.EnderecoRepository;
 import com.perseus.conectapro.Repository.UsuarioRepository;

@@ -2,6 +2,7 @@ package com.perseus.conectapro.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.perseus.conectapro.Entity.Enuns.FormaPagtoEnum;
+import com.perseus.conectapro.Entity.Enuns.NvlSatisfacaoEnum;
 import com.perseus.conectapro.Entity.Enuns.StatusServicoEnum;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ServicoUpdateDTO {
+    public ServicoUpdateDTO() {
+        // No-args constructor required for Jackson
+    }
     private String tituloServico;
     private String descServico;
     private StatusServicoEnum statusServico;
@@ -28,4 +32,5 @@ public class ServicoUpdateDTO {
     private LocalDateTime dataPagamento;
     private LocalDate previsaoInicio;
     private int duracaoServico;
+    private NvlSatisfacaoEnum nvlSatisfacao;
 }
